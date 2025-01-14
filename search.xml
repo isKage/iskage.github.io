@@ -229,8 +229,8 @@
     
     <entry>
       <title>分类页</title>
-      <link href="/categories.html"/>
-      <url>/categories.html</url>
+      <link href="/categories/index.html"/>
+      <url>/categories/index.html</url>
       
         <content type="html"><![CDATA[<div class="note info flat"><p>以下为已经归档的文章，点击即可跳转至文档目录</p></div><div class="link-container">    <a href="../posts/a6a9785e.html" class="styled-link" style='color:white'>管理学导论笔记</a></div>]]></content>
       
@@ -250,9 +250,9 @@
     
     
     <entry>
-      <title>友情链接</title>
-      <link href="/link/index.html"/>
-      <url>/link/index.html</url>
+      <title>标签页</title>
+      <link href="/tags/index.html"/>
+      <url>/tags/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -272,9 +272,9 @@
     
     
     <entry>
-      <title>标签页</title>
-      <link href="/tags/index.html"/>
-      <url>/tags/index.html</url>
+      <title>友情链接</title>
+      <link href="/link/index.html"/>
+      <url>/link/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
