@@ -178,7 +178,7 @@
     border-radius: 5px;
   }
   
-  滚动条
+  /* 滚动条 */
   
   ::-webkit-scrollbar {
     width: 10px;
