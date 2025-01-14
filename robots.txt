@@ -1,0 +1,7 @@
+# hexo robots.txt
+User-agent: *
+
+Disallow: /about/
+
+Sitemap: http://blog.iskage.online/sitemap.xml
+Sitemap: http://blog.iskage.online/baidusitemap.xml

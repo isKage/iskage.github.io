@@ -408,6 +408,17 @@
     
     
     <entry>
+      <title>分类页</title>
+      <link href="/categories/index.html"/>
+      <url>/categories/index.html</url>
+      
+        <content type="html"><![CDATA[<div class="note info flat"><p>以下为已经归档的文章，点击即可跳转至文档目录</p></div><div class="link-container">    <a href="../posts/a6a9785e.html" class="styled-link" style='color:white'>管理学导论笔记</a>    <a href="../posts/40c55931.html" class="styled-link" style='color:white'>经济学原理笔记</a></div>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title></title>
       <link href="/css/custom.css"/>
       <url>/css/custom.css</url>
@@ -457,17 +468,6 @@
       <url>/tags/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>分类页</title>
-      <link href="/categories/index.html"/>
-      <url>/categories/index.html</url>
-      
-        <content type="html"><![CDATA[<div class="note info flat"><p>以下为已经归档的文章，点击即可跳转至文档目录</p></div><div class="link-container">    <a href="../posts/a6a9785e.html" class="styled-link" style='color:white'>管理学导论笔记</a>    <a href="../posts/40c55931.html" class="styled-link" style='color:white'>经济学原理笔记</a></div>]]></content>
       
     </entry>
     
