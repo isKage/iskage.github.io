@@ -178,7 +178,7 @@
     border-radius: 5px;
   }
   
-  /* 滚动条 */
+  滚动条
   
   ::-webkit-scrollbar {
     width: 10px;
@@ -398,3 +398,51 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     transform: scale(0.95);
   }
+
+
+  /* 分类页样式 */
+  /* 容器设置 */
+.link-container {
+  display: flex;
+  flex-wrap: wrap; /* 自动换行 */
+  gap: 15px; /* 间距 */
+  justify-content: start; /* 左对齐 */
+  padding: 10px;
+}
+
+/* 单个块样式 */
+.styled-link {
+  position: relative;
+  display: inline-block;
+  font-size: 1rem; /* 字体大小 */
+  font-weight: bold;
+  text-decoration: none; /* 去掉下划线 */
+  color: #ffffff; /* 字体颜色为白色 */
+  padding: 10px 20px;
+  border-radius: 8px; /* 圆角 */
+  transition: all 0.3s ease; /* 动效 */
+  overflow: hidden; /* 防止子元素溢出 */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15); /* 按钮阴影 */
+}
+
+/* 背景颜色设置（随机 4 种颜色） */
+.styled-link:nth-child(7n+6) { background-color: #3d33ff; }
+.styled-link:nth-child(7n+1) { background-color: #ff3333; }
+.styled-link:nth-child(7n+2) { background-color: #33ff36; }
+.styled-link:nth-child(7n+3) { background-color: #3385FF; }
+.styled-link:nth-child(7n+4) { background-color: #9933FF; }
+.styled-link:nth-child(7n+5) { background-color: #33ebff; }
+.styled-link:nth-child(7n+7) { background-color: #ff3369; }
+
+/* 主内容文字 */
+.styled-link span {
+  position: relative;
+  z-index: 1; /* 确保文字在最上层 */
+  text-shadow: 0px 2px 5px rgba(0, 0, 0, 0.6); /* 字体阴影，增强可见性 */
+}
+
+/* 悬停效果 */
+.styled-link:hover {
+  transform: scale(1.05); /* 放大按钮 */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* 悬停时的按钮阴影 */
+}
