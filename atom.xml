@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>isKage`Blog</title>
+  
+  <subtitle>Welcome to isKage Blog :)</subtitle>
+  <link href="https://blog.iskage.online/atom.xml" rel="self"/>
+  
+  <link href="https://blog.iskage.online/"/>
+  <updated>2025-01-15T06:37:41.698Z</updated>
+  <id>https://blog.iskage.online/</id>
+  
+  <author>
+    <name>isKage</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>经济学原理 笔记目录</title>
+    <link href="https://blog.iskage.online/posts/40c55931.html"/>
+    <id>https://blog.iskage.online/posts/40c55931.html</id>
+    <published>2025-01-15T06:18:00.000Z</published>
+    <updated>2025-01-15T06:37:41.698Z</updated>
+    
+    <content type="html"><![CDATA[<div class="note info flat"><p><strong>文章为博主根据复旦大学本科课程《经济学原理》整理的课程笔记。点击链接即可前往对应文章查看，笔记以pdf的格式展示，如需下载，请前往本人的<a href="https://github.com/isKage/iskage.github.io">Github库</a>中查询</strong></p></div><div class="note danger flat"><p><strong>转载请注明出处，要求见文末</strong></p></div><p>课程书籍为曼昆 (N.Gregory Mankiw) 所著，北京大学出版社出版的<a href="https://book.douban.com/subject/26435630/">《经济学原理》</a></p><div class="note no-icon flat"><p><strong>笔记目录</strong></p><p><a href="./fb0b40e4.html">经济学十大原理</a></p><p><a href="./ea877fe6.html">像经济学家一样思考</a></p><p><a href="./56499585.html">相互依存和贸易收益</a></p><p><a href="./aca4b9e7.html">税收的代价</a></p><p><a href="./43f60f06.html">国际贸易</a></p><p><a href="./7f1ef3f0.html">外部性</a></p><p><a href="./d0db7a3f.html">垄断竞争</a></p><p><a href="./f62b5ee.html">寡头</a></p><p><a href="./7722b671.html">一国收入的衡量</a></p><p><a href="./a311e5d0.html">生活费用的衡量</a></p><p><a href="./85084a49.html">储蓄、投资和金融体系 金融学的基本工具 货币制度</a></p><p><a href="./2db34bd9.html">货币政策和财政政策对总需求的影响</a></p></div>]]></content>
+    
+    
+    <summary type="html">复旦大学《经济学原理》课程笔记，已更新完全</summary>
+    
+    
+    
+    <category term="经济学原理" scheme="https://blog.iskage.online/categories/%E7%BB%8F%E6%B5%8E%E5%AD%A6%E5%8E%9F%E7%90%86/"/>
+    
+    
+    <category term="经济学原理" scheme="https://blog.iskage.online/tags/%E7%BB%8F%E6%B5%8E%E5%AD%A6%E5%8E%9F%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>经济学原理(12) 货币政策和财政政策对总需求的影响 (完)</title>
+    <link href="https://blog.iskage.online/posts/2db34bd9.html"/>
+    <id>https://blog.iskage.online/posts/2db34bd9.html</id>
+    <published>2025-01-14T07:27:33.000Z</published>
+    <updated>2025-01-15T06:36:44.932Z</updated>
+    
+    <content type="html"><![CDATA[<div class="note success flat"><p><strong>返回<a href="./40c55931">笔记目录</a></strong></p></div>  <div id="pdf-container" style="position: relative;">    <iframe id="pdf-frame" src="/pdf/经济学原理笔记/34.pdf#toolbar=0" width="100%" height="600px" allowfullscreen></iframe>    <button id="fullscreen-btn" class="fullscreen-btn" style="position: absolute; top: 10px; right: 10px; z-index: 10;">全屏模式</button>  </div>  <script src="/js/pdf-viewer.js"></script>  ]]></content>
+    
+    
+    <summary type="html">《经济学原理》课程第12讲：货币政策和财政政策对总需求的影响 Chapter 34 The Influence of Monetary and Fiscal Policy on Aggregate Demand</summary>
+    
+    
+    
+    <category term="经济学原理" scheme="https://blog.iskage.online/categories/%E7%BB%8F%E6%B5%8E%E5%AD%A6%E5%8E%9F%E7%90%86/"/>
+    
+    
+    <category term="经济学原理" scheme="https://blog.iskage.online/tags/%E7%BB%8F%E6%B5%8E%E5%AD%A6%E5%8E%9F%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>经济学原理(11) 储蓄、投资和金融体系 金融学的基本工具 货币制度</title>
+    <link href="https://blog.iskage.online/posts/85084a49.html"/>
+    <id>https://blog.iskage.online/posts/85084a49.html</id>
+    <published>2025-01-14T07:27:30.000Z</published>
+    <updated>2025-01-15T06:36:37.550Z</updated>
+    
+    <content type="html"><![CDATA[<div class="note success flat"><p><strong>返回<a href="./40c55931">笔记目录</a></strong></p></div>  <div id="pdf-container" style="position: relative;">    <iframe id="pdf-frame" src="/pdf/经济学原理笔记/26.pdf#toolbar=0" width="100%" height="600px" allowfullscreen></iframe>    <button id="fullscreen-btn" class="fullscreen-btn" style="position: absolute; top: 10px; right: 10px; z-index: 10;">全屏模式</button>  </div>  <script src="/js/pdf-viewer.js"></script>  ]]></content>
+    
+    
+    <summary type="html">《经济学原理》课程第11讲：储蓄、投资和金融体系 金融学的基本工具 货币制度 Chapter 26 27 29</summary>
+    
+    
+    
+    <category term="经济学原理" scheme="https://blog.iskage.online/categories/%E7%BB%8F%E6%B5%8E%E5%AD%A6%E5%8E%9F%E7%90%86/"/>
+    
+    
+    <category term="经济学原理" scheme="https://blog.iskage.online/tags/%E7%BB%8F%E6%B5%8E%E5%AD%A6%E5%8E%9F%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>经济学原理(10) 生活费用的衡量</title>
+    <link href="https://blog.iskage.online/posts/a311e5d0.html"/>
+    <id>https://blog.iskage.online/posts/a311e5d0.html</id>
+    <published>2025-01-14T07:27:21.000Z</published>
+    <updated>2025-01-15T06:36:33.265Z</updated>
+    
+    <content type="html"><![CDATA[<div class="note success flat"><p><strong>返回<a href="./40c55931">笔记目录</a></strong></p></div>  <div id="pdf-container" style="position: relative;">    <iframe id="pdf-frame" src="/pdf/经济学原理笔记/24.pdf#toolbar=0" width="100%" height="600px" allowfullscreen></iframe>    <button id="fullscreen-btn" class="fullscreen-btn" style="position: absolute; top: 10px; right: 10px; z-index: 10;">全屏模式</button>  </div>  <script src="/js/pdf-viewer.js"></script>  ]]></content>
+    
+    
+    <summary type="html">《经济学原理》课程第10讲：生活费用的衡量 Chapter 24 Measuring the Cost of Living</summary>
+    
+    
+    
+    <category term="经济学原理" scheme="https://blog.iskage.online/categories/%E7%BB%8F%E6%B5%8E%E5%AD%A6%E5%8E%9F%E7%90%86/"/>
+    
+    
+    <category term="经济学原理" scheme="https://blog.iskage.online/tags/%E7%BB%8F%E6%B5%8E%E5%AD%A6%E5%8E%9F%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>经济学原理(9) 一国收入的衡量</title>
+    <link href="https://blog.iskage.online/posts/7722b671.html"/>
+    <id>https://blog.iskage.online/posts/7722b671.html</id>
+    <published>2025-01-14T07:27:19.000Z</published>
+    <updated>2025-01-15T06:36:30.960Z</updated>
+    
+    <content type="html"><![CDATA[<div class="note success flat"><p><strong>返回<a href="./40c55931">笔记目录</a></strong></p></div>  <div id="pdf-container" style="position: relative;">    <iframe id="pdf-frame" src="/pdf/经济学原理笔记/23.pdf#toolbar=0" width="100%" height="600px" allowfullscreen></iframe>    <button id="fullscreen-btn" class="fullscreen-btn" style="position: absolute; top: 10px; right: 10px; z-index: 10;">全屏模式</button>  </div>  <script src="/js/pdf-viewer.js"></script>  ]]></content>
+    
+    
+    <summary type="html">《经济学原理》课程第9讲：一国收入的衡量 Chapter 23 Measuring a Nation&#39;s Income</summary>
+    
+    
+    
+    <category term="经济学原理" scheme="https://blog.iskage.online/categories/%E7%BB%8F%E6%B5%8E%E5%AD%A6%E5%8E%9F%E7%90%86/"/>
+    
+    
+    <category term="经济学原理" scheme="https://blog.iskage.online/tags/%E7%BB%8F%E6%B5%8E%E5%AD%A6%E5%8E%9F%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>经济学原理(8) 寡头</title>
+    <link href="https://blog.iskage.online/posts/f62b5ee.html"/>
+    <id>https://blog.iskage.online/posts/f62b5ee.html</id>
+    <published>2025-01-14T07:27:14.000Z</published>
+    <updated>2025-01-15T06:35:01.378Z</updated>
+    
+    <content type="html"><![CDATA[<div class="note success flat"><p><strong>返回<a href="./40c55931">笔记目录</a></strong></p></div>  <div id="pdf-container" style="position: relative;">    <iframe id="pdf-frame" src="/pdf/经济学原理笔记/17.pdf#toolbar=0" width="100%" height="600px" allowfullscreen></iframe>    <button id="fullscreen-btn" class="fullscreen-btn" style="position: absolute; top: 10px; right: 10px; z-index: 10;">全屏模式</button>  </div>  <script src="/js/pdf-viewer.js"></script>  ]]></content>
+    
+    
+    <summary type="html">《经济学原理》课程第8讲：寡头 Chapter 17 Oligopoly</summary>
+    
+    
+    
+    <category term="经济学原理" scheme="https://blog.iskage.online/categories/%E7%BB%8F%E6%B5%8E%E5%AD%A6%E5%8E%9F%E7%90%86/"/>
+    
+    
+    <category term="经济学原理" scheme="https://blog.iskage.online/tags/%E7%BB%8F%E6%B5%8E%E5%AD%A6%E5%8E%9F%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>经济学原理(7) 垄断竞争</title>
+    <link href="https://blog.iskage.online/posts/d0db7a3f.html"/>
+    <id>https://blog.iskage.online/posts/d0db7a3f.html</id>
+    <published>2025-01-14T07:27:11.000Z</published>
+    <updated>2025-01-15T06:34:55.896Z</updated>
+    
+    <content type="html"><![CDATA[<div class="note success flat"><p><strong>返回<a href="./40c55931">笔记目录</a></strong></p></div>  <div id="pdf-container" style="position: relative;">    <iframe id="pdf-frame" src="/pdf/经济学原理笔记/16.pdf#toolbar=0" width="100%" height="600px" allowfullscreen></iframe>    <button id="fullscreen-btn" class="fullscreen-btn" style="position: absolute; top: 10px; right: 10px; z-index: 10;">全屏模式</button>  </div>  <script src="/js/pdf-viewer.js"></script>  ]]></content>
+    
+    
+    <summary type="html">《经济学原理》课程第7讲：垄断竞争 Chapter 16 Monopolistic Competition</summary>
+    
+    
+    
+    <category term="经济学原理" scheme="https://blog.iskage.online/categories/%E7%BB%8F%E6%B5%8E%E5%AD%A6%E5%8E%9F%E7%90%86/"/>
+    
+    
+    <category term="经济学原理" scheme="https://blog.iskage.online/tags/%E7%BB%8F%E6%B5%8E%E5%AD%A6%E5%8E%9F%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>经济学原理(6) 外部性</title>
+    <link href="https://blog.iskage.online/posts/7f1ef3f0.html"/>
+    <id>https://blog.iskage.online/posts/7f1ef3f0.html</id>
+    <published>2025-01-14T07:27:09.000Z</published>
+    <updated>2025-01-15T06:34:53.596Z</updated>
+    
+    <content type="html"><![CDATA[<div class="note success flat"><p><strong>返回<a href="./40c55931">笔记目录</a></strong></p></div>  <div id="pdf-container" style="position: relative;">    <iframe id="pdf-frame" src="/pdf/经济学原理笔记/10.pdf#toolbar=0" width="100%" height="600px" allowfullscreen></iframe>    <button id="fullscreen-btn" class="fullscreen-btn" style="position: absolute; top: 10px; right: 10px; z-index: 10;">全屏模式</button>  </div>  <script src="/js/pdf-viewer.js"></script>  ]]></content>
+    
+    
+    <summary type="html">《经济学原理》课程第6讲：外部性 Chapter 10 Externalities</summary>
+    
+    
+    
+    <category term="经济学原理" scheme="https://blog.iskage.online/categories/%E7%BB%8F%E6%B5%8E%E5%AD%A6%E5%8E%9F%E7%90%86/"/>
+    
+    
+    <category term="经济学原理" scheme="https://blog.iskage.online/tags/%E7%BB%8F%E6%B5%8E%E5%AD%A6%E5%8E%9F%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>经济学原理(5) 国际贸易</title>
+    <link href="https://blog.iskage.online/posts/43f60f06.html"/>
+    <id>https://blog.iskage.online/posts/43f60f06.html</id>
+    <published>2025-01-14T07:27:08.000Z</published>
+    <updated>2025-01-15T06:34:51.434Z</updated>
+    
+    <content type="html"><![CDATA[<div class="note success flat"><p><strong>返回<a href="./40c55931">笔记目录</a></strong></p></div>  <div id="pdf-container" style="position: relative;">    <iframe id="pdf-frame" src="/pdf/经济学原理笔记/09.pdf#toolbar=0" width="100%" height="600px" allowfullscreen></iframe>    <button id="fullscreen-btn" class="fullscreen-btn" style="position: absolute; top: 10px; right: 10px; z-index: 10;">全屏模式</button>  </div>  <script src="/js/pdf-viewer.js"></script>  ]]></content>
+    
+    
+    <summary type="html">《经济学原理》课程第5讲：国际贸易 Chapter 9 Application International Trade</summary>
+    
+    
+    
+    <category term="经济学原理" scheme="https://blog.iskage.online/categories/%E7%BB%8F%E6%B5%8E%E5%AD%A6%E5%8E%9F%E7%90%86/"/>
+    
+    
+    <category term="经济学原理" scheme="https://blog.iskage.online/tags/%E7%BB%8F%E6%B5%8E%E5%AD%A6%E5%8E%9F%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>经济学原理(4) 税收的代价</title>
+    <link href="https://blog.iskage.online/posts/aca4b9e7.html"/>
+    <id>https://blog.iskage.online/posts/aca4b9e7.html</id>
+    <published>2025-01-14T07:27:05.000Z</published>
+    <updated>2025-01-15T06:34:49.096Z</updated>
+    
+    <content type="html"><![CDATA[<div class="note success flat"><p><strong>返回<a href="./40c55931">笔记目录</a></strong></p></div>  <div id="pdf-container" style="position: relative;">    <iframe id="pdf-frame" src="/pdf/经济学原理笔记/08.pdf#toolbar=0" width="100%" height="600px" allowfullscreen></iframe>    <button id="fullscreen-btn" class="fullscreen-btn" style="position: absolute; top: 10px; right: 10px; z-index: 10;">全屏模式</button>  </div>  <script src="/js/pdf-viewer.js"></script>  ]]></content>
+    
+    
+    <summary type="html">《经济学原理》课程第4讲：税收的代价 Chapter 8 Application The Costs of Taxation</summary>
+    
+    
+    
+    <category term="经济学原理" scheme="https://blog.iskage.online/categories/%E7%BB%8F%E6%B5%8E%E5%AD%A6%E5%8E%9F%E7%90%86/"/>
+    
+    
+    <category term="经济学原理" scheme="https://blog.iskage.online/tags/%E7%BB%8F%E6%B5%8E%E5%AD%A6%E5%8E%9F%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>经济学原理(3) 相互依存和贸易收益</title>
+    <link href="https://blog.iskage.online/posts/56499585.html"/>
+    <id>https://blog.iskage.online/posts/56499585.html</id>
+    <published>2025-01-14T07:27:04.000Z</published>
+    <updated>2025-01-15T06:34:46.321Z</updated>
+    
+    <content type="html"><![CDATA[<div class="note success flat"><p><strong>返回<a href="./40c55931">笔记目录</a></strong></p></div>  <div id="pdf-container" style="position: relative;">    <iframe id="pdf-frame" src="/pdf/经济学原理笔记/03.pdf#toolbar=0" width="100%" height="600px" allowfullscreen></iframe>    <button id="fullscreen-btn" class="fullscreen-btn" style="position: absolute; top: 10px; right: 10px; z-index: 10;">全屏模式</button>  </div>  <script src="/js/pdf-viewer.js"></script>  ]]></content>
+    
+    
+    <summary type="html">《经济学原理》课程第3讲：相互依存和贸易收益 Chapter 3* Interdependence and the Gains from Trade</summary>
+    
+    
+    
+    <category term="经济学原理" scheme="https://blog.iskage.online/categories/%E7%BB%8F%E6%B5%8E%E5%AD%A6%E5%8E%9F%E7%90%86/"/>
+    
+    
+    <category term="经济学原理" scheme="https://blog.iskage.online/tags/%E7%BB%8F%E6%B5%8E%E5%AD%A6%E5%8E%9F%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>经济学原理(2) 像经济学家一样思考</title>
+    <link href="https://blog.iskage.online/posts/ea877fe6.html"/>
+    <id>https://blog.iskage.online/posts/ea877fe6.html</id>
+    <published>2025-01-14T07:27:01.000Z</published>
+    <updated>2025-01-15T06:34:42.069Z</updated>
+    
+    <content type="html"><![CDATA[<div class="note success flat"><p><strong>返回<a href="./40c55931">笔记目录</a></strong></p></div>  <div id="pdf-container" style="position: relative;">    <iframe id="pdf-frame" src="/pdf/经济学原理笔记/02.pdf#toolbar=0" width="100%" height="600px" allowfullscreen></iframe>    <button id="fullscreen-btn" class="fullscreen-btn" style="position: absolute; top: 10px; right: 10px; z-index: 10;">全屏模式</button>  </div>  <script src="/js/pdf-viewer.js"></script>  ]]></content>
+    
+    
+    <summary type="html">《经济学原理》课程第2讲：像经济学家一样思考 Chapter 2 Thinking Like an Economist</summary>
+    
+    
+    
+    <category term="经济学原理" scheme="https://blog.iskage.online/categories/%E7%BB%8F%E6%B5%8E%E5%AD%A6%E5%8E%9F%E7%90%86/"/>
+    
+    
+    <category term="经济学原理" scheme="https://blog.iskage.online/tags/%E7%BB%8F%E6%B5%8E%E5%AD%A6%E5%8E%9F%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>经济学原理(1) 经济学十大原理</title>
+    <link href="https://blog.iskage.online/posts/fb0b40e4.html"/>
+    <id>https://blog.iskage.online/posts/fb0b40e4.html</id>
+    <published>2025-01-14T07:27:00.000Z</published>
+    <updated>2025-01-15T06:34:16.299Z</updated>
+    
+    <content type="html"><![CDATA[<div class="note success flat"><p><strong>返回<a href="./40c55931">笔记目录</a></strong></p></div>  <div id="pdf-container" style="position: relative;">    <iframe id="pdf-frame" src="/pdf/经济学原理笔记/01.pdf#toolbar=0" width="100%" height="600px" allowfullscreen></iframe>    <button id="fullscreen-btn" class="fullscreen-btn" style="position: absolute; top: 10px; right: 10px; z-index: 10;">全屏模式</button>  </div>  <script src="/js/pdf-viewer.js"></script>  ]]></content>
+    
+    
+    <summary type="html">《经济学原理》课程第1讲：经济学十大原理 Chapter 1 Ten Principles of Economics</summary>
+    
+    
+    
+    <category term="经济学原理" scheme="https://blog.iskage.online/categories/%E7%BB%8F%E6%B5%8E%E5%AD%A6%E5%8E%9F%E7%90%86/"/>
+    
+    
+    <category term="经济学原理" scheme="https://blog.iskage.online/tags/%E7%BB%8F%E6%B5%8E%E5%AD%A6%E5%8E%9F%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>管理学导论 笔记目录</title>
+    <link href="https://blog.iskage.online/posts/a6a9785e.html"/>
+    <id>https://blog.iskage.online/posts/a6a9785e.html</id>
+    <published>2025-01-14T06:18:00.000Z</published>
+    <updated>2025-01-14T08:22:47.121Z</updated>
+    
+    <content type="html"><![CDATA[<div class="note info flat"><p><strong>文章为博主根据复旦大学管理学院本科大类基础课程《管理学导论》整理的课程笔记。点击链接即可前往对应文章查看，笔记以pdf的格式展示，如需下载，请前往本人的<a href="https://github.com/isKage/iskage.github.io">Github库</a>中查询</strong></p></div><div class="note danger flat"><p><strong>转载请注明出处，要求见文末</strong></p></div><p>课程书籍为《管理学》编写组编写，高等教育出版社出版的<a href="https://book.douban.com/subject/30875101/">《管理学》</a></p><div class="note no-icon flat"><p><strong>笔记目录</strong></p><p><a href="./d0c50e8c.html">1管理与组织导论</a></p><p><a href="./68173e37.html">2管理与管理者</a></p><p><a href="./c68d1930.html">3经典管理理论</a></p><p><a href="./6bb1a7c0.html">4决策</a></p><p><a href="./d147422a.html">5战略管理(上)</a></p><p><a href="./c85c736b.html">5战略管理(下)</a></p><p><a href="./75c3361.html">6组织设计</a></p><p><a href="./e8705652.html">7人员配置</a></p><p><a href="./80a3e173.html">8领导力</a></p><p><a href="./a9f9fa5b.html">9计划和组织文化(上)</a></p><p><a href="./b0e2cb1a.html">9计划和组织文化(下)</a></p><p><a href="./40df443d.html">10激励</a></p><p><a href="./23d62f75.html">11沟通</a></p><p><a href="./4f076b5d.html">12控制与运营</a></p><p><a href="./c1c25776.html">13组织创新与组织变革</a></p></div>]]></content>
+    
+    
+    <summary type="html">复旦大学《管理学导论》课程笔记，已更新完全</summary>
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>管理学导论(13)组织创新与组织变革(完)</title>
+    <link href="https://blog.iskage.online/posts/c1c25776.html"/>
+    <id>https://blog.iskage.online/posts/c1c25776.html</id>
+    <published>2025-01-12T06:18:21.000Z</published>
+    <updated>2025-01-14T04:14:31.155Z</updated>
+    
+    <content type="html"><![CDATA[<div class="note success flat"><p><strong>返回<a href="./a6a9785e">笔记目录</a></strong></p></div>  <div id="pdf-container" style="position: relative;">    <iframe id="pdf-frame" src="/pdf/管理学导论笔记/13组织创新与组织变革.pdf#toolbar=0" width="100%" height="600px" allowfullscreen></iframe>    <button id="fullscreen-btn" class="fullscreen-btn" style="position: absolute; top: 10px; right: 10px; z-index: 10;">全屏模式</button>  </div>  <script src="/js/pdf-viewer.js"></script>  ]]></content>
+    
+    
+    <summary type="html">《管理学导论》笔记第十三章：组织创新与组织变革</summary>
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>管理学导论(12)控制与运营</title>
+    <link href="https://blog.iskage.online/posts/4f076b5d.html"/>
+    <id>https://blog.iskage.online/posts/4f076b5d.html</id>
+    <published>2025-01-12T06:18:20.000Z</published>
+    <updated>2025-01-14T04:14:28.083Z</updated>
+    
+    <content type="html"><![CDATA[<div class="note success flat"><p><strong>返回<a href="./a6a9785e">笔记目录</a></strong></p></div>  <div id="pdf-container" style="position: relative;">    <iframe id="pdf-frame" src="/pdf/管理学导论笔记/12控制与运营.pdf#toolbar=0" width="100%" height="600px" allowfullscreen></iframe>    <button id="fullscreen-btn" class="fullscreen-btn" style="position: absolute; top: 10px; right: 10px; z-index: 10;">全屏模式</button>  </div>  <script src="/js/pdf-viewer.js"></script>  ]]></content>
+    
+    
+    <summary type="html">《管理学导论》笔记第十二章：控制与运营</summary>
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>管理学导论(11)沟通</title>
+    <link href="https://blog.iskage.online/posts/23d62f75.html"/>
+    <id>https://blog.iskage.online/posts/23d62f75.html</id>
+    <published>2025-01-12T06:18:17.000Z</published>
+    <updated>2025-01-14T04:14:24.653Z</updated>
+    
+    <content type="html"><![CDATA[<div class="note success flat"><p><strong>返回<a href="./a6a9785e">笔记目录</a></strong></p></div>  <div id="pdf-container" style="position: relative;">    <iframe id="pdf-frame" src="/pdf/管理学导论笔记/11沟通.pdf#toolbar=0" width="100%" height="600px" allowfullscreen></iframe>    <button id="fullscreen-btn" class="fullscreen-btn" style="position: absolute; top: 10px; right: 10px; z-index: 10;">全屏模式</button>  </div>  <script src="/js/pdf-viewer.js"></script>  ]]></content>
+    
+    
+    <summary type="html">《管理学导论》笔记第十一章：沟通</summary>
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>管理学导论(10)激励</title>
+    <link href="https://blog.iskage.online/posts/40df443d.html"/>
+    <id>https://blog.iskage.online/posts/40df443d.html</id>
+    <published>2025-01-12T06:18:15.000Z</published>
+    <updated>2025-01-14T04:14:21.769Z</updated>
+    
+    <content type="html"><![CDATA[<div class="note success flat"><p><strong>返回<a href="./a6a9785e">笔记目录</a></strong></p></div>  <div id="pdf-container" style="position: relative;">    <iframe id="pdf-frame" src="/pdf/管理学导论笔记/10激励.pdf#toolbar=0" width="100%" height="600px" allowfullscreen></iframe>    <button id="fullscreen-btn" class="fullscreen-btn" style="position: absolute; top: 10px; right: 10px; z-index: 10;">全屏模式</button>  </div>  <script src="/js/pdf-viewer.js"></script>  ]]></content>
+    
+    
+    <summary type="html">《管理学导论》笔记第十章：激励</summary>
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>管理学导论(9)计划和组织文化(下)</title>
+    <link href="https://blog.iskage.online/posts/b0e2cb1a.html"/>
+    <id>https://blog.iskage.online/posts/b0e2cb1a.html</id>
+    <published>2025-01-12T06:18:14.000Z</published>
+    <updated>2025-01-14T04:14:18.068Z</updated>
+    
+    <content type="html"><![CDATA[<div class="note success flat"><p><strong>返回<a href="./a6a9785e">笔记目录</a></strong></p></div>  <div id="pdf-container" style="position: relative;">    <iframe id="pdf-frame" src="/pdf/管理学导论笔记/9计划和组织文化(下).pdf#toolbar=0" width="100%" height="600px" allowfullscreen></iframe>    <button id="fullscreen-btn" class="fullscreen-btn" style="position: absolute; top: 10px; right: 10px; z-index: 10;">全屏模式</button>  </div>  <script src="/js/pdf-viewer.js"></script>  ]]></content>
+    
+    
+    <summary type="html">《管理学导论》笔记第九章：计划和组织文化(下)</summary>
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>管理学导论(9)计划和组织文化(上)</title>
+    <link href="https://blog.iskage.online/posts/a9f9fa5b.html"/>
+    <id>https://blog.iskage.online/posts/a9f9fa5b.html</id>
+    <published>2025-01-12T06:18:12.000Z</published>
+    <updated>2025-01-14T04:14:14.206Z</updated>
+    
+    <content type="html"><![CDATA[<div class="note success flat"><p><strong>返回<a href="./a6a9785e">笔记目录</a></strong></p></div>  <div id="pdf-container" style="position: relative;">    <iframe id="pdf-frame" src="/pdf/管理学导论笔记/9计划和组织文化(上).pdf#toolbar=0" width="100%" height="600px" allowfullscreen></iframe>    <button id="fullscreen-btn" class="fullscreen-btn" style="position: absolute; top: 10px; right: 10px; z-index: 10;">全屏模式</button>  </div>  <script src="/js/pdf-viewer.js"></script>  ]]></content>
+    
+    
+    <summary type="html">《管理学导论》笔记第九章：计划和组织文化(上)</summary>
+    
+    
+    
+    
+  </entry>
+  
+</feed>
