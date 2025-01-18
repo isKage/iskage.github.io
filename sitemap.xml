@@ -335,13 +335,6 @@
 
   
   <url>
-    <loc>https://blog.iskage.online/tags/%E7%BB%8F%E6%B5%8E%E5%AD%A6%E5%8E%9F%E7%90%86/</loc>
-    <lastmod>2025-01-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.iskage.online/tags/MySQL/</loc>
     <lastmod>2025-01-18</lastmod>
     <changefreq>weekly</changefreq>
@@ -369,14 +362,14 @@
     <priority>0.2</priority>
   </url>
   
-
-  
   <url>
-    <loc>https://blog.iskage.online/categories/%E7%BB%8F%E6%B5%8E%E5%AD%A6%E5%8E%9F%E7%90%86/</loc>
+    <loc>https://blog.iskage.online/tags/%E7%BB%8F%E6%B5%8E%E5%AD%A6%E5%8E%9F%E7%90%86/</loc>
     <lastmod>2025-01-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
+  
+
   
   <url>
     <loc>https://blog.iskage.online/categories/MySQL/</loc>
@@ -387,6 +380,13 @@
   
   <url>
     <loc>https://blog.iskage.online/categories/%E7%AE%A1%E7%90%86%E5%AD%A6%E5%AF%BC%E8%AE%BA/</loc>
+    <lastmod>2025-01-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.iskage.online/categories/%E7%BB%8F%E6%B5%8E%E5%AD%A6%E5%8E%9F%E7%90%86/</loc>
     <lastmod>2025-01-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
