@@ -6,7 +6,7 @@
   <link href="https://blog.iskage.online/atom.xml" rel="self"/>
   
   <link href="https://blog.iskage.online/"/>
-  <updated>2025-02-08T03:51:18.439Z</updated>
+  <updated>2025-02-08T06:44:31.373Z</updated>
   <id>https://blog.iskage.online/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>SQL 自学笔记（3）排序与分页：ORDER BY 子句 和 LIMIT 子句</title>
+    <link href="https://blog.iskage.online/posts/c8719e79.html"/>
+    <id>https://blog.iskage.online/posts/c8719e79.html</id>
+    <published>2025-02-08T06:43:00.000Z</published>
+    <updated>2025-02-08T06:44:31.373Z</updated>
+    
+    <content type="html"><![CDATA[<p>本文笔记根据<a href="https://www.bilibili.com/video/BV1iq4y1u7vj/?share_source=copy_web&amp;vd_source=67ce2d561f3b6dc9d7cff375959101a2">【b站 尚硅谷-宋红康 MySQL 课程】</a>整理</p><h1>1 排序</h1><p>为了使数据按照设定的规则排序输出，可以使用 <code>ORDER BY</code></p><ul><li><p>使用 <code>ORDER BY 字段名 ASC</code> 表示按照 <code>字段</code> <strong>生序</strong> 展示</p></li><li><p>使用 <code>ORDER BY 字段名 DESC</code> 表示按照 <code>字段</code> <strong>降序</strong> 展示</p></li><li><p><code>ORDER BY</code> 位于  <code>SELECT</code> 语句结尾</p></li></ul><h2 id="1-1-按照某一列排序">1.1 按照某一列排序</h2><ul><li>例如按照 <code>hire_date</code> 升序</li></ul><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> first_name, email, hire_date</span><br><span class="line"><span class="keyword">FROM</span> employees</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> hire_date;  # 按照 hire_date 排序输出，默认升序 <span class="keyword">ASC</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> first_name, email, hire_date</span><br><span class="line"><span class="keyword">FROM</span> employees</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> hire_date <span class="keyword">ASC</span>;  # 按照 hire_date 升序输出</span><br></pre></td></tr></table></figure><p><img src="https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/QQ_1738994927454.png" alt=""></p><ul><li>按照 <code>hire_date</code> 降序</li></ul><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> first_name, email, hire_date</span><br><span class="line"><span class="keyword">FROM</span> employees</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> hire_date <span class="keyword">DESC</span>;  # 按照 hire_date 降序输出</span><br></pre></td></tr></table></figure><p><img src="https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/QQ_1738995009057.png" alt=""></p><ul><li>列别名同样可以使用</li></ul><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> first_name, salary <span class="operator">*</span> <span class="number">12</span> <span class="keyword">AS</span> &quot;annual salary&quot;</span><br><span class="line"><span class="keyword">FROM</span> employees</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> &quot;annual salary&quot; <span class="keyword">DESC</span>;  # 按照别名 annual salary 降序</span><br></pre></td></tr></table></figure><p><img src="https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/QQ_1738995074331.png" alt=""></p><h2 id="1-2-按照多列排序">1.2 按照多列排序</h2><p>根据多个列进行数据行排序，格式为</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> 列<span class="number">1</span>, 列<span class="number">2</span>, 列<span class="number">3</span></span><br><span class="line"><span class="keyword">FROM</span> 表名</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> 列<span class="number">2</span>, 列<span class="number">4</span>;</span><br></pre></td></tr></table></figure><ul><li>排序依据列可以不在展示列中：即 <code>ORDER BY</code> 后的列可以不是 <code>SELECT</code> 后的列，只要是表中的列即可</li><li>多列排序，按照从左到右的方式排序 <code>ORDER BY</code> 后面的列，只有前面列存在相同元素时，才会参考后一列进行排序：即先按照 <code>列2</code> 排，如果 <code>列2</code> 各异，则完全按照 <code>列2</code> 拍；否则参考 <code>列4</code></li></ul><p>例如：按照部门降序，聘请日期升序</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> last_name, department_id, hire_date</span><br><span class="line"><span class="keyword">FROM</span> employees</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> department_id <span class="keyword">DESC</span>, hire_date <span class="keyword">ASC</span>;</span><br></pre></td></tr></table></figure><p><img src="https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/QQ_1738995708094.png" alt=""></p><h1>2 分页</h1><p>返回特定范围（行）的数据，以免占据页面过多</p><blockquote><p>也可以使用图形化工具，例如 <code>jetBrains</code> 的 <a href="https://www.jetbrains.com.cn/datagrip/"><code>DataGrip</code> 产品</a>。</p></blockquote><p>MySQL 中使用 <code>LIMIT</code> 实现分页，格式为</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LIMIT 起始行数, 行数  <span class="comment">-- 从 0 开始计数，起始行数可省略，默认为 0</span></span><br></pre></td></tr></table></figure><ul><li><code>LIMIT</code> 语句放在 <code>SELECT</code> 语句结尾</li><li>不同数据库管理系统 DBMS 的语句存在差异</li></ul><p>例如：选取前 5 行</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span></span><br><span class="line"><span class="keyword">FROM</span> employees</span><br><span class="line">LIMIT <span class="number">5</span>;  <span class="comment">-- 前 5 行</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span></span><br><span class="line"><span class="keyword">FROM</span> employees</span><br><span class="line">LIMIT <span class="number">0</span>, <span class="number">5</span>;  <span class="comment">-- [0, 1, 2, 3, 4] 从第 0 行开始往后查 5 行</span></span><br></pre></td></tr></table></figure><p>例如：选取第 11 到第 15 行数据（从 0 计数则是：从第 10 行到第 14 行）</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span></span><br><span class="line"><span class="keyword">FROM</span> employees</span><br><span class="line">LIMIT <span class="number">10</span>, <span class="number">10</span>;  <span class="comment">-- [10, 11, 12, 13, 14] 从 0 计数: 从第 10 行到第 14 行</span></span><br></pre></td></tr></table></figure><blockquote><p><code>MySQL 8.0</code>中可以使用 <code>LIMIT 3 OFFSET 4</code> 等价于 <code>LIMIT 4, 3</code></p></blockquote>]]></content>
+    
+    
+    <summary type="html">本文详细介绍 数据库查询语言 SQL 的 ORDER BY 子句，使数据按照设定的规则排序输出。LIMIT 子句，返回特定范围（行）的数据，以免占据页面过多</summary>
+    
+    
+    
+    <category term="MySQL" scheme="https://blog.iskage.online/categories/MySQL/"/>
+    
+    
+    <category term="MySQL" scheme="https://blog.iskage.online/tags/MySQL/"/>
+    
+    <category term="SQL" scheme="https://blog.iskage.online/tags/SQL/"/>
+    
+    <category term="数据库" scheme="https://blog.iskage.online/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+  </entry>
   
   <entry>
     <title>为搭建神经网络创建虚拟环境全流程：下载 Python，利用 conda 创建虚拟环境，激活与安装 Pytorch</title>
@@ -479,27 +504,6 @@
     
     
     <summary type="html">《微观经济学》（平狄克）课程第7讲：利润的最大化和竞争性供给 Chapter Chapter 08 Max Profit and Competetive Supply</summary>
-    
-    
-    
-    <category term="微观经济学" scheme="https://blog.iskage.online/categories/%E5%BE%AE%E8%A7%82%E7%BB%8F%E6%B5%8E%E5%AD%A6/"/>
-    
-    
-    <category term="微观经济学" scheme="https://blog.iskage.online/tags/%E5%BE%AE%E8%A7%82%E7%BB%8F%E6%B5%8E%E5%AD%A6/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>微观经济学(6)生产成本</title>
-    <link href="https://blog.iskage.online/posts/c4281815.html"/>
-    <id>https://blog.iskage.online/posts/c4281815.html</id>
-    <published>2025-01-20T07:27:11.000Z</published>
-    <updated>2025-01-20T08:02:03.558Z</updated>
-    
-    <content type="html"><![CDATA[<div class="note success flat"><p><strong>返回<a href="./73f9c55d.html">笔记目录</a></strong></p></div><div class="note info flat"><p>因为文件数据存储在<strong>中国香港地区</strong>，所以加载需要少量时间。如长时间无法加载，可考虑使用<s>VPN代理</s>。</p></div>  <div id="pdf-container" style="position: relative;">    <iframe id="pdf-frame" src="https://oss.iskage.online/pdfs/%E5%BE%AE%E8%A7%82%E7%BB%8F%E6%B5%8E%E5%AD%A6%E7%AC%94%E8%AE%B0/Chapter%2007%20Costs%20of%20Production.pdf#toolbar=0" width="100%" height="600px" allowfullscreen></iframe>    <button id="fullscreen-btn" class="fullscreen-btn" style="position: absolute; top: 10px; right: 10px; z-index: 10;">全屏模式</button>  </div>  <script src="/js/pdf-viewer.js"></script>  ]]></content>
-    
-    
-    <summary type="html">《微观经济学》（平狄克）课程第6讲：生产成本 Chapter 07 Costs of Production</summary>
     
     
     
