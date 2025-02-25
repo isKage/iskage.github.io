@@ -4,6 +4,39 @@
   
     
     <entry>
+      <title>搭建神经网络 PyTorch 实战：猫狗分类问题训练全流程</title>
+      <link href="/posts/c89b028f.html"/>
+      <url>/posts/c89b028f.html</url>
+      
+        <content type="html"><![CDATA[<h1>搭建神经网络 PyTorch 实战: 猫狗分类问题训练全流程</h1><p>根据之前的知识 <a href="https://zhuanlan.zhihu.com/column/c_1864780737208799232">专栏：PyTorch 教程</a>，本文将一步一步详细介绍如何获取数据，自定义数据集，搭建神经网络，训练、验证和测试结果的全流程。针对的问题是 kaggle 经典竞赛：猫狗二分类问题（<a href="https://www.kaggle.com/competitions/dog-vs-cat-classification">dog-vs-cat-classification</a>）</p><p>相关代码均已开源在我的 Github 库 <a href="https://github.com/isKage/dog-vs-cat-classification">https://github.com/isKage/dog-vs-cat-classification</a> 。【注意】代码只是用于介绍搭建网络、训练模型，实际参考网络效果极差，不建议使用。文章根据 <a href="https://github.com/chenyuntc/pytorch-book">深度学习框架PyTorch：入门与实践 (陈云) </a> 整理。</p><p>注意数据集较大，如果想要训练出结果需要 GPU。如果只是学习如何训练搭建网络等流程，可以自己在根目录下创建 <code>AllData</code> 文件夹，模拟数据集文件结构放入部分图片。</p><p>如果想直接运行我的 Github 代码，还可以阅读 <a href="https://github.com/isKage/dog-vs-cat-classification/blob/main/README.md">README.md</a> 文档。</p><h2 id="0-项目目录">0 项目目录</h2><p>如果直接下载我的 Github 源码。进入一个空目录后，打开终端输入【或者跟着后文一步一步编写】</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/isKage/dog-vs-cat-classification.git</span><br></pre></td></tr></table></figure><p>目录结构</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── AllData  <span class="comment"># 数据集存放</span></span><br><span class="line">├── README.md</span><br><span class="line">├── checkpoints  <span class="comment"># 训练好的模型        【需要自己创建】</span></span><br><span class="line">├── config.py  <span class="comment"># 配置文件，如何创建见下  【需要自己创建】</span></span><br><span class="line">├── data  <span class="comment"># 自定义数据集处理包</span></span><br><span class="line">│   ├── __init__.py</span><br><span class="line">│   │   └── dataset.cpython-312.pyc</span><br><span class="line">│   └── dataset.py</span><br><span class="line">├── logs  <span class="comment"># 存放 tensorboard logs 文件 【需要自己创建】</span></span><br><span class="line">├── main.py  <span class="comment"># 主程序</span></span><br><span class="line">├── models  <span class="comment"># 网络模型定义</span></span><br><span class="line">│   ├── __init__.py</span><br><span class="line">│   ├── basic.py</span><br><span class="line">│   └── cnn.py</span><br><span class="line">├── notes  <span class="comment"># 一些笔记</span></span><br><span class="line">│   ├── kaggle_download.md</span><br><span class="line">│   └── note06_dog_vs_cat.md</span><br><span class="line">├── requirements.txt  <span class="comment"># 依赖包</span></span><br><span class="line">├── result.csv  <span class="comment"># 预测/测试结果</span></span><br><span class="line">└── utils  <span class="comment"># 一些辅助包</span></span><br><span class="line">    ├── __init__.py</span><br><span class="line">    └── visualizer.py  <span class="comment"># 封装可视化功能</span></span><br></pre></td></tr></table></figure><p>安装依赖</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -r requirements.txt</span><br></pre></td></tr></table></figure><h2 id="1-获取数据">1 获取数据</h2><p>从 kaggle 官网下载数据集，可以自定义数据集的统一放置路径，方便未来训练使用。具体教程见：<a href="https://zhuanlan.zhihu.com/p/25732245405">从 Kaggle 下载数据集（mac 和 win 端）</a></p><p>下载后解压，数据集结构大致为：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">dog-vs-cat-classification</span><br><span class="line">├── dog-vs-cat-classification.zip</span><br><span class="line">├── sample_submission.csv</span><br><span class="line">├── <span class="built_in">test</span></span><br><span class="line">│   └── <span class="built_in">test</span> <span class="comment"># 测试图片</span></span><br><span class="line">└── train</span><br><span class="line">    └── train  <span class="comment"># 训练图片</span></span><br></pre></td></tr></table></figure><p><img src="https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/QQ_1740458311037.png" alt=""></p><h2 id="2-自定义数据集">2 自定义数据集</h2><p>根据如上的数据集文件结构，我们自定义数据集 Dataset 类。相关教程见：<a href="https://zhuanlan.zhihu.com/p/23210343084">数据处理：Dataset 类和 Dataloader 类</a>。</p><p>定义 Python 函数包 <code>data</code> ，结构如下</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">data</span><br><span class="line">├── __init__.py  <span class="comment"># 初始化包</span></span><br><span class="line">└── dataset.py  <span class="comment"># 自定义的 dataset 类</span></span><br></pre></td></tr></table></figure><ul><li>使用 <code>__init__.py</code> 声明 <code>data</code> 文件夹视为 Python 的程序包</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># __init__.py</span></span><br><span class="line"><span class="keyword">from</span> .dataset <span class="keyword">import</span> DogVsCatDataset</span><br></pre></td></tr></table></figure><p>其中 <code>.dataset</code> 指向文件 <code>dataset.py</code> 而 <code>DogVsCatDataset</code> 为我们在 <code>dataset.py</code> 中自定义的类</p><p>如此就可以在其他程序里使用</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> data <span class="keyword">import</span> DogVsCatDataset</span><br></pre></td></tr></table></figure><ul><li><code>dataset.py</code> 中定义读取猫狗分类问题的数据集 Dataset 类</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># dataset.py</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">from</span> torch.utils.data <span class="keyword">import</span> Dataset</span><br><span class="line"><span class="keyword">from</span> torchvision <span class="keyword">import</span> transforms</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">DogVsCatDataset</span>(<span class="title class_ inherited__">Dataset</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;加载猫狗数据集&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, root, trans=<span class="literal">None</span>, mode=<span class="literal">None</span></span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        初始化</span></span><br><span class="line"><span class="string">        :param root: 数据集文件路径</span></span><br><span class="line"><span class="string">        :param trans: 变换操作</span></span><br><span class="line"><span class="string">        :param mode: [&#x27;train&#x27;, &#x27;val&#x27;, &#x27;test&#x27;]</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">assert</span> mode <span class="keyword">in</span> [<span class="string">&#x27;train&#x27;</span>, <span class="string">&#x27;val&#x27;</span>, <span class="string">&#x27;test&#x27;</span>]  <span class="comment"># 判断 mode 是否合法，否则报错</span></span><br><span class="line">        <span class="variable language_">self</span>.mode = mode</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> <span class="variable language_">self</span>.mode != <span class="string">&#x27;test&#x27;</span>:</span><br><span class="line">            <span class="comment"># 训练集和验证集要把猫狗训练数据都获取</span></span><br><span class="line">            root = os.path.join(root, <span class="string">&#x27;train&#x27;</span>, <span class="string">&#x27;train&#x27;</span>)</span><br><span class="line">            img_dir_dict = [os.path.join(root, <span class="string">&#x27;cats&#x27;</span>, img_dir) <span class="keyword">for</span> img_dir <span class="keyword">in</span> os.listdir(os.path.join(root, <span class="string">&#x27;cats&#x27;</span>))]</span><br><span class="line">            img_dir_dict += [os.path.join(root, <span class="string">&#x27;dogs&#x27;</span>, img_dir) <span class="keyword">for</span> img_dir <span class="keyword">in</span> os.listdir(os.path.join(root, <span class="string">&#x27;dogs&#x27;</span>))]</span><br><span class="line">            random.shuffle(img_dir_dict)  <span class="comment"># 猫狗图片打乱</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># 测试集路径不同</span></span><br><span class="line">            root = os.path.join(root, <span class="string">&#x27;test&#x27;</span>, <span class="string">&#x27;test&#x27;</span>)</span><br><span class="line">            img_dir_dict = [os.path.join(root, img_dir) <span class="keyword">for</span> img_dir <span class="keyword">in</span> os.listdir(os.path.join(root))]</span><br><span class="line"></span><br><span class="line">        img_num = <span class="built_in">len</span>(img_dir_dict)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 存入图片路径</span></span><br><span class="line">        <span class="keyword">if</span> <span class="variable language_">self</span>.mode == <span class="string">&#x27;test&#x27;</span>:</span><br><span class="line">            <span class="variable language_">self</span>.img_dir_dict = img_dir_dict</span><br><span class="line">        <span class="comment"># 划分数据集</span></span><br><span class="line">        <span class="keyword">elif</span> <span class="variable language_">self</span>.mode == <span class="string">&#x27;train&#x27;</span>:</span><br><span class="line">            <span class="variable language_">self</span>.img_dir_dict = img_dir_dict[:<span class="built_in">int</span>(img_num * <span class="number">0.7</span>)]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="variable language_">self</span>.img_dir_dict = img_dir_dict[<span class="built_in">int</span>(img_num * <span class="number">0.7</span>):]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> trans <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="comment"># 数据转换操作，测试、验证和训练集的数据转换有所区别</span></span><br><span class="line">            normalize = transforms.Normalize(</span><br><span class="line">                mean=[<span class="number">0.485</span>, <span class="number">0.456</span>, <span class="number">0.406</span>], </span><br><span class="line">                std=[<span class="number">0.229</span>, <span class="number">0.224</span>, <span class="number">0.225</span>])</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 测试集 test 和验证集 val 不需要数据增强</span></span><br><span class="line">            <span class="keyword">if</span> <span class="variable language_">self</span>.mode == <span class="string">&quot;test&quot;</span> <span class="keyword">or</span> <span class="variable language_">self</span>.mode == <span class="string">&quot;val&quot;</span>:</span><br><span class="line">                <span class="variable language_">self</span>.trans = transforms.Compose([</span><br><span class="line">                    transforms.Resize(<span class="number">256</span>),</span><br><span class="line">                    transforms.CenterCrop(<span class="number">224</span>),</span><br><span class="line">                    transforms.ToTensor(),</span><br><span class="line">                    normalize</span><br><span class="line">                ])</span><br><span class="line">            <span class="comment"># 训练集 需要数据增强</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="variable language_">self</span>.trans = transforms.Compose([</span><br><span class="line">                    transforms.Resize(<span class="number">256</span>),</span><br><span class="line">                    transforms.RandomResizedCrop(<span class="number">224</span>),</span><br><span class="line">                    transforms.RandomHorizontalFlip(),</span><br><span class="line">                    transforms.ToTensor(),</span><br><span class="line">                    normalize</span><br><span class="line">                ])</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__getitem__</span>(<span class="params">self, index</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        真正开始读取数据，对于测试集 test 返回 id，如 100.jpg 返回 100</span></span><br><span class="line"><span class="string">        :param index: 图片下标</span></span><br><span class="line"><span class="string">        :return: 返回张量数据和标签</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        img_path = <span class="variable language_">self</span>.img_dir_dict[index]</span><br><span class="line">        <span class="keyword">if</span> <span class="variable language_">self</span>.mode == <span class="string">&quot;test&quot;</span>:</span><br><span class="line">            label = <span class="built_in">int</span>(os.path.basename(img_path).split(<span class="string">&#x27;.&#x27;</span>)[<span class="number">0</span>])</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># dog is 1, cat is 0</span></span><br><span class="line">            label = <span class="number">1</span> <span class="keyword">if</span> <span class="string">&#x27;dog&#x27;</span> <span class="keyword">in</span> os.path.basename(img_path).split(<span class="string">&#x27;.&#x27;</span>) <span class="keyword">else</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 读取图片</span></span><br><span class="line">        data = Image.<span class="built_in">open</span>(img_path)</span><br><span class="line">        data = <span class="variable language_">self</span>.trans(data)</span><br><span class="line">        <span class="keyword">return</span> data, label</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__len__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        返回图片个数</span></span><br><span class="line"><span class="string">        :return: 数据集大小</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">len</span>(<span class="variable language_">self</span>.img_dir_dict)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    root = <span class="string">&quot;../AllData/competitions/dog-vs-cat-classification&quot;</span></span><br><span class="line">    train_dataset = DogVsCatDataset(root, mode=<span class="string">&#x27;train&#x27;</span>)</span><br><span class="line">    test_dataset = DogVsCatDataset(root, mode=<span class="string">&#x27;test&#x27;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="built_in">len</span>(train_dataset))</span><br><span class="line">    <span class="built_in">print</span>(<span class="built_in">len</span>(test_dataset))</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(os.path.basename(train_dataset.img_dir_dict[<span class="number">0</span>]).split(<span class="string">&#x27;.&#x27;</span>))</span><br><span class="line">    <span class="built_in">print</span>(os.path.basename(test_dataset.img_dir_dict[<span class="number">0</span>]).split(<span class="string">&#x27;.&#x27;</span>)[<span class="number">0</span>])</span><br></pre></td></tr></table></figure><h2 id="3-搭建网络模型">3 搭建网络模型</h2><p>创建 Python 包 <code>models</code></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">models</span><br><span class="line">├── __init__.py</span><br><span class="line">├── basic.py</span><br><span class="line">└── cnn.py</span><br></pre></td></tr></table></figure><ul><li>同样地，使用 <code>__init__.py</code> 声明</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># __init__.py</span></span><br><span class="line"><span class="keyword">from</span> .cnn <span class="keyword">import</span> AlexNetClassification</span><br></pre></td></tr></table></figure><ul><li>为了方便的保存模型和加载模型，我们定义一个基类，继承 <code>nn.Module</code> 提前添加 <code>save</code> 和 <code>load</code> 方法</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># basic.py</span></span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span> nn</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">BasicModule</span>(nn.Module):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    作为基类，继承 nn.Module 但增加了模型保存和加载功能 save and load</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        <span class="variable language_">self</span>.model_name = <span class="built_in">str</span>(<span class="built_in">type</span>(<span class="variable language_">self</span>))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">load</span>(<span class="params">self, model_path</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        根据模型路径加载模型</span></span><br><span class="line"><span class="string">        :param model_path: 模型路径</span></span><br><span class="line"><span class="string">        :return: 模型</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="variable language_">self</span>.load_state_dict(torch.load(model_path))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">save</span>(<span class="params">self, filename=<span class="literal">None</span></span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        保存模型，默认使用 &quot;模型名字 + 时间&quot; 作为文件名，也可以自定义</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">if</span> filename <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            filename = <span class="string">&#x27;checkpoints/&#x27;</span> + <span class="variable language_">self</span>.model_name + <span class="string">&#x27;_&#x27;</span> + time.strftime(<span class="string">&quot;%Y-%m-%d%H%M%S&quot;</span>) + <span class="string">&#x27;.pth&#x27;</span></span><br><span class="line">        torch.save(<span class="variable language_">self</span>.state_dict(), filename)</span><br><span class="line">        <span class="keyword">return</span> filename</span><br></pre></td></tr></table></figure><ul><li>然后定义真正的网络模型，我们这使用了最传统简单的 AlexNet 网络【故效果不佳，可以前往 kaggle 查看更好的模型】，神经网络搭建教程可见：<a href="https://zhuanlan.zhihu.com/p/22793450207">利用 torch.nn 搭建神经网络</a></li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># cnn.py</span></span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span> nn</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> .basic <span class="keyword">import</span> BasicModule</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">AlexNetClassification</span>(<span class="title class_ inherited__">BasicModule</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, num_classes=<span class="number">2</span></span>):</span><br><span class="line">        <span class="built_in">super</span>(AlexNetClassification, <span class="variable language_">self</span>).__init__()</span><br><span class="line">        <span class="variable language_">self</span>.model_name = <span class="string">&#x27;CNNClassification&#x27;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 特征提取部分</span></span><br><span class="line">        <span class="variable language_">self</span>.features = nn.Sequential(</span><br><span class="line">            nn.Conv2d(<span class="number">3</span>, <span class="number">64</span>, kernel_size=<span class="number">11</span>, stride=<span class="number">4</span>, padding=<span class="number">2</span>),</span><br><span class="line">            nn.ReLU(inplace=<span class="literal">True</span>),</span><br><span class="line">            nn.MaxPool2d(kernel_size=<span class="number">3</span>, stride=<span class="number">2</span>),</span><br><span class="line"></span><br><span class="line">            nn.Conv2d(<span class="number">64</span>, <span class="number">192</span>, kernel_size=<span class="number">5</span>, padding=<span class="number">2</span>),</span><br><span class="line">            nn.ReLU(inplace=<span class="literal">True</span>),</span><br><span class="line">            nn.MaxPool2d(kernel_size=<span class="number">3</span>, stride=<span class="number">2</span>),</span><br><span class="line"></span><br><span class="line">            nn.Conv2d(<span class="number">192</span>, <span class="number">384</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>),</span><br><span class="line">            nn.ReLU(inplace=<span class="literal">True</span>),</span><br><span class="line"></span><br><span class="line">            nn.Conv2d(<span class="number">384</span>, <span class="number">256</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>),</span><br><span class="line">            nn.ReLU(inplace=<span class="literal">True</span>),</span><br><span class="line"></span><br><span class="line">            nn.Conv2d(<span class="number">256</span>, <span class="number">256</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>),</span><br><span class="line">            nn.ReLU(inplace=<span class="literal">True</span>),</span><br><span class="line">            nn.MaxPool2d(kernel_size=<span class="number">3</span>, stride=<span class="number">2</span>),</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 分类部分</span></span><br><span class="line">        <span class="variable language_">self</span>.classifier = nn.Sequential(</span><br><span class="line">            nn.Dropout(),</span><br><span class="line">            nn.Linear(<span class="number">256</span> * <span class="number">6</span> * <span class="number">6</span>, <span class="number">4096</span>),</span><br><span class="line">            nn.ReLU(inplace=<span class="literal">True</span>),</span><br><span class="line">            nn.Dropout(),</span><br><span class="line">            nn.Linear(<span class="number">4096</span>, <span class="number">4096</span>),</span><br><span class="line">            nn.ReLU(inplace=<span class="literal">True</span>),</span><br><span class="line">            nn.Linear(<span class="number">4096</span>, num_classes),</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">        x = <span class="variable language_">self</span>.features(x)</span><br><span class="line">        x = torch.flatten(x, <span class="number">1</span>)</span><br><span class="line">        x = <span class="variable language_">self</span>.classifier(x)</span><br><span class="line">        <span class="keyword">return</span> x</span><br></pre></td></tr></table></figure><h2 id="4-可视化插件">4 可视化插件</h2><p>为了方便直观地观测训练过程，我们可以提前自定义一个可视化的 Python 包，如上一样的套路</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">utils</span><br><span class="line">├── __init__.py</span><br><span class="line">└── visualizer.py</span><br></pre></td></tr></table></figure><ul><li><code>__init__py</code>  声明</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># __init__.py</span></span><br><span class="line"><span class="keyword">from</span> .visualizer <span class="keyword">import</span> Visualizer</span><br></pre></td></tr></table></figure><ul><li><code>visualizer.py</code> 中封装可视化的类，这里使用的是 Tensorboard ，具体教程可见：<a href="https://zhuanlan.zhihu.com/p/23467081773">可视化工具：Tensorboard</a></li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> torch.utils.tensorboard <span class="keyword">import</span> SummaryWriter</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Visualizer</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    封装了基本的 TensorBoard 操作。</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, log_dir</span>):</span><br><span class="line">        <span class="comment"># 初始化 TensorBoard SummaryWriter</span></span><br><span class="line">        <span class="variable language_">self</span>.writer = SummaryWriter(log_dir=log_dir)</span><br><span class="line">        <span class="variable language_">self</span>.index = &#123;&#125;  <span class="comment"># 用于追踪图表的点</span></span><br><span class="line">        <span class="variable language_">self</span>.log_text = <span class="string">&#x27;&#x27;</span>  <span class="comment"># 用于记录日志信息</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">reinit</span>(<span class="params">self, log_dir, **kwargs</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        重新初始化 TensorBoard writer，并设置新的日志目录。</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="variable language_">self</span>.writer = SummaryWriter(log_dir=log_dir)</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">plot</span>(<span class="params">self, name, y, step=<span class="literal">None</span></span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        将标量值记录到 TensorBoard。</span></span><br><span class="line"><span class="string">        例如：plot(&#x27;loss&#x27;, 1.00)</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">if</span> step <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            step = <span class="variable language_">self</span>.index.get(name, <span class="number">0</span>)</span><br><span class="line">        <span class="variable language_">self</span>.writer.add_scalar(name, y, step)</span><br><span class="line">        <span class="variable language_">self</span>.index[name] = step + <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">img</span>(<span class="params">self, name, img_, step=<span class="literal">None</span></span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        将图像记录到 TensorBoard。</span></span><br><span class="line"><span class="string">        img_ 应该是一个张量（例如，torch.Tensor）。</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">if</span> step <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            step = <span class="variable language_">self</span>.index.get(name, <span class="number">0</span>)</span><br><span class="line">        <span class="variable language_">self</span>.writer.add_images(name, img_, step)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">log</span>(<span class="params">self, info, step=<span class="literal">None</span>, win=<span class="string">&#x27;log_text&#x27;</span></span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        记录信息为文本（可选）。</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">if</span> step <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            step = <span class="variable language_">self</span>.index.get(win, <span class="number">0</span>)</span><br><span class="line">        <span class="variable language_">self</span>.log_text += (<span class="string">&#x27;[&#123;time&#125;] &#123;info&#125; &lt;br&gt;&#x27;</span>.<span class="built_in">format</span>(</span><br><span class="line">            time=time.strftime(<span class="string">&#x27;%m%d_%H%M%S&#x27;</span>),</span><br><span class="line">            info=info))</span><br><span class="line">        <span class="variable language_">self</span>.writer.add_text(win, <span class="variable language_">self</span>.log_text, step)</span><br><span class="line">        <span class="variable language_">self</span>.index[win] = step + <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__getattr__</span>(<span class="params">self, name</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        允许访问其他 TensorBoard writer 的函数。</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">getattr</span>(<span class="variable language_">self</span>.writer, name)</span><br></pre></td></tr></table></figure><blockquote><p>使用 tensorboard ：下载 tensorboard ，程序完成后使用命令开启</p></blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install tensorboard</span><br></pre></td></tr></table></figure><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tensorboard --logdir=./logs</span><br></pre></td></tr></table></figure><p><img src="https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/QQ_1740458248881.png" alt=""></p><h2 id="5-config-本地配置和-fire-包">5 config 本地配置和 fire 包</h2><h3 id="5-1-config-本地配置">5.1 config 本地配置</h3><p>创建 <code>config.py</code> 用于提取写好训练的参数</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># config.py</span></span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> warnings</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">DefaultConfig</span>:</span><br><span class="line">    model = <span class="string">&#x27;AlexNetClassification&#x27;</span></span><br><span class="line">    root = <span class="string">&#x27;./AllData/competitions/dog-vs-cat-classification&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 获取最新的文件</span></span><br><span class="line">    param_path = <span class="string">&#x27;./checkpoints/&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.listdir(param_path):</span><br><span class="line">        load_model_path = <span class="literal">None</span>  <span class="comment"># 加载预训练的模型的路径，为None代表不加载</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        load_model_path = os.path.join(</span><br><span class="line">            param_path,</span><br><span class="line">            <span class="built_in">sorted</span>(</span><br><span class="line">                os.listdir(param_path),</span><br><span class="line">                key=<span class="keyword">lambda</span> x: datetime.strptime(</span><br><span class="line">                    x.split(<span class="string">&#x27;_&#x27;</span>)[-<span class="number">1</span>].split(<span class="string">&#x27;.pth&#x27;</span>)[<span class="number">0</span>],</span><br><span class="line">                    <span class="string">&quot;%Y-%m-%d%H%M%S&quot;</span></span><br><span class="line">                )</span><br><span class="line">            )[-<span class="number">1</span>]</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    batch_size = <span class="number">32</span></span><br><span class="line">    <span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line">        use_gpu = <span class="literal">True</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        use_gpu = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">    num_workers = <span class="number">0</span></span><br><span class="line">    print_freq = <span class="number">20</span></span><br><span class="line"></span><br><span class="line">    max_epochs = <span class="number">10</span></span><br><span class="line">    lr = <span class="number">0.003</span></span><br><span class="line">    lr_decay = <span class="number">0.5</span>  <span class="comment"># when val_loss increase, lr = lr*lr_decay</span></span><br><span class="line">    weight_decay = <span class="number">0e-5</span>  <span class="comment"># 损失函数</span></span><br><span class="line"></span><br><span class="line">    tensorboard_log_dir = <span class="string">&#x27;./logs&#x27;</span></span><br><span class="line"></span><br><span class="line">    result_file = <span class="string">&#x27;result.csv&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">_parse</span>(<span class="params">self, kwargs</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        根据字典kwargs 更新 config参数</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">for</span> k, v <span class="keyword">in</span> kwargs.items():</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> <span class="built_in">hasattr</span>(<span class="variable language_">self</span>, k):</span><br><span class="line">                warnings.warn(<span class="string">&quot;Warning: opt has not attribute %s&quot;</span> % k)</span><br><span class="line">            <span class="built_in">setattr</span>(<span class="variable language_">self</span>, k, v)</span><br><span class="line"></span><br><span class="line">        config.device = torch.device(<span class="string">&#x27;cuda:0&#x27;</span>) <span class="keyword">if</span> config.use_gpu <span class="keyword">else</span> torch.device(<span class="string">&#x27;cpu&#x27;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;user config:&#x27;</span>)</span><br><span class="line">        <span class="keyword">for</span> k, v <span class="keyword">in</span> <span class="variable language_">self</span>.__class__.__dict__.items():</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> k.startswith(<span class="string">&#x27;_&#x27;</span>):</span><br><span class="line">                <span class="built_in">print</span>(k, <span class="built_in">getattr</span>(<span class="variable language_">self</span>, k))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">config = DefaultConfig()</span><br></pre></td></tr></table></figure><h3 id="5-2-fire-包">5.2 fire 包</h3><p><code>fire</code> 包能够在终端直接进行传参和训练。先下载</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install fire</span><br></pre></td></tr></table></figure><p>而后当主程序 <code>main.py</code> 中定义了训练、测试、验证函数时</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># main.py</span></span><br><span class="line"><span class="keyword">from</span> config <span class="keyword">import</span> config</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">train</span>(<span class="params">**kwargs</span>):</span><br><span class="line">    ...</span><br><span class="line">    </span><br><span class="line"><span class="meta">@torch.no_grad()</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">val</span>(<span class="params">**kwargs</span>):</span><br><span class="line">    ...</span><br><span class="line">    </span><br><span class="line"><span class="meta">@torch.no_grad()</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test</span>(<span class="params">**kwargs</span>):</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure><p>于是可以在终端中使用如下方法进行训练和传入参数。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python main.py train --参数1=&lt;param&gt; --参数2=&lt;param&gt;</span><br></pre></td></tr></table></figure><h2 id="6-主程序">6 主程序</h2><h3 id="6-1-训练和验证函数">6.1 训练和验证函数</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># main.py</span></span><br><span class="line"><span class="keyword">from</span> config <span class="keyword">import</span> config</span><br><span class="line"><span class="keyword">from</span> data <span class="keyword">import</span> DogVsCatDataset</span><br><span class="line"><span class="keyword">from</span> torch.utils.data <span class="keyword">import</span> DataLoader</span><br><span class="line"><span class="keyword">import</span> models</span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> tqdm <span class="keyword">import</span> tqdm</span><br><span class="line"><span class="keyword">from</span> utils <span class="keyword">import</span> Visualizer</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">train</span>(<span class="params">**kwargs</span>):</span><br><span class="line">    <span class="comment"># 根据命令行参数更新配置</span></span><br><span class="line">    config._parse(kwargs)</span><br><span class="line">    vis = Visualizer(log_dir=config.tensorboard_log_dir)  <span class="comment"># 使用 TensorBoard</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># step1: 模型</span></span><br><span class="line">    model = <span class="built_in">getattr</span>(models, config.model)()</span><br><span class="line">    model.to(config.device)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># step2: 数据</span></span><br><span class="line">    train_data = DogVsCatDataset(config.root, mode=<span class="string">&quot;train&quot;</span>)</span><br><span class="line">    val_data = DogVsCatDataset(config.root, mode=<span class="string">&quot;val&quot;</span>)</span><br><span class="line">    train_dataloader = DataLoader(train_data, config.batch_size, shuffle=<span class="literal">True</span>, num_workers=config.num_workers)</span><br><span class="line">    val_dataloader = DataLoader(val_data, config.batch_size, shuffle=<span class="literal">False</span>, num_workers=config.num_workers)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># step3: 目标函数和优化器</span></span><br><span class="line">    criterion = torch.nn.CrossEntropyLoss()</span><br><span class="line">    lr = config.lr</span><br><span class="line">    optimizer = torch.optim.Adam(model.parameters(), lr=lr, weight_decay=config.weight_decay)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 初始化误差</span></span><br><span class="line">    previous_loss = <span class="number">1e10</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 训练</span></span><br><span class="line">    <span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(config.max_epochs):</span><br><span class="line">        epoch_loss = <span class="number">0</span>  <span class="comment"># 记录当前 epoch 的平均损失</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> ii, (data, label) <span class="keyword">in</span> <span class="built_in">enumerate</span>(train_dataloader):</span><br><span class="line">            <span class="comment"># 训练模型参数</span></span><br><span class="line">            inputs = data.to(config.device)</span><br><span class="line">            target = label.to(config.device)</span><br><span class="line"></span><br><span class="line">            optimizer.zero_grad()</span><br><span class="line">            score = model(inputs)</span><br><span class="line">            loss = criterion(score, target)</span><br><span class="line">            loss.backward()</span><br><span class="line">            optimizer.step()</span><br><span class="line"></span><br><span class="line">            epoch_loss += loss.item()</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 记录损失到 TensorBoard</span></span><br><span class="line">            <span class="keyword">if</span> (ii + <span class="number">1</span>) % config.print_freq == <span class="number">0</span>:</span><br><span class="line">                vis.plot(<span class="string">&#x27;loss&#x27;</span>, loss.item(), step=epoch * <span class="built_in">len</span>(train_dataloader) + ii)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 保存模型</span></span><br><span class="line">        model.save()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 在每个 epoch 结束后验证模型</span></span><br><span class="line">        val_accuracy = val(model, val_dataloader)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;Validation Accuracy: <span class="subst">&#123;val_accuracy:<span class="number">.4</span>f&#125;</span>&quot;</span>)</span><br><span class="line">        vis.plot(<span class="string">&#x27;val_accuracy&#x27;</span>, val_accuracy, step=epoch)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 记录训练日志</span></span><br><span class="line">        vis.log(</span><br><span class="line">            <span class="string">f&quot;epoch:<span class="subst">&#123;epoch&#125;</span>, lr:<span class="subst">&#123;lr&#125;</span>, loss:<span class="subst">&#123;epoch_loss / <span class="built_in">len</span>(train_dataloader):<span class="number">.4</span>f&#125;</span>, val_accuracy:<span class="subst">&#123;val_accuracy:<span class="number">.4</span>f&#125;</span>&quot;</span></span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 更新学习率</span></span><br><span class="line">        <span class="keyword">if</span> epoch_loss / <span class="built_in">len</span>(train_dataloader) &gt; previous_loss:</span><br><span class="line">            lr = lr * config.lr_decay</span><br><span class="line">            <span class="keyword">for</span> param_group <span class="keyword">in</span> optimizer.param_groups:</span><br><span class="line">                param_group[<span class="string">&#x27;lr&#x27;</span>] = lr</span><br><span class="line"></span><br><span class="line">        previous_loss = epoch_loss / <span class="built_in">len</span>(train_dataloader)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@torch.no_grad()</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">val</span>(<span class="params">model, dataloader</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    计算模型在验证集上的准确率等信息</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    model.<span class="built_in">eval</span>()</span><br><span class="line">    correct = <span class="number">0</span></span><br><span class="line">    total = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> ii, (val_input, label) <span class="keyword">in</span> tqdm(<span class="built_in">enumerate</span>(dataloader)):</span><br><span class="line">        val_input = val_input.to(config.device)</span><br><span class="line">        label = label.to(config.device)</span><br><span class="line">        score = model(val_input)</span><br><span class="line">        _, predicted = score.<span class="built_in">max</span>(<span class="number">1</span>)</span><br><span class="line">        total += label.size(<span class="number">0</span>)</span><br><span class="line">        correct += (predicted == label).<span class="built_in">sum</span>().item()</span><br><span class="line"></span><br><span class="line">    model.train()</span><br><span class="line">    accuracy = <span class="number">100.</span> * correct / total</span><br><span class="line">    <span class="keyword">return</span> accuracy</span><br></pre></td></tr></table></figure><h3 id="6-2-测试和写入结果函数">6.2 测试和写入结果函数</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># main.py</span></span><br><span class="line"><span class="meta">@torch.no_grad()</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test</span>(<span class="params">**kwargs</span>):</span><br><span class="line">    config._parse(kwargs)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># configure model</span></span><br><span class="line">    model = <span class="built_in">getattr</span>(models, config.model)().<span class="built_in">eval</span>()</span><br><span class="line">    <span class="keyword">if</span> config.load_model_path:</span><br><span class="line">        model.load(config.load_model_path)</span><br><span class="line"></span><br><span class="line">    model.to(config.device)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># data</span></span><br><span class="line">    test_data = DogVsCatDataset(config.root, mode=<span class="string">&quot;test&quot;</span>)</span><br><span class="line">    test_dataloader = DataLoader(test_data, batch_size=config.batch_size, shuffle=<span class="literal">False</span>, num_workers=config.num_workers)</span><br><span class="line"></span><br><span class="line">    results = []</span><br><span class="line">    <span class="keyword">for</span> ii, (data, path) <span class="keyword">in</span> tqdm(<span class="built_in">enumerate</span>(test_dataloader)):</span><br><span class="line">        inputs = data.to(config.device)</span><br><span class="line">        score = model(inputs)</span><br><span class="line"></span><br><span class="line">        predicted_label = score.<span class="built_in">max</span>(dim=<span class="number">1</span>)[<span class="number">1</span>].detach().tolist()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 如果你要保存为 id, label 的格式，修改为：</span></span><br><span class="line">        batch_results = [(path_.item(), label_) <span class="keyword">for</span> path_, label_ <span class="keyword">in</span> <span class="built_in">zip</span>(path, predicted_label)]</span><br><span class="line"></span><br><span class="line">        results += batch_results</span><br><span class="line"></span><br><span class="line">    write_csv(results, config.result_file)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> results</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">write_csv</span>(<span class="params">results, file_name</span>):</span><br><span class="line">    <span class="keyword">import</span> csv</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(file_name, <span class="string">&#x27;w&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        writer = csv.writer(f)</span><br><span class="line">        writer.writerow([<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;label&#x27;</span>])</span><br><span class="line">        writer.writerows(results)</span><br></pre></td></tr></table></figure><p>最后使用 fire 包</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="keyword">import</span> fire</span><br><span class="line"></span><br><span class="line">    fire.Fire()</span><br></pre></td></tr></table></figure><h2 id="7-训练和预测过程">7 训练和预测过程</h2><h3 id="7-1-开始训练">7.1 开始训练</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python main.py train</span><br></pre></td></tr></table></figure><p>一定要先定义好参数和数据集路径。</p><p><img src="https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/47ef5337feb656be8b726fe2cdcf8f6f_720.png" alt=""></p><h3 id="7-2-测试">7.2 测试</h3><p>在上面训练结束后</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python main.py <span class="built_in">test</span></span><br></pre></td></tr></table></figure><h3 id="7-3-结果">7.3 结果</h3><p>得到结果，写入了 <code>result.csv</code> ，之后可以提交到 kaggle</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 深度学习 Pytorch 完整教程 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Pytorch </tag>
+            
+            <tag> 神经网络 </tag>
+            
+            <tag> 深度学习 </tag>
+            
+            <tag> AI </tag>
+            
+            <tag> Python </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>从 Kaggle 下载数据集（mac 和 win 端）</title>
       <link href="/posts/86ecc33b.html"/>
       <url>/posts/86ecc33b.html</url>
@@ -20,17 +53,17 @@
       
         <tags>
             
-            <tag> kaggle </tag>
-            
-            <tag> 数据集 </tag>
-            
-            <tag> 虚拟环境 </tag>
-            
             <tag> 神经网络 </tag>
             
             <tag> 深度学习 </tag>
             
             <tag> Python </tag>
+            
+            <tag> kaggle </tag>
+            
+            <tag> 数据集 </tag>
+            
+            <tag> 虚拟环境 </tag>
             
             <tag> conda </tag>
             
@@ -175,13 +208,13 @@
       
         <tags>
             
-            <tag> 虚拟环境 </tag>
+            <tag> Pytorch </tag>
             
             <tag> Python </tag>
             
-            <tag> conda </tag>
+            <tag> 虚拟环境 </tag>
             
-            <tag> Pytorch </tag>
+            <tag> conda </tag>
             
         </tags>
       
@@ -206,15 +239,15 @@
       
         <tags>
             
+            <tag> Pytorch </tag>
+            
             <tag> 神经网络 </tag>
             
             <tag> 深度学习 </tag>
             
-            <tag> Python </tag>
-            
-            <tag> Pytorch </tag>
-            
             <tag> AI </tag>
+            
+            <tag> Python </tag>
             
         </tags>
       
@@ -239,15 +272,15 @@
       
         <tags>
             
+            <tag> Pytorch </tag>
+            
             <tag> 神经网络 </tag>
             
             <tag> 深度学习 </tag>
             
-            <tag> Python </tag>
-            
-            <tag> Pytorch </tag>
-            
             <tag> AI </tag>
+            
+            <tag> Python </tag>
             
         </tags>
       
@@ -272,15 +305,15 @@
       
         <tags>
             
+            <tag> Pytorch </tag>
+            
             <tag> 神经网络 </tag>
             
             <tag> 深度学习 </tag>
             
-            <tag> Python </tag>
-            
-            <tag> Pytorch </tag>
-            
             <tag> AI </tag>
+            
+            <tag> Python </tag>
             
         </tags>
       
@@ -305,15 +338,15 @@
       
         <tags>
             
+            <tag> Pytorch </tag>
+            
             <tag> 神经网络 </tag>
             
             <tag> 深度学习 </tag>
             
-            <tag> Python </tag>
-            
-            <tag> Pytorch </tag>
-            
             <tag> AI </tag>
+            
+            <tag> Python </tag>
             
         </tags>
       
@@ -396,15 +429,15 @@
       
         <tags>
             
+            <tag> Pytorch </tag>
+            
             <tag> 神经网络 </tag>
             
             <tag> 深度学习 </tag>
             
-            <tag> Python </tag>
-            
-            <tag> Pytorch </tag>
-            
             <tag> AI </tag>
+            
+            <tag> Python </tag>
             
         </tags>
       
@@ -458,15 +491,15 @@
       
         <tags>
             
+            <tag> Pytorch </tag>
+            
             <tag> 神经网络 </tag>
             
             <tag> 深度学习 </tag>
             
-            <tag> Python </tag>
-            
-            <tag> Pytorch </tag>
-            
             <tag> AI </tag>
+            
+            <tag> Python </tag>
             
         </tags>
       
@@ -520,7 +553,7 @@
       
         <tags>
             
-            <tag> 虚拟环境 </tag>
+            <tag> Pytorch </tag>
             
             <tag> 神经网络 </tag>
             
@@ -528,9 +561,9 @@
             
             <tag> Python </tag>
             
-            <tag> conda </tag>
+            <tag> 虚拟环境 </tag>
             
-            <tag> Pytorch </tag>
+            <tag> conda </tag>
             
         </tags>
       
@@ -555,9 +588,9 @@
       
         <tags>
             
-            <tag> 虚拟环境 </tag>
-            
             <tag> Python </tag>
+            
+            <tag> 虚拟环境 </tag>
             
         </tags>
       
@@ -582,15 +615,15 @@
       
         <tags>
             
+            <tag> Pytorch </tag>
+            
             <tag> 神经网络 </tag>
             
             <tag> 深度学习 </tag>
             
-            <tag> Python </tag>
-            
-            <tag> Pytorch </tag>
-            
             <tag> AI </tag>
+            
+            <tag> Python </tag>
             
         </tags>
       
@@ -673,13 +706,13 @@
       
         <tags>
             
-            <tag> 虚拟环境 </tag>
+            <tag> Pytorch </tag>
             
             <tag> Python </tag>
             
-            <tag> conda </tag>
+            <tag> 虚拟环境 </tag>
             
-            <tag> Pytorch </tag>
+            <tag> conda </tag>
             
         </tags>
       
@@ -733,11 +766,11 @@
       
         <tags>
             
+            <tag> Pytorch </tag>
+            
             <tag> 神经网络 </tag>
             
             <tag> 深度学习 </tag>
-            
-            <tag> Pytorch </tag>
             
             <tag> AI </tag>
             
@@ -764,11 +797,11 @@
       
         <tags>
             
+            <tag> Pytorch </tag>
+            
             <tag> 神经网络 </tag>
             
             <tag> 深度学习 </tag>
-            
-            <tag> Pytorch </tag>
             
             <tag> AI </tag>
             
@@ -795,11 +828,11 @@
       
         <tags>
             
+            <tag> Pytorch </tag>
+            
             <tag> 神经网络 </tag>
             
             <tag> 深度学习 </tag>
-            
-            <tag> Pytorch </tag>
             
             <tag> AI </tag>
             
@@ -826,11 +859,11 @@
       
         <tags>
             
+            <tag> Pytorch </tag>
+            
             <tag> 神经网络 </tag>
             
             <tag> 深度学习 </tag>
-            
-            <tag> Pytorch </tag>
             
             <tag> AI </tag>
             
@@ -857,11 +890,11 @@
       
         <tags>
             
+            <tag> Pytorch </tag>
+            
             <tag> 神经网络 </tag>
             
             <tag> 深度学习 </tag>
-            
-            <tag> Pytorch </tag>
             
             <tag> AI </tag>
             
@@ -888,11 +921,11 @@
       
         <tags>
             
+            <tag> Pytorch </tag>
+            
             <tag> 神经网络 </tag>
             
             <tag> 深度学习 </tag>
-            
-            <tag> Pytorch </tag>
             
             <tag> AI </tag>
             
@@ -1021,22 +1054,22 @@
     
     
     <entry>
-      <title>分类页</title>
-      <link href="/categories/index.html"/>
-      <url>/categories/index.html</url>
+      <title></title>
+      <link href="/google15991a1123c5c160.html"/>
+      <url>/google15991a1123c5c160.html</url>
       
-        <content type="html"><![CDATA[<div class="note info flat"><p>以下为已经归档的文章，点击即可跳转至文档目录</p></div><div class="link-container">    <a href="../posts/a6a9785e.html" class="styled-link" style='color:white'>管理学导论笔记</a>    <a href="../posts/40c55931.html" class="styled-link" style='color:white'>经济学原理笔记</a></div>]]></content>
+        <content type="html"><![CDATA[google-site-verification: google15991a1123c5c160.html]]></content>
       
     </entry>
     
     
     
     <entry>
-      <title></title>
-      <link href="/google15991a1123c5c160.html"/>
-      <url>/google15991a1123c5c160.html</url>
+      <title>分类页</title>
+      <link href="/categories/index.html"/>
+      <url>/categories/index.html</url>
       
-        <content type="html"><![CDATA[google-site-verification: google15991a1123c5c160.html]]></content>
+        <content type="html"><![CDATA[<div class="note info flat"><p>以下为已经归档的文章，点击即可跳转至文档目录</p></div><div class="link-container">    <a href="../posts/a6a9785e.html" class="styled-link" style='color:white'>管理学导论笔记</a>    <a href="../posts/40c55931.html" class="styled-link" style='color:white'>经济学原理笔记</a></div>]]></content>
       
     </entry>
     
@@ -1076,9 +1109,9 @@
     
     
     <entry>
-      <title>标签页</title>
-      <link href="/tags/index.html"/>
-      <url>/tags/index.html</url>
+      <title>友情链接</title>
+      <link href="/link/index.html"/>
+      <url>/link/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -1087,9 +1120,9 @@
     
     
     <entry>
-      <title>友情链接</title>
-      <link href="/link/index.html"/>
-      <url>/link/index.html</url>
+      <title>标签页</title>
+      <link href="/tags/index.html"/>
+      <url>/tags/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
