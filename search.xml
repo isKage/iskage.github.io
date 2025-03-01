@@ -4,6 +4,39 @@
   
     
     <entry>
+      <title>CIFAR-10 分类问题 (基于 ResNet18 预训练模型)</title>
+      <link href="/posts/24ab2d0a.html"/>
+      <url>/posts/24ab2d0a.html</url>
+      
+        <content type="html"><![CDATA[<h1>CIFAR-10 分类问题 (基于 ResNet18 预训练模型)</h1><p>项目源码存放在 GitHub 库 <a href="https://github.com/isKage/cifar10-classification">isKage/cifar10-classification</a></p><p><code>PyTorch</code> <code>Python</code> <code>torch</code> <code>nn</code> <code>ResNet</code> <code>ResNet18</code> <code>pre-trained</code></p><p>针对 CIFAR-10 分类问题，搭建神经网络：<code>AlexNet</code>、<code>GoogLeNet</code>、<code>ResNet</code>、<code>ResNet18</code>。最后选择预训练后的 <code>ResNet18</code> 进行该问题的训练、验证和测试。包含自定义数据集 <code>Dataset</code> 类、自定义训练、验证和测试函数、自定义结果表格函数等。</p><p><img src="https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/cifar.jpeg" alt="cifar-10"></p><p><code>kaggle: private score = 0.68100, ranked about 71. (just training once as using cpu)</code></p><p><code>device: cpu</code></p><p><strong>项目目录</strong></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">├── README.md                   </span><br><span class="line">├── TempData                  <span class="comment"># 取少量图片模拟 CIFAR10 数据集                 </span></span><br><span class="line">│   └── competitions</span><br><span class="line">│       └── cifar-10</span><br><span class="line">├── checkpoints               <span class="comment"># 存放训练完成后的模型参数 model.save() 存放处</span></span><br><span class="line">├── config.py                 <span class="comment"># 默认的配置文件</span></span><br><span class="line">├── data                      <span class="comment"># 自定义的数据集 Dataset 类</span></span><br><span class="line">│   ├── __init__.py</span><br><span class="line">│   └── dataset.py</span><br><span class="line">├── logfile                   <span class="comment"># 记录模型表现 csv 文件的目录</span></span><br><span class="line">├── logs                      <span class="comment"># 存放 tensorboard 文件</span></span><br><span class="line">├── main.py                   <span class="comment"># 主程序: 包含 train, test 等主要函数</span></span><br><span class="line">├── models                    <span class="comment"># 搭建的各种神经网络 `AlexNet`、`GoogLeNet`、`ResNet`、`ResNet18`</span></span><br><span class="line">│   ├── __init__.py</span><br><span class="line">│   ├── alexnet.py</span><br><span class="line">│   ├── basic.py</span><br><span class="line">│   ├── googlenet.py</span><br><span class="line">│   ├── resnet.py</span><br><span class="line">│   └── resnet18.py</span><br><span class="line">├── requirements.txt          <span class="comment"># 安装依赖</span></span><br><span class="line">├── result_example.csv        <span class="comment"># 少量数据模拟数据集得到的测试结果</span></span><br><span class="line">└── sampleSubmission.csv      <span class="comment"># 最后生成的可提交 kaggle 的最终测试结果</span></span><br></pre></td></tr></table></figure><h2 id="1-下载至本地">1 下载至本地</h2><p>在终端运行</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/isKage/cifar10-classification.git</span><br></pre></td></tr></table></figure><h2 id="2-安装依赖和数据集">2 安装依赖和数据集</h2><h3 id="2-1-pip-安装依赖">2.1 pip 安装依赖</h3><p>在项目根目录下终端输入</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -r requirements.txt</span><br></pre></td></tr></table></figure><h3 id="2-2-kaggle-下载数据集">2.2 kaggle 下载数据集</h3><p>教程见 <a href="https://zhuanlan.zhihu.com/p/25732245405">从 kaggle 下载数据集 (mac &amp; win)</a>。</p><h2 id="3-本地配置-config-py">3 本地配置 <code>config.py</code></h2><p>在 <code>config.py</code> 中配置相关参数。例如数据集路径。相关配置均已配置好，但需要自己配置数据集的位置。<br>在 <code>_parse()</code> 方法中，需修改 cifar 数据集的路径。例如我的配置：<code>cifar-10</code> 文件夹放在用户目录下的 <code>AllData/competitions/</code> 下。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> config.real_or_try == <span class="string">&quot;real&quot;</span>:</span><br><span class="line">    <span class="comment"># 如果数据放在用户目录的 &#x27;AllData&#x27; 下则</span></span><br><span class="line">    config.root = os.path.join(config.user_root, <span class="string">&#x27;AllData&#x27;</span>, <span class="string">&#x27;competitions&#x27;</span>, <span class="string">&#x27;cifar-10&#x27;</span>)  <span class="comment"># 【本地设置: 数据目录】</span></span><br><span class="line">    config.res_path = os.path.join(config.working_root, <span class="string">&#x27;sampleSubmission.csv&#x27;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="comment"># 样本数据尝试</span></span><br><span class="line">    config.root = os.path.join(config.working_root, <span class="string">&#x27;TempData&#x27;</span>, <span class="string">&#x27;competitions&#x27;</span>, <span class="string">&#x27;cifar-10&#x27;</span>)</span><br><span class="line">    config.res_path = os.path.join(config.working_root, <span class="string">&#x27;result_example.csv&#x27;</span>)</span><br></pre></td></tr></table></figure><h2 id="4-训练">4 训练</h2><blockquote><p>注意，默认的数据集为模拟数据集，故如果想在完整数据集训练，在指定路径后还需传入参数 <code>--real_or_try=real</code><br>，或者直接在 <code>config.py</code> 中<br>修改默认</p></blockquote><h3 id="4-1-解压数据集">4.1 解压数据集</h3><p>在第 3 步设置完成数据集下载的路径后，终端输入</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python main.py unzip</span><br></pre></td></tr></table></figure><p>即可解压数据集。</p><h3 id="4-2-训练">4.2 训练</h3><p>使用 <code>fire</code> 库方便的在终端中进行训练、测试过程。可以在 <code>config.py</code> 中输入默认参数。例如：<code>model</code><br>为选择模型，默认使用 <code>&quot;ResNet18&quot;</code> 模型，<br>会自动进行下载，下载的预训练模型参数保存在 <code>checkpoints/</code> 文件夹里。</p><p>在终端运行</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python main.py train</span><br></pre></td></tr></table></figure><p>可以使用 <code>--&lt;参数名&gt;=参数值</code> 在终端覆盖默认参数</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python main.py train model=AlexNet      <span class="comment"># 指定 AlexNet 为模型</span></span><br><span class="line">python main.py train rea_or_try=real    <span class="comment"># 使用完整 CIFAR10 数据集，而不是模拟数据集 </span></span><br></pre></td></tr></table></figure><h3 id="4-3-可视化">4.3 可视化</h3><p>终端运行</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tensorboard --logdir=./logs  <span class="comment"># http://localhost:6006/</span></span><br></pre></td></tr></table></figure><p>打开浏览器观察训练过程可视化：</p><p><img src="https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/QQ_1740818446605.png" alt=""></p><h2 id="5-测试">5 测试</h2><p>终端运行</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python main.py <span class="built_in">test</span></span><br></pre></td></tr></table></figure><p>即可得到测试后的结果表格 <code>result_example.csv</code> 或 <code>sampleSubmission.csv</code> （取决与使用的是模拟数据集还是完整的数据集）。</p><p>注意，测试完成后终端输入一下指令，对结果表格按照 <code>id</code> 进行排序。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python main.py sort_csv</span><br></pre></td></tr></table></figure><p>最后可以将 <code>sampleSubmission.csv</code> 上传到 kaggle <a href="https://www.kaggle.com/competitions/cifar-10">CIFAR-10 competition</a> 。</p><img src="https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/QQ_1740818596562.png" style="zoom:50%;" /><h2 id="6-友链">6 友链</h2><ol><li>关注我的知乎账号 <a href="https://www.zhihu.com/people/--55-97-8-41">Zhuhu</a> 不错过我的笔记更新。</li><li>我会在个人博客 <a href="https://blog.iskage.online/">isKage`Blog</a> 更新相关项目和学习资料。</li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> 深度学习 Pytorch 完整教程 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Python </tag>
+            
+            <tag> Pytorch </tag>
+            
+            <tag> 神经网络 </tag>
+            
+            <tag> 深度学习 </tag>
+            
+            <tag> AI </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>统计软件 R 语言学习笔记 (2) R 语言入门：常见对象和数据的输入输出</title>
       <link href="/posts/a6f8df4a.html"/>
       <url>/posts/a6f8df4a.html</url>
@@ -49,6 +82,8 @@
       
         <tags>
             
+            <tag> Python </tag>
+            
             <tag> Pytorch </tag>
             
             <tag> 神经网络 </tag>
@@ -56,8 +91,6 @@
             <tag> 深度学习 </tag>
             
             <tag> AI </tag>
-            
-            <tag> Python </tag>
             
         </tags>
       
@@ -142,6 +175,8 @@
       
         <tags>
             
+            <tag> Python </tag>
+            
             <tag> Pytorch </tag>
             
             <tag> 神经网络 </tag>
@@ -149,8 +184,6 @@
             <tag> 深度学习 </tag>
             
             <tag> AI </tag>
-            
-            <tag> Python </tag>
             
         </tags>
       
@@ -175,17 +208,17 @@
       
         <tags>
             
+            <tag> Python </tag>
+            
+            <tag> 虚拟环境 </tag>
+            
             <tag> 神经网络 </tag>
             
             <tag> 深度学习 </tag>
             
-            <tag> Python </tag>
-            
             <tag> kaggle </tag>
             
             <tag> 数据集 </tag>
-            
-            <tag> 虚拟环境 </tag>
             
             <tag> conda </tag>
             
@@ -330,11 +363,11 @@
       
         <tags>
             
-            <tag> Pytorch </tag>
-            
             <tag> Python </tag>
             
             <tag> 虚拟环境 </tag>
+            
+            <tag> Pytorch </tag>
             
             <tag> conda </tag>
             
@@ -361,6 +394,8 @@
       
         <tags>
             
+            <tag> Python </tag>
+            
             <tag> Pytorch </tag>
             
             <tag> 神经网络 </tag>
@@ -368,8 +403,6 @@
             <tag> 深度学习 </tag>
             
             <tag> AI </tag>
-            
-            <tag> Python </tag>
             
         </tags>
       
@@ -394,6 +427,8 @@
       
         <tags>
             
+            <tag> Python </tag>
+            
             <tag> Pytorch </tag>
             
             <tag> 神经网络 </tag>
@@ -401,8 +436,6 @@
             <tag> 深度学习 </tag>
             
             <tag> AI </tag>
-            
-            <tag> Python </tag>
             
         </tags>
       
@@ -427,6 +460,8 @@
       
         <tags>
             
+            <tag> Python </tag>
+            
             <tag> Pytorch </tag>
             
             <tag> 神经网络 </tag>
@@ -434,8 +469,6 @@
             <tag> 深度学习 </tag>
             
             <tag> AI </tag>
-            
-            <tag> Python </tag>
             
         </tags>
       
@@ -460,6 +493,8 @@
       
         <tags>
             
+            <tag> Python </tag>
+            
             <tag> Pytorch </tag>
             
             <tag> 神经网络 </tag>
@@ -467,8 +502,6 @@
             <tag> 深度学习 </tag>
             
             <tag> AI </tag>
-            
-            <tag> Python </tag>
             
         </tags>
       
@@ -551,6 +584,8 @@
       
         <tags>
             
+            <tag> Python </tag>
+            
             <tag> Pytorch </tag>
             
             <tag> 神经网络 </tag>
@@ -558,8 +593,6 @@
             <tag> 深度学习 </tag>
             
             <tag> AI </tag>
-            
-            <tag> Python </tag>
             
         </tags>
       
@@ -613,6 +646,8 @@
       
         <tags>
             
+            <tag> Python </tag>
+            
             <tag> Pytorch </tag>
             
             <tag> 神经网络 </tag>
@@ -620,8 +655,6 @@
             <tag> 深度学习 </tag>
             
             <tag> AI </tag>
-            
-            <tag> Python </tag>
             
         </tags>
       
@@ -675,15 +708,15 @@
       
         <tags>
             
+            <tag> Python </tag>
+            
+            <tag> 虚拟环境 </tag>
+            
             <tag> Pytorch </tag>
             
             <tag> 神经网络 </tag>
             
             <tag> 深度学习 </tag>
-            
-            <tag> Python </tag>
-            
-            <tag> 虚拟环境 </tag>
             
             <tag> conda </tag>
             
@@ -737,6 +770,8 @@
       
         <tags>
             
+            <tag> Python </tag>
+            
             <tag> Pytorch </tag>
             
             <tag> 神经网络 </tag>
@@ -744,8 +779,6 @@
             <tag> 深度学习 </tag>
             
             <tag> AI </tag>
-            
-            <tag> Python </tag>
             
         </tags>
       
@@ -828,11 +861,11 @@
       
         <tags>
             
-            <tag> Pytorch </tag>
-            
             <tag> Python </tag>
             
             <tag> 虚拟环境 </tag>
+            
+            <tag> Pytorch </tag>
             
             <tag> conda </tag>
             
@@ -1166,17 +1199,6 @@
     
     <entry>
       <title></title>
-      <link href="/google15991a1123c5c160.html"/>
-      <url>/google15991a1123c5c160.html</url>
-      
-        <content type="html"><![CDATA[google-site-verification: google15991a1123c5c160.html]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title></title>
       <link href="/baidu_verify_codeva-Mp1sMZQTvc.html"/>
       <url>/baidu_verify_codeva-Mp1sMZQTvc.html</url>
       
@@ -1187,11 +1209,11 @@
     
     
     <entry>
-      <title>分类页</title>
-      <link href="/categories/index.html"/>
-      <url>/categories/index.html</url>
+      <title></title>
+      <link href="/google15991a1123c5c160.html"/>
+      <url>/google15991a1123c5c160.html</url>
       
-        <content type="html"><![CDATA[<div class="note info flat"><p>以下为已经归档的文章，点击即可跳转至文档目录</p></div><div class="link-container">    <a href="../posts/a6a9785e.html" class="styled-link" style='color:white'>管理学导论笔记</a>    <a href="../posts/40c55931.html" class="styled-link" style='color:white'>经济学原理笔记</a></div>]]></content>
+        <content type="html"><![CDATA[google-site-verification: google15991a1123c5c160.html]]></content>
       
     </entry>
     
@@ -1209,11 +1231,22 @@
     
     
     <entry>
-      <title></title>
-      <link href="/css/custom.css"/>
-      <url>/css/custom.css</url>
+      <title>分类页</title>
+      <link href="/categories/index.html"/>
+      <url>/categories/index.html</url>
       
-        <content type="html"><![CDATA[/* @font-face {  font-family: Candyhome;  src: url(https://npm.elemecdn.com/anzhiyu-blog@1.1.6/fonts/Candyhome.ttf);  font-display: swap;  font-weight: lighter;} */@font-face {    font-family: ZhuZiAYuanJWD;    src: url(https://npm.elemecdn.com/anzhiyu-blog@1.1.6/fonts/ZhuZiAWan.woff2);    font-display: swap;    font-weight: lighter;  }    div#menus {    font-family: "ZhuZiAYuanJWD";  }  h1#site-title {    font-family: ZhuZiAYuanJWD;    font-size: 3em !important;  }  a.article-title,  a.blog-slider__title,  a.categoryBar-list-link,  h1.post-title {    font-family: ZhuZiAYuanJWD;  }    .iconfont {    font-family: "iconfont" !important;    font-size: 3em;    /* 可以定义图标大小 */    font-style: normal;    -webkit-font-smoothing: antialiased;    -moz-osx-font-smoothing: grayscale;  }    /* 时间轴生肖icon */  svg.icon {    /* 这里定义svg.icon，避免和Butterfly自带的note标签冲突 */    width: 1em;    height: 1em;    /* width和height定义图标的默认宽度和高度*/    vertical-align: -0.15em;    fill: currentColor;    overflow: hidden;  }    .icon-zhongbiao::before {    color: #f7c768;  }    /* bilibli番剧插件 */  #article-container .bangumi-tab.bangumi-active {    background: var(--anzhiyu-theme);    color: var(--anzhiyu-ahoverbg);    border-radius: 10px;  }  a.bangumi-tab:hover {    text-decoration: none !important;  }  .bangumi-button:hover {    background: var(--anzhiyu-theme) !important;    border-radius: 10px !important;    color: var(--anzhiyu-ahoverbg) !important;  }  a.bangumi-button.bangumi-nextpage:hover {    text-decoration: none !important;  }  .bangumi-button {    padding: 5px 10px !important;  }    a.bangumi-tab {    padding: 5px 10px !important;  }  svg.icon.faa-tada {    font-size: 1.1em;  }  .bangumi-info-item {    border-right: 1px solid #f2b94b;  }  .bangumi-info-item span {    color: #f2b94b;  }  .bangumi-info-item em {    color: #f2b94b;  }    /* 解决artitalk的图标问题 */  #uploadSource > svg {    width: 1.19em;    height: 1.5em;  }    /*top-img黑色透明玻璃效果移除，不建议加，除非你执着于完全一图流或者背景图对比色明显 */  #page-header:not(.not-top-img):before {    background-color: transparent !important;  }    /* 首页文章卡片 */  #recent-posts > .recent-post-item {    background: rgba(255, 255, 255, 0.9);  }    /* 首页侧栏卡片 */  #aside-content .card-widget {    background: rgba(255, 255, 255, 0.9);  }    /* 文章页面正文背景 */  div#post {    background: rgba(255, 255, 255, 0.9);  }    /* 分页页面 */  div#page {    background: rgba(255, 255, 255, 0.9);  }    /* 归档页面 */  div#archive {    background: rgba(255, 255, 255, 0.9);  }    /* 标签页面 */  div#tag {    background: rgba(255, 255, 255, 0.9);  }    /* 分类页面 */  div#category {    background: rgba(255, 255, 255, 0.9);  }    /*夜间模式伪类遮罩层透明*/  [data-theme="dark"] #recent-posts > .recent-post-item {    background: #121212;  }    [data-theme="dark"] .card-widget {    background: #121212 !important;  }    [data-theme="dark"] div#post {    background: #121212 !important;  }    [data-theme="dark"] div#tag {    background: #121212 !important;  }    [data-theme="dark"] div#archive {    background: #121212 !important;  }    [data-theme="dark"] div#page {    background: #121212 !important;  }    [data-theme="dark"] div#category {    background: #121212 !important;  }    [data-theme="dark"] div#category {    background: transparent !important;  }  /* 页脚透明 */  #footer {    background: transparent !important;  }    /* 头图透明 */  #page-header {    background: transparent !important;  }    #rightside > div > button {    border-radius: 5px;  }    /* 滚动条 */    ::-webkit-scrollbar {    width: 10px;    height: 10px;  }    ::-webkit-scrollbar-thumb {    background-color: #3b70fc;    border-radius: 2em;  }    ::-webkit-scrollbar-corner {    background-color: transparent;  }    ::-moz-selection {    color: #fff;    background-color: #3b70fc;  }    /* 音乐播放器 */    /* .aplayer .aplayer-lrc {    display: none !important;  } */    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {    left: -66px !important;    transition: all 0.3s;    /* 默认情况下缩进左侧66px，只留一点箭头部分 */  }    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {    left: 0 !important;    transition: all 0.3s;    /* 鼠标悬停是左侧缩进归零，完全显示按钮 */  }    .aplayer.aplayer-fixed {    z-index: 999999 !important;  }    /* 评论框  */  .vwrap {    box-shadow: 2px 2px 5px #bbb;    background: rgba(255, 255, 255, 0.3);    border-radius: 8px;    padding: 30px;    margin: 30px 0px 30px 0px;  }    /* 设置评论框 */    .vcard {    box-shadow: 2px 2px 5px #bbb;    background: rgba(255, 255, 255, 0.3);    border-radius: 8px;    padding: 30px;    margin: 30px 0px 0px 0px;  }    /* md网站下划线 */  #article-container a:hover {    text-decoration: none !important;  }    #article-container #hpp_talk p img {    display: inline;  }    /* 404页面 */  #error-wrap {    position: absolute;    top: 40%;    right: 0;    left: 0;    margin: 0 auto;    padding: 0 1rem;    max-width: 1000px;    transform: translate(0, -50%);  }    #error-wrap .error-content {    display: flex;    flex-direction: row;    justify-content: center;    align-items: center;    margin: 0 1rem;    height: 18rem;    border-radius: 8px;    background: var(--card-bg);    box-shadow: var(--card-box-shadow);    transition: all 0.3s;  }    #error-wrap .error-content .error-img {    box-flex: 1;    flex: 1;    height: 100%;    border-top-left-radius: 8px;    border-bottom-left-radius: 8px;    background-color: #3b70fc;    background-position: center;    background-size: cover;  }    #error-wrap .error-content .error-info {    box-flex: 1;    flex: 1;    padding: 0.5rem;    text-align: center;    font-size: 14px;    font-family: Titillium Web, "PingFang SC", "Hiragino Sans GB", "Microsoft JhengHei", "Microsoft YaHei", sans-serif;  }  #error-wrap .error-content .error-info .error_title {    margin-top: -4rem;    font-size: 9em;  }  #error-wrap .error-content .error-info .error_subtitle {    margin-top: -3.5rem;    word-break: break-word;    font-size: 1.6em;  }  #error-wrap .error-content .error-info a {    display: inline-block;    margin-top: 0.5rem;    padding: 0.3rem 1.5rem;    background: var(--btn-bg);    color: var(--btn-color);  }    #body-wrap.error .aside-list {    display: flex;    flex-direction: row;    flex-wrap: nowrap;    bottom: 0px;    position: absolute;    padding: 1rem;    width: 100%;    overflow: scroll;  }    #body-wrap.error .aside-list .aside-list-group {    display: flex;    flex-direction: row;    flex-wrap: nowrap;    max-width: 1200px;    margin: 0 auto;  }    #body-wrap.error .aside-list .aside-list-item {    padding: 0.5rem;  }    #body-wrap.error .aside-list .aside-list-item img {    width: 100%;    object-fit: cover;    border-radius: 12px;  }    #body-wrap.error .aside-list .aside-list-item .thumbnail {    overflow: hidden;    width: 230px;    height: 143px;    background: var(--anzhiyu-card-bg);    display: flex;  }    #body-wrap.error .aside-list .aside-list-item .content .title {    -webkit-line-clamp: 2;    overflow: hidden;    display: -webkit-box;    -webkit-box-orient: vertical;    line-height: 1.5;    justify-content: center;    align-items: flex-end;    align-content: center;    padding-top: 0.5rem;    color: white;  }    #body-wrap.error .aside-list .aside-list-item .content time {    display: none;  }    /* 代码框主题 */  #article-container figure.highlight {    border-radius: 10px;  }  /* 全屏按钮 */  .fullscreen-btn {    position: absolute;    top: 10px;    right: 10px;    z-index: 10;    padding: 6px 10px;    background: linear-gradient(135deg, #007BFF, #0056b3);    color: white;    font-size: 10px;    font-weight: bold;    border: none;    border-radius: 2.5px;    cursor: pointer;    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);    transition: all 0.3s ease;  }    .fullscreen-btn:hover {    background: linear-gradient(135deg, #0056b3, #007BFF);    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);    transform: scale(1.05);  }    .fullscreen-btn:active {    background: linear-gradient(135deg, #004085, #0069d9);    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);    transform: scale(0.95);  }  /* 分类页样式 */  /* 容器设置 */.link-container {  display: flex;  flex-wrap: wrap; /* 自动换行 */  gap: 15px; /* 间距 */  justify-content: start; /* 左对齐 */  padding: 10px;}/* 单个块样式 */.styled-link {  position: relative;  display: inline-block;  font-size: 1rem; /* 字体大小 */  font-weight: bold;  text-decoration: none; /* 去掉下划线 */  color: #ffffff; /* 字体颜色为白色 */  padding: 10px 20px;  border-radius: 8px; /* 圆角 */  transition: all 0.3s ease; /* 动效 */  overflow: hidden; /* 防止子元素溢出 */  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15); /* 按钮阴影 */}/* 背景颜色设置（随机 4 种颜色） */.styled-link:nth-child(7n+6) { background-color: #3d33ff; }.styled-link:nth-child(7n+1) { background-color: #ff3333; }.styled-link:nth-child(7n+2) { background-color: #33ff36; }.styled-link:nth-child(7n+3) { background-color: #3385FF; }.styled-link:nth-child(7n+4) { background-color: #9933FF; }.styled-link:nth-child(7n+5) { background-color: #33ebff; }.styled-link:nth-child(7n+7) { background-color: #ff3369; }/* 主内容文字 */.styled-link span {  position: relative;  z-index: 1; /* 确保文字在最上层 */  text-shadow: 0px 2px 5px rgba(0, 0, 0, 0.6); /* 字体阴影，增强可见性 */}/* 悬停效果 */.styled-link:hover {  transform: scale(1.05); /* 放大按钮 */  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* 悬停时的按钮阴影 */}]]></content>
+        <content type="html"><![CDATA[<div class="note info flat"><p>以下为已经归档的文章，点击即可跳转至文档目录</p></div><div class="link-container">    <a href="../posts/a6a9785e.html" class="styled-link" style='color:white'>管理学导论笔记</a>    <a href="../posts/40c55931.html" class="styled-link" style='color:white'>经济学原理笔记</a></div>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>标签页</title>
+      <link href="/tags/index.html"/>
+      <url>/tags/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
       
     </entry>
     
@@ -1231,20 +1264,20 @@
     
     
     <entry>
-      <title>友情链接</title>
-      <link href="/link/index.html"/>
-      <url>/link/index.html</url>
+      <title></title>
+      <link href="/css/custom.css"/>
+      <url>/css/custom.css</url>
       
-        <content type="html"><![CDATA[]]></content>
+        <content type="html"><![CDATA[/* @font-face {  font-family: Candyhome;  src: url(https://npm.elemecdn.com/anzhiyu-blog@1.1.6/fonts/Candyhome.ttf);  font-display: swap;  font-weight: lighter;} */@font-face {    font-family: ZhuZiAYuanJWD;    src: url(https://npm.elemecdn.com/anzhiyu-blog@1.1.6/fonts/ZhuZiAWan.woff2);    font-display: swap;    font-weight: lighter;  }    div#menus {    font-family: "ZhuZiAYuanJWD";  }  h1#site-title {    font-family: ZhuZiAYuanJWD;    font-size: 3em !important;  }  a.article-title,  a.blog-slider__title,  a.categoryBar-list-link,  h1.post-title {    font-family: ZhuZiAYuanJWD;  }    .iconfont {    font-family: "iconfont" !important;    font-size: 3em;    /* 可以定义图标大小 */    font-style: normal;    -webkit-font-smoothing: antialiased;    -moz-osx-font-smoothing: grayscale;  }    /* 时间轴生肖icon */  svg.icon {    /* 这里定义svg.icon，避免和Butterfly自带的note标签冲突 */    width: 1em;    height: 1em;    /* width和height定义图标的默认宽度和高度*/    vertical-align: -0.15em;    fill: currentColor;    overflow: hidden;  }    .icon-zhongbiao::before {    color: #f7c768;  }    /* bilibli番剧插件 */  #article-container .bangumi-tab.bangumi-active {    background: var(--anzhiyu-theme);    color: var(--anzhiyu-ahoverbg);    border-radius: 10px;  }  a.bangumi-tab:hover {    text-decoration: none !important;  }  .bangumi-button:hover {    background: var(--anzhiyu-theme) !important;    border-radius: 10px !important;    color: var(--anzhiyu-ahoverbg) !important;  }  a.bangumi-button.bangumi-nextpage:hover {    text-decoration: none !important;  }  .bangumi-button {    padding: 5px 10px !important;  }    a.bangumi-tab {    padding: 5px 10px !important;  }  svg.icon.faa-tada {    font-size: 1.1em;  }  .bangumi-info-item {    border-right: 1px solid #f2b94b;  }  .bangumi-info-item span {    color: #f2b94b;  }  .bangumi-info-item em {    color: #f2b94b;  }    /* 解决artitalk的图标问题 */  #uploadSource > svg {    width: 1.19em;    height: 1.5em;  }    /*top-img黑色透明玻璃效果移除，不建议加，除非你执着于完全一图流或者背景图对比色明显 */  #page-header:not(.not-top-img):before {    background-color: transparent !important;  }    /* 首页文章卡片 */  #recent-posts > .recent-post-item {    background: rgba(255, 255, 255, 0.9);  }    /* 首页侧栏卡片 */  #aside-content .card-widget {    background: rgba(255, 255, 255, 0.9);  }    /* 文章页面正文背景 */  div#post {    background: rgba(255, 255, 255, 0.9);  }    /* 分页页面 */  div#page {    background: rgba(255, 255, 255, 0.9);  }    /* 归档页面 */  div#archive {    background: rgba(255, 255, 255, 0.9);  }    /* 标签页面 */  div#tag {    background: rgba(255, 255, 255, 0.9);  }    /* 分类页面 */  div#category {    background: rgba(255, 255, 255, 0.9);  }    /*夜间模式伪类遮罩层透明*/  [data-theme="dark"] #recent-posts > .recent-post-item {    background: #121212;  }    [data-theme="dark"] .card-widget {    background: #121212 !important;  }    [data-theme="dark"] div#post {    background: #121212 !important;  }    [data-theme="dark"] div#tag {    background: #121212 !important;  }    [data-theme="dark"] div#archive {    background: #121212 !important;  }    [data-theme="dark"] div#page {    background: #121212 !important;  }    [data-theme="dark"] div#category {    background: #121212 !important;  }    [data-theme="dark"] div#category {    background: transparent !important;  }  /* 页脚透明 */  #footer {    background: transparent !important;  }    /* 头图透明 */  #page-header {    background: transparent !important;  }    #rightside > div > button {    border-radius: 5px;  }    /* 滚动条 */    ::-webkit-scrollbar {    width: 10px;    height: 10px;  }    ::-webkit-scrollbar-thumb {    background-color: #3b70fc;    border-radius: 2em;  }    ::-webkit-scrollbar-corner {    background-color: transparent;  }    ::-moz-selection {    color: #fff;    background-color: #3b70fc;  }    /* 音乐播放器 */    /* .aplayer .aplayer-lrc {    display: none !important;  } */    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {    left: -66px !important;    transition: all 0.3s;    /* 默认情况下缩进左侧66px，只留一点箭头部分 */  }    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {    left: 0 !important;    transition: all 0.3s;    /* 鼠标悬停是左侧缩进归零，完全显示按钮 */  }    .aplayer.aplayer-fixed {    z-index: 999999 !important;  }    /* 评论框  */  .vwrap {    box-shadow: 2px 2px 5px #bbb;    background: rgba(255, 255, 255, 0.3);    border-radius: 8px;    padding: 30px;    margin: 30px 0px 30px 0px;  }    /* 设置评论框 */    .vcard {    box-shadow: 2px 2px 5px #bbb;    background: rgba(255, 255, 255, 0.3);    border-radius: 8px;    padding: 30px;    margin: 30px 0px 0px 0px;  }    /* md网站下划线 */  #article-container a:hover {    text-decoration: none !important;  }    #article-container #hpp_talk p img {    display: inline;  }    /* 404页面 */  #error-wrap {    position: absolute;    top: 40%;    right: 0;    left: 0;    margin: 0 auto;    padding: 0 1rem;    max-width: 1000px;    transform: translate(0, -50%);  }    #error-wrap .error-content {    display: flex;    flex-direction: row;    justify-content: center;    align-items: center;    margin: 0 1rem;    height: 18rem;    border-radius: 8px;    background: var(--card-bg);    box-shadow: var(--card-box-shadow);    transition: all 0.3s;  }    #error-wrap .error-content .error-img {    box-flex: 1;    flex: 1;    height: 100%;    border-top-left-radius: 8px;    border-bottom-left-radius: 8px;    background-color: #3b70fc;    background-position: center;    background-size: cover;  }    #error-wrap .error-content .error-info {    box-flex: 1;    flex: 1;    padding: 0.5rem;    text-align: center;    font-size: 14px;    font-family: Titillium Web, "PingFang SC", "Hiragino Sans GB", "Microsoft JhengHei", "Microsoft YaHei", sans-serif;  }  #error-wrap .error-content .error-info .error_title {    margin-top: -4rem;    font-size: 9em;  }  #error-wrap .error-content .error-info .error_subtitle {    margin-top: -3.5rem;    word-break: break-word;    font-size: 1.6em;  }  #error-wrap .error-content .error-info a {    display: inline-block;    margin-top: 0.5rem;    padding: 0.3rem 1.5rem;    background: var(--btn-bg);    color: var(--btn-color);  }    #body-wrap.error .aside-list {    display: flex;    flex-direction: row;    flex-wrap: nowrap;    bottom: 0px;    position: absolute;    padding: 1rem;    width: 100%;    overflow: scroll;  }    #body-wrap.error .aside-list .aside-list-group {    display: flex;    flex-direction: row;    flex-wrap: nowrap;    max-width: 1200px;    margin: 0 auto;  }    #body-wrap.error .aside-list .aside-list-item {    padding: 0.5rem;  }    #body-wrap.error .aside-list .aside-list-item img {    width: 100%;    object-fit: cover;    border-radius: 12px;  }    #body-wrap.error .aside-list .aside-list-item .thumbnail {    overflow: hidden;    width: 230px;    height: 143px;    background: var(--anzhiyu-card-bg);    display: flex;  }    #body-wrap.error .aside-list .aside-list-item .content .title {    -webkit-line-clamp: 2;    overflow: hidden;    display: -webkit-box;    -webkit-box-orient: vertical;    line-height: 1.5;    justify-content: center;    align-items: flex-end;    align-content: center;    padding-top: 0.5rem;    color: white;  }    #body-wrap.error .aside-list .aside-list-item .content time {    display: none;  }    /* 代码框主题 */  #article-container figure.highlight {    border-radius: 10px;  }  /* 全屏按钮 */  .fullscreen-btn {    position: absolute;    top: 10px;    right: 10px;    z-index: 10;    padding: 6px 10px;    background: linear-gradient(135deg, #007BFF, #0056b3);    color: white;    font-size: 10px;    font-weight: bold;    border: none;    border-radius: 2.5px;    cursor: pointer;    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);    transition: all 0.3s ease;  }    .fullscreen-btn:hover {    background: linear-gradient(135deg, #0056b3, #007BFF);    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);    transform: scale(1.05);  }    .fullscreen-btn:active {    background: linear-gradient(135deg, #004085, #0069d9);    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);    transform: scale(0.95);  }  /* 分类页样式 */  /* 容器设置 */.link-container {  display: flex;  flex-wrap: wrap; /* 自动换行 */  gap: 15px; /* 间距 */  justify-content: start; /* 左对齐 */  padding: 10px;}/* 单个块样式 */.styled-link {  position: relative;  display: inline-block;  font-size: 1rem; /* 字体大小 */  font-weight: bold;  text-decoration: none; /* 去掉下划线 */  color: #ffffff; /* 字体颜色为白色 */  padding: 10px 20px;  border-radius: 8px; /* 圆角 */  transition: all 0.3s ease; /* 动效 */  overflow: hidden; /* 防止子元素溢出 */  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15); /* 按钮阴影 */}/* 背景颜色设置（随机 4 种颜色） */.styled-link:nth-child(7n+6) { background-color: #3d33ff; }.styled-link:nth-child(7n+1) { background-color: #ff3333; }.styled-link:nth-child(7n+2) { background-color: #33ff36; }.styled-link:nth-child(7n+3) { background-color: #3385FF; }.styled-link:nth-child(7n+4) { background-color: #9933FF; }.styled-link:nth-child(7n+5) { background-color: #33ebff; }.styled-link:nth-child(7n+7) { background-color: #ff3369; }/* 主内容文字 */.styled-link span {  position: relative;  z-index: 1; /* 确保文字在最上层 */  text-shadow: 0px 2px 5px rgba(0, 0, 0, 0.6); /* 字体阴影，增强可见性 */}/* 悬停效果 */.styled-link:hover {  transform: scale(1.05); /* 放大按钮 */  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* 悬停时的按钮阴影 */}]]></content>
       
     </entry>
     
     
     
     <entry>
-      <title>标签页</title>
-      <link href="/tags/index.html"/>
-      <url>/tags/index.html</url>
+      <title>友情链接</title>
+      <link href="/link/index.html"/>
+      <url>/link/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
