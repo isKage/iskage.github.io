@@ -586,7 +586,7 @@
   </url>
   
   <url>
-    <loc>https://blog.iskage.online/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-Pytorch-%E5%AE%8C%E6%95%B4%E6%95%99%E7%A8%8B/</loc>
+    <loc>https://blog.iskage.online/categories/Pytorch-%E5%85%A5%E9%97%A8/</loc>
     <lastmod>2025-03-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -607,13 +607,6 @@
   </url>
   
   <url>
-    <loc>https://blog.iskage.online/categories/Pytorch-%E5%85%A5%E9%97%A8/</loc>
-    <lastmod>2025-03-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.iskage.online/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/</loc>
     <lastmod>2025-03-02</lastmod>
     <changefreq>weekly</changefreq>
@@ -622,6 +615,13 @@
   
   <url>
     <loc>https://blog.iskage.online/categories/conda/</loc>
+    <lastmod>2025-03-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.iskage.online/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-Pytorch-%E5%AE%8C%E6%95%B4%E6%95%99%E7%A8%8B/</loc>
     <lastmod>2025-03-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
