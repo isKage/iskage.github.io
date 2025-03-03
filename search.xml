@@ -4,6 +4,39 @@
   
     
     <entry>
+      <title>Linux 操作系统：ssh 远程连接服务器和基本指令</title>
+      <link href="/posts/e0a5070b.html"/>
+      <url>/posts/e0a5070b.html</url>
+      
+        <content type="html"><![CDATA[<h1>Linux 操作系统概述</h1><p>本文介绍了使用 ssh 进行 Linux 系统服务区的远程访问与一些简单的命令。服务器可以去往各大服务器商购买，或者在本地安装虚拟机，针对 mac 用户 Linux 操作系统的指令大多可以直接使用，windows 系统的 wsl 或 powershell 也满足 Linux 的习惯。</p><h2 id="1-Linux-的远程访问-ssh">1 Linux 的远程访问 ssh</h2><h3 id="1-1-本地生成-ssh-密钥">1.1 本地生成 ssh 密钥</h3><p>在本地用户目录 <code>~</code> 下终端输入</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen</span><br></pre></td></tr></table></figure><blockquote><p>会要求设置密码，可以设置也可以不设置，这个密码只是未来使用 ssh 连接时需要输入的。</p></blockquote><p>便会在用户目录下生成文件夹和文件</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.ssh</span><br><span class="line">├── id_rsa</span><br><span class="line">└── id_rsa.pub</span><br></pre></td></tr></table></figure><p>其中 <code>id_rsa</code> 为私钥，不可泄漏；<code>id_rsa.pub</code> 为公钥，未来将放置在其他主机上的。</p><h3 id="1-2-服务器存储公钥">1.2 服务器存储公钥</h3><p>在需要登陆的服务器用户目录下创建文件夹和文件</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">.ssh</span><br><span class="line">└── authorized_keys</span><br></pre></td></tr></table></figure><p>将本地主机的公钥 <code>id_rsa.pub</code> 内容复制到远程服务器 <code>.ssh/authorized_keys</code> 文件中。</p><h3 id="1-3-登陆远程服务器">1.3 登陆远程服务器</h3><p>此时就可以通过 ssh 建立安全的访问。</p><ul><li>方式一：直接输入远程的 ip 地址</li></ul><p>在本地主机终端输入</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh@&lt;ip地址&gt;</span><br></pre></td></tr></table></figure><p>之后即可通过 ssh 登陆。但相对复杂，推荐使用本地配置登陆。</p><ul><li>方式二：自定义配置文件 <code>config</code></li></ul><p>在本地主机的 <code>~/.ssh/</code> 目录下创建配置文件 <code>config</code> ，<code>.ssh/</code> 目录结构：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">.ssh</span><br><span class="line">├── config</span><br><span class="line">├── id_rsa</span><br><span class="line">└── id_rsa.pub</span><br></pre></td></tr></table></figure><p>在 <code>config</code> 文件中写入配置</p><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># config 文件，以阿里云服务器为例</span><br><span class="line"></span><br><span class="line"># Aliyun Server</span><br><span class="line">Host &lt;别名&gt;</span><br><span class="line">    HostName &lt;公网ip&gt;</span><br><span class="line">    User root</span><br><span class="line">    Port 22</span><br></pre></td></tr></table></figure><blockquote><p><code>#</code> 表示注释，<code>Host</code> 后的可以自定义别名，<code>Hostname</code> 后填入服务器的 ip 地址，<code>User</code> 表示想要登陆的远程服务器用户，例如 <code>root</code> 表示直接登陆到管理员用户，<code>Port 22</code> 表示通过端口 22 连接。</p></blockquote><p>以上配置完成后，直接在终端输入</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh &lt;别名&gt;</span><br></pre></td></tr></table></figure><p>即可登陆。</p><h3 id="1-4-known-hosts-文件">1.4 known_hosts 文件</h3><p>有时，当远端服务器也使用了 <code>ssh-keygen</code> 产生密钥时，本地 <code>.ssh/</code> 目录下会有 <code>known_hosts</code> 文件，其保存了远方 ssh 服务器的公钥，确认是否是之前连接的服务器。</p><h3 id="1-5-文件传输-ssh-cat-或-scp">1.5 文件传输 ssh + cat 或 scp</h3><p>当按照上面配置完成了 ssh 和远程服务器别名后，可以进行快捷的文件传输。</p><ul><li>对于小文件，可以直接使用 <code>cat + ssh</code> 的方式</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> ~/a.txt | ssh &lt;别名&gt; <span class="string">&#x27;cat &gt; /root/file.txt&#x27;</span></span><br></pre></td></tr></table></figure><p>将本地 <code>~/a.txt</code> 文件复制传输到远程服务器 <code>&lt;别名&gt;</code> 的 <code>/root/file.txt</code> 文件。</p><ul><li>对于大文件，可以使用 <code>scp</code> 递归传输文件夹</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp -r ~/localFile &lt;别名&gt;:/root</span><br></pre></td></tr></table></figure><p>将本地的 <code>~/localFile</code> 文件夹传输到远程服务器 <code>&lt;别名&gt;</code> 的 <code>/root</code> 路径下。</p><h2 id="2-Linux-的简单使用">2 Linux 的简单使用</h2><h3 id="2-1-登录后的信息">2.1 登录后的信息</h3><p>每次登陆 Linux 系统后，会显示 <code>motd</code> (Message of the day) 以及上次登陆的时间和地点。</p><img src="https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/QQ_1740976579623.png" style="zoom:23%;" /><ul><li><code>last</code> 命令查看当前或指定用户以前的成功登录情况，来源于 <code>/var/log/wtmp</code></li></ul><h3 id="2-2-注销">2.2 注销</h3><p>退出 Linux 操作系统的文本终端，可以使用：</p><ul><li><code>logout</code></li><li><code>exit</code></li><li>组合 <code>Ctrl + D</code> 退出，代表 <code>EOF (End Of File)</code></li></ul><p>如果不希望按下组合键一次就退出，可以设置 <code>IGNOREEOF</code> ，以免误触</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> IGNOREEOF=3 &gt;&gt; ~/.bashrc</span><br></pre></td></tr></table></figure><p>如此，就需要按压 3 次 <code>Ctrl + D</code> 才能退出。如果只按一次，则会出现以下情况：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@&lt;name&gt;:~# </span><br><span class="line">Use <span class="string">&quot;logout&quot;</span> to leave the shell.</span><br></pre></td></tr></table></figure><blockquote><p>或者进入用户目录的 <code>.bashrc</code> 文件添加一行</p></blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 进入 .bashrc 文件，输入 I 进入编辑模式</span></span><br><span class="line">vim .bashrc</span><br></pre></td></tr></table></figure><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># .bashrc 文件，添加一行</span></span><br><span class="line">IGNOREEOF=3</span><br></pre></td></tr></table></figure><p>键入 <code>esc</code> 退出编辑模式，输入 <code>:wq</code> 保存并退出。然后在终端输入以下指令以永久生效：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> .bashrc</span><br></pre></td></tr></table></figure><h3 id="2-3-关机和重启">2.3 关机和重启</h3><p>在命令行可通过【不推荐】</p><ul><li><code>poweroff</code> 立刻关机并断电</li><li><code>halt</code> 立刻关机</li><li><code>reboot</code> 立刻重启</li></ul><p>【推荐】使用 <code>shutdown</code> 命令指定时间进行关机。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shutdown [OPTIONS...] [TIME] [WALL...]</span><br></pre></td></tr></table></figure><ul><li><code>[TIME]</code> 填入命令执行的时间：例如 <code>+m</code> 或 <code>m</code> 表示 m 分钟后执行；<code>now</code> 表示立马执行；不指定则默认 1 分钟后执行。或者采用 <code>hh:mm</code> 表示在 hh 时 mm 分时刻执行。</li><li><code>WALL...</code> 要发送的消息，可不传递。</li><li><code>[OPTIONS...]</code> 可项的参数</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">1. 查看 shutdown 的帮助信息</span><br><span class="line">--<span class="built_in">help</span></span><br><span class="line"></span><br><span class="line">2. 关机（默认，可省略）</span><br><span class="line">-P 或 -h 或 --poweroff</span><br><span class="line"></span><br><span class="line">3. 重启</span><br><span class="line">-r 或 --reboot</span><br><span class="line"></span><br><span class="line">4. 取消前面的命令</span><br><span class="line">-c</span><br></pre></td></tr></table></figure><p>例如：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">shutdown -r 10  <span class="comment"># 十分钟后重启</span></span><br><span class="line">Reboot scheduled <span class="keyword">for</span> Mon 2025-03-03 14:08:42 CST, use <span class="string">&#x27;shutdown -c&#x27;</span> to cancel.</span><br><span class="line">shutdown -c   <span class="comment"># 取消操作</span></span><br><span class="line"></span><br><span class="line">shutdown   <span class="comment"># 默认 1 分钟后关机并断电</span></span><br><span class="line">shutdown -c   <span class="comment"># 取消操作</span></span><br><span class="line"></span><br><span class="line">shutdown -r now <span class="comment"># 立即重启</span></span><br></pre></td></tr></table></figure><h3 id="2-4-查看系统信息">2.4 查看系统信息</h3><ul><li><code>hostname</code> ：查看主机的名字（主机名存储在文件 <code>/etc/hostname</code> 中）</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@&lt;主机名&gt;:~# hostname</span><br><span class="line">&lt;主机名&gt;</span><br></pre></td></tr></table></figure><ul><li><code>uname</code> ：可以查看更多的系统信息</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">-a  : 显示所有信息</span><br><span class="line">-s  : 内核名，例如 Linux 或 Darwin (MacOS)</span><br><span class="line">-r  : 内核发行版本号</span><br><span class="line">-n  : 节点名</span><br><span class="line">-v  : 内核版本</span><br><span class="line">-m  : 主机硬件架构</span><br><span class="line">-o  : 操作系统，结果为 GNU/Linux 等</span><br></pre></td></tr></table></figure><p><img src="https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/QQ_1740982042004.png" alt=""></p><ul><li><code>lsb_release</code> ：查看 LSB (Linux Standard Base) 一些 Linux 版本信息</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-a  : 查看所有信息 </span><br><span class="line">-i  : 查看发行者 ID</span><br><span class="line">-d  : 发行版描述 </span><br><span class="line">-r  : 发行版发行号 </span><br><span class="line">-c  : 发行版代号</span><br><span class="line">-s  : 短格式，不包括前面的头部部分</span><br></pre></td></tr></table></figure><p><img src="https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/QQ_1740982156204.png" alt=""></p><h3 id="2-5-查看用户信息">2.5 查看用户信息</h3><ul><li><code>whoami</code> ：登录用户名</li><li><code>id</code> ：查看当前用户（也可查看其他用户）的用户和组信息</li><li><code>who</code> ：查看当前系统正在登录的用户信息</li><li><code>uptime</code> ：查看系统运行时间和负载等信息</li><li><code>w</code> ：<code>uptime</code> 和 <code>who</code> 结合的功能，还可查看用户在做什么</li><li><code>tty</code> ：查看当前所连接的终端设备文件</li></ul><img src="https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/QQ_1740982352680.png" style="zoom:33%;" /><h3 id="2-6-阅读文本文件">2.6 阅读文本文件</h3><ul><li><code>cat</code> ：阅读文本文件，不分页</li><li><code>more</code> ：阅读文本文件，分页</li><li><code>less</code> ：与 <code>more</code> 相似，但功能更多</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">less &lt;file&gt;</span><br><span class="line"></span><br><span class="line">-- 显示一页内容，然后等待用户的输入 --</span><br><span class="line">h    : 显示帮助 </span><br><span class="line">q        : 退出</span><br><span class="line">&lt;Space&gt; or f  : 查看下一页 </span><br><span class="line">b   : 查看上一页</span><br><span class="line">/xxx          : 向前搜索 xxx </span><br><span class="line">n             : 重复上次搜索（方向不变）</span><br><span class="line">?xxx          : 向后搜索 xxx </span><br><span class="line">N             : 重复上次搜索，但是反方向</span><br><span class="line">:n            : 切换到下一个文件 </span><br><span class="line">:p            : 切换到前一个文件</span><br><span class="line">v   : 采用相应的编辑器来编辑本文件</span><br></pre></td></tr></table></figure><h3 id="2-7-文件编辑">2.7 文件编辑</h3><p>例如：<code>vim</code> 或 <code>nano</code></p><p>使用 <code>nano</code> （<code>Meta</code> 键一般为 <code>Alt</code> 键）</p><ul><li><code>Ctrl + O</code> 保存</li><li><code>Ctrl + X</code> 退出，如有修改，会询问是否保存</li><li><code>Ctrl + G</code> 查看帮助</li><li><code>Shift + &lt;- or -&gt;</code> 使用 Shift 加键盘向左/右，可以选定一段文字</li><li><code>Ctrl + K</code> 剪切</li><li><code>Ctrl + U</code> 粘贴</li><li><code>Ctrl + W</code> 搜索文本</li><li><code>Meta + 6</code> 复制</li><li><code>Meta + U</code> 撤销上次操作</li><li><code>Meta + E</code> 恢复上次撤销的操作</li></ul><img src="https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/QQ_1740983326079.png" style="zoom:23%;" />]]></content>
+      
+      
+      <categories>
+          
+          <category> Linux 操作系统 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Linux </tag>
+            
+            <tag> 操作系统 </tag>
+            
+            <tag> 服务器 </tag>
+            
+            <tag> ssh </tag>
+            
+            <tag> 远程连接 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>递归算法</title>
       <link href="/posts/5f7017e8.html"/>
       <url>/posts/5f7017e8.html</url>
@@ -51,11 +84,11 @@
       
         <tags>
             
-            <tag> Python </tag>
-            
             <tag> 神经网络 </tag>
             
             <tag> 深度学习 </tag>
+            
+            <tag> Python </tag>
             
             <tag> Pytorch </tag>
             
@@ -113,11 +146,11 @@
       
         <tags>
             
-            <tag> Python </tag>
-            
             <tag> 神经网络 </tag>
             
             <tag> 深度学习 </tag>
+            
+            <tag> Python </tag>
             
             <tag> Pytorch </tag>
             
@@ -206,11 +239,11 @@
       
         <tags>
             
-            <tag> Python </tag>
-            
             <tag> 神经网络 </tag>
             
             <tag> 深度学习 </tag>
+            
+            <tag> Python </tag>
             
             <tag> Pytorch </tag>
             
@@ -239,17 +272,17 @@
       
         <tags>
             
-            <tag> Python </tag>
-            
-            <tag> 虚拟环境 </tag>
-            
             <tag> kaggle </tag>
             
             <tag> 数据集 </tag>
             
+            <tag> 虚拟环境 </tag>
+            
             <tag> 神经网络 </tag>
             
             <tag> 深度学习 </tag>
+            
+            <tag> Python </tag>
             
             <tag> conda </tag>
             
@@ -394,9 +427,9 @@
       
         <tags>
             
-            <tag> Python </tag>
-            
             <tag> 虚拟环境 </tag>
+            
+            <tag> Python </tag>
             
             <tag> conda </tag>
             
@@ -425,11 +458,11 @@
       
         <tags>
             
-            <tag> Python </tag>
-            
             <tag> 神经网络 </tag>
             
             <tag> 深度学习 </tag>
+            
+            <tag> Python </tag>
             
             <tag> Pytorch </tag>
             
@@ -458,11 +491,11 @@
       
         <tags>
             
-            <tag> Python </tag>
-            
             <tag> 神经网络 </tag>
             
             <tag> 深度学习 </tag>
+            
+            <tag> Python </tag>
             
             <tag> Pytorch </tag>
             
@@ -491,11 +524,11 @@
       
         <tags>
             
-            <tag> Python </tag>
-            
             <tag> 神经网络 </tag>
             
             <tag> 深度学习 </tag>
+            
+            <tag> Python </tag>
             
             <tag> Pytorch </tag>
             
@@ -524,11 +557,11 @@
       
         <tags>
             
-            <tag> Python </tag>
-            
             <tag> 神经网络 </tag>
             
             <tag> 深度学习 </tag>
+            
+            <tag> Python </tag>
             
             <tag> Pytorch </tag>
             
@@ -615,11 +648,11 @@
       
         <tags>
             
-            <tag> Python </tag>
-            
             <tag> 神经网络 </tag>
             
             <tag> 深度学习 </tag>
+            
+            <tag> Python </tag>
             
             <tag> Pytorch </tag>
             
@@ -677,11 +710,11 @@
       
         <tags>
             
-            <tag> Python </tag>
-            
             <tag> 神经网络 </tag>
             
             <tag> 深度学习 </tag>
+            
+            <tag> Python </tag>
             
             <tag> Pytorch </tag>
             
@@ -739,13 +772,13 @@
       
         <tags>
             
-            <tag> Python </tag>
-            
             <tag> 虚拟环境 </tag>
             
             <tag> 神经网络 </tag>
             
             <tag> 深度学习 </tag>
+            
+            <tag> Python </tag>
             
             <tag> conda </tag>
             
@@ -774,9 +807,9 @@
       
         <tags>
             
-            <tag> Python </tag>
-            
             <tag> 虚拟环境 </tag>
+            
+            <tag> Python </tag>
             
         </tags>
       
@@ -801,11 +834,11 @@
       
         <tags>
             
-            <tag> Python </tag>
-            
             <tag> 神经网络 </tag>
             
             <tag> 深度学习 </tag>
+            
+            <tag> Python </tag>
             
             <tag> Pytorch </tag>
             
@@ -892,9 +925,9 @@
       
         <tags>
             
-            <tag> Python </tag>
-            
             <tag> 虚拟环境 </tag>
+            
+            <tag> Python </tag>
             
             <tag> conda </tag>
             
@@ -1273,22 +1306,22 @@
     
     
     <entry>
-      <title></title>
-      <link href="/css/custom.css"/>
-      <url>/css/custom.css</url>
+      <title>友情链接</title>
+      <link href="/link/index.html"/>
+      <url>/link/index.html</url>
       
-        <content type="html"><![CDATA[/* @font-face {  font-family: Candyhome;  src: url(https://npm.elemecdn.com/anzhiyu-blog@1.1.6/fonts/Candyhome.ttf);  font-display: swap;  font-weight: lighter;} */@font-face {    font-family: ZhuZiAYuanJWD;    src: url(https://npm.elemecdn.com/anzhiyu-blog@1.1.6/fonts/ZhuZiAWan.woff2);    font-display: swap;    font-weight: lighter;  }    div#menus {    font-family: "ZhuZiAYuanJWD";  }  h1#site-title {    font-family: ZhuZiAYuanJWD;    font-size: 3em !important;  }  a.article-title,  a.blog-slider__title,  a.categoryBar-list-link,  h1.post-title {    font-family: ZhuZiAYuanJWD;  }    .iconfont {    font-family: "iconfont" !important;    font-size: 3em;    /* 可以定义图标大小 */    font-style: normal;    -webkit-font-smoothing: antialiased;    -moz-osx-font-smoothing: grayscale;  }    /* 时间轴生肖icon */  svg.icon {    /* 这里定义svg.icon，避免和Butterfly自带的note标签冲突 */    width: 1em;    height: 1em;    /* width和height定义图标的默认宽度和高度*/    vertical-align: -0.15em;    fill: currentColor;    overflow: hidden;  }    .icon-zhongbiao::before {    color: #f7c768;  }    /* bilibli番剧插件 */  #article-container .bangumi-tab.bangumi-active {    background: var(--anzhiyu-theme);    color: var(--anzhiyu-ahoverbg);    border-radius: 10px;  }  a.bangumi-tab:hover {    text-decoration: none !important;  }  .bangumi-button:hover {    background: var(--anzhiyu-theme) !important;    border-radius: 10px !important;    color: var(--anzhiyu-ahoverbg) !important;  }  a.bangumi-button.bangumi-nextpage:hover {    text-decoration: none !important;  }  .bangumi-button {    padding: 5px 10px !important;  }    a.bangumi-tab {    padding: 5px 10px !important;  }  svg.icon.faa-tada {    font-size: 1.1em;  }  .bangumi-info-item {    border-right: 1px solid #f2b94b;  }  .bangumi-info-item span {    color: #f2b94b;  }  .bangumi-info-item em {    color: #f2b94b;  }    /* 解决artitalk的图标问题 */  #uploadSource > svg {    width: 1.19em;    height: 1.5em;  }    /*top-img黑色透明玻璃效果移除，不建议加，除非你执着于完全一图流或者背景图对比色明显 */  #page-header:not(.not-top-img):before {    background-color: transparent !important;  }    /* 首页文章卡片 */  #recent-posts > .recent-post-item {    background: rgba(255, 255, 255, 0.9);  }    /* 首页侧栏卡片 */  #aside-content .card-widget {    background: rgba(255, 255, 255, 0.9);  }    /* 文章页面正文背景 */  div#post {    background: rgba(255, 255, 255, 0.9);  }    /* 分页页面 */  div#page {    background: rgba(255, 255, 255, 0.9);  }    /* 归档页面 */  div#archive {    background: rgba(255, 255, 255, 0.9);  }    /* 标签页面 */  div#tag {    background: rgba(255, 255, 255, 0.9);  }    /* 分类页面 */  div#category {    background: rgba(255, 255, 255, 0.9);  }    /*夜间模式伪类遮罩层透明*/  [data-theme="dark"] #recent-posts > .recent-post-item {    background: #121212;  }    [data-theme="dark"] .card-widget {    background: #121212 !important;  }    [data-theme="dark"] div#post {    background: #121212 !important;  }    [data-theme="dark"] div#tag {    background: #121212 !important;  }    [data-theme="dark"] div#archive {    background: #121212 !important;  }    [data-theme="dark"] div#page {    background: #121212 !important;  }    [data-theme="dark"] div#category {    background: #121212 !important;  }    [data-theme="dark"] div#category {    background: transparent !important;  }  /* 页脚透明 */  #footer {    background: transparent !important;  }    /* 头图透明 */  #page-header {    background: transparent !important;  }    #rightside > div > button {    border-radius: 5px;  }    /* 滚动条 */    ::-webkit-scrollbar {    width: 10px;    height: 10px;  }    ::-webkit-scrollbar-thumb {    background-color: #3b70fc;    border-radius: 2em;  }    ::-webkit-scrollbar-corner {    background-color: transparent;  }    ::-moz-selection {    color: #fff;    background-color: #3b70fc;  }    /* 音乐播放器 */    /* .aplayer .aplayer-lrc {    display: none !important;  } */    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {    left: -66px !important;    transition: all 0.3s;    /* 默认情况下缩进左侧66px，只留一点箭头部分 */  }    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {    left: 0 !important;    transition: all 0.3s;    /* 鼠标悬停是左侧缩进归零，完全显示按钮 */  }    .aplayer.aplayer-fixed {    z-index: 999999 !important;  }    /* 评论框  */  .vwrap {    box-shadow: 2px 2px 5px #bbb;    background: rgba(255, 255, 255, 0.3);    border-radius: 8px;    padding: 30px;    margin: 30px 0px 30px 0px;  }    /* 设置评论框 */    .vcard {    box-shadow: 2px 2px 5px #bbb;    background: rgba(255, 255, 255, 0.3);    border-radius: 8px;    padding: 30px;    margin: 30px 0px 0px 0px;  }    /* md网站下划线 */  #article-container a:hover {    text-decoration: none !important;  }    #article-container #hpp_talk p img {    display: inline;  }    /* 404页面 */  #error-wrap {    position: absolute;    top: 40%;    right: 0;    left: 0;    margin: 0 auto;    padding: 0 1rem;    max-width: 1000px;    transform: translate(0, -50%);  }    #error-wrap .error-content {    display: flex;    flex-direction: row;    justify-content: center;    align-items: center;    margin: 0 1rem;    height: 18rem;    border-radius: 8px;    background: var(--card-bg);    box-shadow: var(--card-box-shadow);    transition: all 0.3s;  }    #error-wrap .error-content .error-img {    box-flex: 1;    flex: 1;    height: 100%;    border-top-left-radius: 8px;    border-bottom-left-radius: 8px;    background-color: #3b70fc;    background-position: center;    background-size: cover;  }    #error-wrap .error-content .error-info {    box-flex: 1;    flex: 1;    padding: 0.5rem;    text-align: center;    font-size: 14px;    font-family: Titillium Web, "PingFang SC", "Hiragino Sans GB", "Microsoft JhengHei", "Microsoft YaHei", sans-serif;  }  #error-wrap .error-content .error-info .error_title {    margin-top: -4rem;    font-size: 9em;  }  #error-wrap .error-content .error-info .error_subtitle {    margin-top: -3.5rem;    word-break: break-word;    font-size: 1.6em;  }  #error-wrap .error-content .error-info a {    display: inline-block;    margin-top: 0.5rem;    padding: 0.3rem 1.5rem;    background: var(--btn-bg);    color: var(--btn-color);  }    #body-wrap.error .aside-list {    display: flex;    flex-direction: row;    flex-wrap: nowrap;    bottom: 0px;    position: absolute;    padding: 1rem;    width: 100%;    overflow: scroll;  }    #body-wrap.error .aside-list .aside-list-group {    display: flex;    flex-direction: row;    flex-wrap: nowrap;    max-width: 1200px;    margin: 0 auto;  }    #body-wrap.error .aside-list .aside-list-item {    padding: 0.5rem;  }    #body-wrap.error .aside-list .aside-list-item img {    width: 100%;    object-fit: cover;    border-radius: 12px;  }    #body-wrap.error .aside-list .aside-list-item .thumbnail {    overflow: hidden;    width: 230px;    height: 143px;    background: var(--anzhiyu-card-bg);    display: flex;  }    #body-wrap.error .aside-list .aside-list-item .content .title {    -webkit-line-clamp: 2;    overflow: hidden;    display: -webkit-box;    -webkit-box-orient: vertical;    line-height: 1.5;    justify-content: center;    align-items: flex-end;    align-content: center;    padding-top: 0.5rem;    color: white;  }    #body-wrap.error .aside-list .aside-list-item .content time {    display: none;  }    /* 代码框主题 */  #article-container figure.highlight {    border-radius: 10px;  }  /* 全屏按钮 */  .fullscreen-btn {    position: absolute;    top: 10px;    right: 10px;    z-index: 10;    padding: 6px 10px;    background: linear-gradient(135deg, #007BFF, #0056b3);    color: white;    font-size: 10px;    font-weight: bold;    border: none;    border-radius: 2.5px;    cursor: pointer;    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);    transition: all 0.3s ease;  }    .fullscreen-btn:hover {    background: linear-gradient(135deg, #0056b3, #007BFF);    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);    transform: scale(1.05);  }    .fullscreen-btn:active {    background: linear-gradient(135deg, #004085, #0069d9);    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);    transform: scale(0.95);  }  /* 分类页样式 */  /* 容器设置 */.link-container {  display: flex;  flex-wrap: wrap; /* 自动换行 */  gap: 15px; /* 间距 */  justify-content: start; /* 左对齐 */  padding: 10px;}/* 单个块样式 */.styled-link {  position: relative;  display: inline-block;  font-size: 1rem; /* 字体大小 */  font-weight: bold;  text-decoration: none; /* 去掉下划线 */  color: #ffffff; /* 字体颜色为白色 */  padding: 10px 20px;  border-radius: 8px; /* 圆角 */  transition: all 0.3s ease; /* 动效 */  overflow: hidden; /* 防止子元素溢出 */  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15); /* 按钮阴影 */}/* 背景颜色设置（随机 4 种颜色） */.styled-link:nth-child(7n+6) { background-color: #3d33ff; }.styled-link:nth-child(7n+1) { background-color: #ff3333; }.styled-link:nth-child(7n+2) { background-color: #33ff36; }.styled-link:nth-child(7n+3) { background-color: #3385FF; }.styled-link:nth-child(7n+4) { background-color: #9933FF; }.styled-link:nth-child(7n+5) { background-color: #33ebff; }.styled-link:nth-child(7n+7) { background-color: #ff3369; }/* 主内容文字 */.styled-link span {  position: relative;  z-index: 1; /* 确保文字在最上层 */  text-shadow: 0px 2px 5px rgba(0, 0, 0, 0.6); /* 字体阴影，增强可见性 */}/* 悬停效果 */.styled-link:hover {  transform: scale(1.05); /* 放大按钮 */  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* 悬停时的按钮阴影 */}]]></content>
+        <content type="html"><![CDATA[]]></content>
       
     </entry>
     
     
     
     <entry>
-      <title>友情链接</title>
-      <link href="/link/index.html"/>
-      <url>/link/index.html</url>
+      <title></title>
+      <link href="/js/pdf-viewer.js"/>
+      <url>/js/pdf-viewer.js</url>
       
-        <content type="html"><![CDATA[]]></content>
+        <content type="html"><![CDATA[document.addEventListener("DOMContentLoaded", function () {    const fullscreenBtn = document.querySelector(".fullscreen-btn");    const container = document.querySelector("#pdf-container");    const iframe = document.querySelector("#pdf-frame");      fullscreenBtn.addEventListener("click", function () {      if (document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement) {        // 已经在全屏模式，退出全屏        exitFullscreen();      } else {        // 进入全屏模式        enterFullscreen();      }    });      // 进入全屏模式    function enterFullscreen() {      if (container.requestFullscreen) {        container.requestFullscreen();      } else if (container.webkitRequestFullscreen) {        container.webkitRequestFullscreen(); // Safari      } else if (container.msRequestFullscreen) {        container.msRequestFullscreen(); // IE11      }    }      // 退出全屏模式    function exitFullscreen() {      if (document.exitFullscreen) {        document.exitFullscreen();      } else if (document.webkitExitFullscreen) {        document.webkitExitFullscreen(); // Safari      } else if (document.msExitFullscreen) {        document.msExitFullscreen(); // IE11      }    }      // 更新按钮文本并调整 iframe 大小    container.addEventListener("fullscreenchange", updateButtonText);    container.addEventListener("webkitfullscreenchange", updateButtonText);    container.addEventListener("msfullscreenchange", updateButtonText);      function updateButtonText() {      if (document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement) {        fullscreenBtn.textContent = "退出全屏"; // 进入全屏时更新按钮文本        iframe.style.width = "100vw"; // 全屏宽度        iframe.style.height = "100vh"; // 全屏高度      } else {        fullscreenBtn.textContent = "全屏模式"; // 退出全屏时恢复按钮文本        iframe.style.width = "100%"; // 恢复正常宽度        iframe.style.height = "600px"; // 恢复正常高度      }    }  });]]></content>
       
     </entry>
     
@@ -1307,10 +1340,10 @@
     
     <entry>
       <title></title>
-      <link href="/js/pdf-viewer.js"/>
-      <url>/js/pdf-viewer.js</url>
+      <link href="/css/custom.css"/>
+      <url>/css/custom.css</url>
       
-        <content type="html"><![CDATA[document.addEventListener("DOMContentLoaded", function () {    const fullscreenBtn = document.querySelector(".fullscreen-btn");    const container = document.querySelector("#pdf-container");    const iframe = document.querySelector("#pdf-frame");      fullscreenBtn.addEventListener("click", function () {      if (document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement) {        // 已经在全屏模式，退出全屏        exitFullscreen();      } else {        // 进入全屏模式        enterFullscreen();      }    });      // 进入全屏模式    function enterFullscreen() {      if (container.requestFullscreen) {        container.requestFullscreen();      } else if (container.webkitRequestFullscreen) {        container.webkitRequestFullscreen(); // Safari      } else if (container.msRequestFullscreen) {        container.msRequestFullscreen(); // IE11      }    }      // 退出全屏模式    function exitFullscreen() {      if (document.exitFullscreen) {        document.exitFullscreen();      } else if (document.webkitExitFullscreen) {        document.webkitExitFullscreen(); // Safari      } else if (document.msExitFullscreen) {        document.msExitFullscreen(); // IE11      }    }      // 更新按钮文本并调整 iframe 大小    container.addEventListener("fullscreenchange", updateButtonText);    container.addEventListener("webkitfullscreenchange", updateButtonText);    container.addEventListener("msfullscreenchange", updateButtonText);      function updateButtonText() {      if (document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement) {        fullscreenBtn.textContent = "退出全屏"; // 进入全屏时更新按钮文本        iframe.style.width = "100vw"; // 全屏宽度        iframe.style.height = "100vh"; // 全屏高度      } else {        fullscreenBtn.textContent = "全屏模式"; // 退出全屏时恢复按钮文本        iframe.style.width = "100%"; // 恢复正常宽度        iframe.style.height = "600px"; // 恢复正常高度      }    }  });]]></content>
+        <content type="html"><![CDATA[/* @font-face {  font-family: Candyhome;  src: url(https://npm.elemecdn.com/anzhiyu-blog@1.1.6/fonts/Candyhome.ttf);  font-display: swap;  font-weight: lighter;} */@font-face {    font-family: ZhuZiAYuanJWD;    src: url(https://npm.elemecdn.com/anzhiyu-blog@1.1.6/fonts/ZhuZiAWan.woff2);    font-display: swap;    font-weight: lighter;  }    div#menus {    font-family: "ZhuZiAYuanJWD";  }  h1#site-title {    font-family: ZhuZiAYuanJWD;    font-size: 3em !important;  }  a.article-title,  a.blog-slider__title,  a.categoryBar-list-link,  h1.post-title {    font-family: ZhuZiAYuanJWD;  }    .iconfont {    font-family: "iconfont" !important;    font-size: 3em;    /* 可以定义图标大小 */    font-style: normal;    -webkit-font-smoothing: antialiased;    -moz-osx-font-smoothing: grayscale;  }    /* 时间轴生肖icon */  svg.icon {    /* 这里定义svg.icon，避免和Butterfly自带的note标签冲突 */    width: 1em;    height: 1em;    /* width和height定义图标的默认宽度和高度*/    vertical-align: -0.15em;    fill: currentColor;    overflow: hidden;  }    .icon-zhongbiao::before {    color: #f7c768;  }    /* bilibli番剧插件 */  #article-container .bangumi-tab.bangumi-active {    background: var(--anzhiyu-theme);    color: var(--anzhiyu-ahoverbg);    border-radius: 10px;  }  a.bangumi-tab:hover {    text-decoration: none !important;  }  .bangumi-button:hover {    background: var(--anzhiyu-theme) !important;    border-radius: 10px !important;    color: var(--anzhiyu-ahoverbg) !important;  }  a.bangumi-button.bangumi-nextpage:hover {    text-decoration: none !important;  }  .bangumi-button {    padding: 5px 10px !important;  }    a.bangumi-tab {    padding: 5px 10px !important;  }  svg.icon.faa-tada {    font-size: 1.1em;  }  .bangumi-info-item {    border-right: 1px solid #f2b94b;  }  .bangumi-info-item span {    color: #f2b94b;  }  .bangumi-info-item em {    color: #f2b94b;  }    /* 解决artitalk的图标问题 */  #uploadSource > svg {    width: 1.19em;    height: 1.5em;  }    /*top-img黑色透明玻璃效果移除，不建议加，除非你执着于完全一图流或者背景图对比色明显 */  #page-header:not(.not-top-img):before {    background-color: transparent !important;  }    /* 首页文章卡片 */  #recent-posts > .recent-post-item {    background: rgba(255, 255, 255, 0.9);  }    /* 首页侧栏卡片 */  #aside-content .card-widget {    background: rgba(255, 255, 255, 0.9);  }    /* 文章页面正文背景 */  div#post {    background: rgba(255, 255, 255, 0.9);  }    /* 分页页面 */  div#page {    background: rgba(255, 255, 255, 0.9);  }    /* 归档页面 */  div#archive {    background: rgba(255, 255, 255, 0.9);  }    /* 标签页面 */  div#tag {    background: rgba(255, 255, 255, 0.9);  }    /* 分类页面 */  div#category {    background: rgba(255, 255, 255, 0.9);  }    /*夜间模式伪类遮罩层透明*/  [data-theme="dark"] #recent-posts > .recent-post-item {    background: #121212;  }    [data-theme="dark"] .card-widget {    background: #121212 !important;  }    [data-theme="dark"] div#post {    background: #121212 !important;  }    [data-theme="dark"] div#tag {    background: #121212 !important;  }    [data-theme="dark"] div#archive {    background: #121212 !important;  }    [data-theme="dark"] div#page {    background: #121212 !important;  }    [data-theme="dark"] div#category {    background: #121212 !important;  }    [data-theme="dark"] div#category {    background: transparent !important;  }  /* 页脚透明 */  #footer {    background: transparent !important;  }    /* 头图透明 */  #page-header {    background: transparent !important;  }    #rightside > div > button {    border-radius: 5px;  }    /* 滚动条 */    ::-webkit-scrollbar {    width: 10px;    height: 10px;  }    ::-webkit-scrollbar-thumb {    background-color: #3b70fc;    border-radius: 2em;  }    ::-webkit-scrollbar-corner {    background-color: transparent;  }    ::-moz-selection {    color: #fff;    background-color: #3b70fc;  }    /* 音乐播放器 */    /* .aplayer .aplayer-lrc {    display: none !important;  } */    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {    left: -66px !important;    transition: all 0.3s;    /* 默认情况下缩进左侧66px，只留一点箭头部分 */  }    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {    left: 0 !important;    transition: all 0.3s;    /* 鼠标悬停是左侧缩进归零，完全显示按钮 */  }    .aplayer.aplayer-fixed {    z-index: 999999 !important;  }    /* 评论框  */  .vwrap {    box-shadow: 2px 2px 5px #bbb;    background: rgba(255, 255, 255, 0.3);    border-radius: 8px;    padding: 30px;    margin: 30px 0px 30px 0px;  }    /* 设置评论框 */    .vcard {    box-shadow: 2px 2px 5px #bbb;    background: rgba(255, 255, 255, 0.3);    border-radius: 8px;    padding: 30px;    margin: 30px 0px 0px 0px;  }    /* md网站下划线 */  #article-container a:hover {    text-decoration: none !important;  }    #article-container #hpp_talk p img {    display: inline;  }    /* 404页面 */  #error-wrap {    position: absolute;    top: 40%;    right: 0;    left: 0;    margin: 0 auto;    padding: 0 1rem;    max-width: 1000px;    transform: translate(0, -50%);  }    #error-wrap .error-content {    display: flex;    flex-direction: row;    justify-content: center;    align-items: center;    margin: 0 1rem;    height: 18rem;    border-radius: 8px;    background: var(--card-bg);    box-shadow: var(--card-box-shadow);    transition: all 0.3s;  }    #error-wrap .error-content .error-img {    box-flex: 1;    flex: 1;    height: 100%;    border-top-left-radius: 8px;    border-bottom-left-radius: 8px;    background-color: #3b70fc;    background-position: center;    background-size: cover;  }    #error-wrap .error-content .error-info {    box-flex: 1;    flex: 1;    padding: 0.5rem;    text-align: center;    font-size: 14px;    font-family: Titillium Web, "PingFang SC", "Hiragino Sans GB", "Microsoft JhengHei", "Microsoft YaHei", sans-serif;  }  #error-wrap .error-content .error-info .error_title {    margin-top: -4rem;    font-size: 9em;  }  #error-wrap .error-content .error-info .error_subtitle {    margin-top: -3.5rem;    word-break: break-word;    font-size: 1.6em;  }  #error-wrap .error-content .error-info a {    display: inline-block;    margin-top: 0.5rem;    padding: 0.3rem 1.5rem;    background: var(--btn-bg);    color: var(--btn-color);  }    #body-wrap.error .aside-list {    display: flex;    flex-direction: row;    flex-wrap: nowrap;    bottom: 0px;    position: absolute;    padding: 1rem;    width: 100%;    overflow: scroll;  }    #body-wrap.error .aside-list .aside-list-group {    display: flex;    flex-direction: row;    flex-wrap: nowrap;    max-width: 1200px;    margin: 0 auto;  }    #body-wrap.error .aside-list .aside-list-item {    padding: 0.5rem;  }    #body-wrap.error .aside-list .aside-list-item img {    width: 100%;    object-fit: cover;    border-radius: 12px;  }    #body-wrap.error .aside-list .aside-list-item .thumbnail {    overflow: hidden;    width: 230px;    height: 143px;    background: var(--anzhiyu-card-bg);    display: flex;  }    #body-wrap.error .aside-list .aside-list-item .content .title {    -webkit-line-clamp: 2;    overflow: hidden;    display: -webkit-box;    -webkit-box-orient: vertical;    line-height: 1.5;    justify-content: center;    align-items: flex-end;    align-content: center;    padding-top: 0.5rem;    color: white;  }    #body-wrap.error .aside-list .aside-list-item .content time {    display: none;  }    /* 代码框主题 */  #article-container figure.highlight {    border-radius: 10px;  }  /* 全屏按钮 */  .fullscreen-btn {    position: absolute;    top: 10px;    right: 10px;    z-index: 10;    padding: 6px 10px;    background: linear-gradient(135deg, #007BFF, #0056b3);    color: white;    font-size: 10px;    font-weight: bold;    border: none;    border-radius: 2.5px;    cursor: pointer;    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);    transition: all 0.3s ease;  }    .fullscreen-btn:hover {    background: linear-gradient(135deg, #0056b3, #007BFF);    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);    transform: scale(1.05);  }    .fullscreen-btn:active {    background: linear-gradient(135deg, #004085, #0069d9);    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);    transform: scale(0.95);  }  /* 分类页样式 */  /* 容器设置 */.link-container {  display: flex;  flex-wrap: wrap; /* 自动换行 */  gap: 15px; /* 间距 */  justify-content: start; /* 左对齐 */  padding: 10px;}/* 单个块样式 */.styled-link {  position: relative;  display: inline-block;  font-size: 1rem; /* 字体大小 */  font-weight: bold;  text-decoration: none; /* 去掉下划线 */  color: #ffffff; /* 字体颜色为白色 */  padding: 10px 20px;  border-radius: 8px; /* 圆角 */  transition: all 0.3s ease; /* 动效 */  overflow: hidden; /* 防止子元素溢出 */  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15); /* 按钮阴影 */}/* 背景颜色设置（随机 4 种颜色） */.styled-link:nth-child(7n+6) { background-color: #3d33ff; }.styled-link:nth-child(7n+1) { background-color: #ff3333; }.styled-link:nth-child(7n+2) { background-color: #33ff36; }.styled-link:nth-child(7n+3) { background-color: #3385FF; }.styled-link:nth-child(7n+4) { background-color: #9933FF; }.styled-link:nth-child(7n+5) { background-color: #33ebff; }.styled-link:nth-child(7n+7) { background-color: #ff3369; }/* 主内容文字 */.styled-link span {  position: relative;  z-index: 1; /* 确保文字在最上层 */  text-shadow: 0px 2px 5px rgba(0, 0, 0, 0.6); /* 字体阴影，增强可见性 */}/* 悬停效果 */.styled-link:hover {  transform: scale(1.05); /* 放大按钮 */  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* 悬停时的按钮阴影 */}]]></content>
       
     </entry>
     
