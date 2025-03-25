@@ -150,25 +150,22 @@
   isToc: true,
   isShuoshuo: false
 }</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="isKage`Blog" type="application/atom+xml">
-</head><body><div id="web_bg" style="background-image: url(https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/background.jpeg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/avatar_new.PNG" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">52</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">27</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/"><i class="fa-fw fas fa-home faa-tada"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/categories/"><i class="fa-fw fas fa-folder-open faa-tada"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/tags/"><i class="fa-fw fas fa-tags faa-tada"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/archives/"><i class="fa-fw fas fa-archive faa-tada"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/link/"><i class="fa-fw fas fa-link faa-tada"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url(https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/linux.jpeg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">isKage`Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">Linux 操作系统：文件系统</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/"><i class="fa-fw fas fa-home faa-tada"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/categories/"><i class="fa-fw fas fa-folder-open faa-tada"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/tags/"><i class="fa-fw fas fa-tags faa-tada"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/archives/"><i class="fa-fw fas fa-archive faa-tada"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/link/"><i class="fa-fw fas fa-link faa-tada"></i><span> 友链</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Linux 操作系统：文件系统</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-03-10T07:03:00.000Z" title="发表于 2025-03-10 15:03:00">2025-03-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-03-10T07:15:51.852Z" title="更新于 2025-03-10 15:15:51">2025-03-10</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Linux-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">Linux 操作系统</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1>Linux 文件系统</h1>
-<p>Linux 文件系统：路径名、目录 (<code>pwd, cd</code>) 、文件系统组织方式 (inode) 、文件和目录查看 (<code>touch, ls, tree</code>) 、文件和目录操作 (<code>mkdir, rmdir, cp, mv, rm</code>) 和 Linux 的目录结构。</p>
-<h2 id="1-路径名和路径名解析">1 路径名和路径名解析</h2>
-<p>相关命令：<code>dirname</code> <code>basename</code> <code>realpath</code></p>
+</head><body><div id="web_bg" style="background-image: url(https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/background.jpeg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/avatar_new.PNG" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">53</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">27</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/"><i class="fa-fw fas fa-home faa-tada"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/categories/"><i class="fa-fw fas fa-folder-open faa-tada"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/tags/"><i class="fa-fw fas fa-tags faa-tada"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/archives/"><i class="fa-fw fas fa-archive faa-tada"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/link/"><i class="fa-fw fas fa-link faa-tada"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url(https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/linux.jpeg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">isKage`Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">Linux 操作系统：文件系统</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/"><i class="fa-fw fas fa-home faa-tada"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/categories/"><i class="fa-fw fas fa-folder-open faa-tada"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/tags/"><i class="fa-fw fas fa-tags faa-tada"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/archives/"><i class="fa-fw fas fa-archive faa-tada"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/link/"><i class="fa-fw fas fa-link faa-tada"></i><span> 友链</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Linux 操作系统：文件系统</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-03-10T07:03:00.000Z" title="发表于 2025-03-10 15:03:00">2025-03-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-03-10T07:15:51.852Z" title="更新于 2025-03-10 15:15:51">2025-03-10</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Linux-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">Linux 操作系统</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="Linux-文件系统"><a href="#Linux-文件系统" class="headerlink" title="Linux 文件系统"></a>Linux 文件系统</h1><p>Linux 文件系统：路径名、目录 (<code>pwd, cd</code>) 、文件系统组织方式 (inode) 、文件和目录查看 (<code>touch, ls, tree</code>) 、文件和目录操作 (<code>mkdir, rmdir, cp, mv, rm</code>) 和 Linux 的目录结构。</p>
+<h2 id="1-路径名和路径名解析"><a href="#1-路径名和路径名解析" class="headerlink" title="1 路径名和路径名解析"></a>1 路径名和路径名解析</h2><p>相关命令：<code>dirname</code> <code>basename</code> <code>realpath</code></p>
 <p><strong>文件系统</strong>以一颗目录树的形式来组织：</p>
 <ul>
 <li>根节点称为根 <code>root</code> 目录，用 <code>/</code> 来表示</li>
 <li>目录树中的名字只需在其所在目录中唯一</li>
 </ul>
-<h3 id="1-1-路径名">1.1 路径名</h3>
-<p>路径以 <code>/</code> 分隔，分为相对路径和绝对路径：</p>
+<h3 id="1-1-路径名"><a href="#1-1-路径名" class="headerlink" title="1.1 路径名"></a>1.1 路径名</h3><p>路径以 <code>/</code> 分隔，分为相对路径和绝对路径：</p>
 <ul>
 <li>绝对路径：从根目录开始，以 <code>/</code> 分割各级目录，例如：<code>/home/User/Documents/example.txt</code></li>
-<li>相对路径：从当前目录开始，只包含当前目录以下的目录名，例如：如果位于 <code>/home/User</code> 则相对路径为 <code>Documents/example.txt</code> 或者 <code>./Documents/example.txt</code></li>
+<li>相对路径：从当前目录开始，只包含当前目录以下的目录名，例如：如果位于 <code>/home/User</code> 则相对路径为 <code>Documents/example.txt</code> 或者 <code>./Documents/example.txt</code> </li>
 </ul>
 <blockquote>
 <p><code>.</code> 和 <code>..</code> 是特殊的目录，所有目录下都有这两个目录，<code>.</code> 指代当前目录，<code>..</code>  指代上一级目录。特别的，根目录的上一级目录为自身。</p>
 </blockquote>
-<h3 id="1-2-路径解析">1.2 路径解析</h3>
+<h3 id="1-2-路径解析"><a href="#1-2-路径解析" class="headerlink" title="1.2 路径解析"></a>1.2 路径解析</h3><div class="table-container">
 <table>
 <thead>
 <tr>
@@ -191,12 +188,14 @@
 </tr>
 </tbody>
 </table>
+</div>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">dirname</span> /home/iskage/docs/example.txt</span><br><span class="line">/home/iskage/docs</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">basename</span> /home/iskage/docs/example.txt</span><br><span class="line">example.txt</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">realpath</span> -e example.txt</span><br><span class="line">/home/iskage/docs/example.txt</span><br><span class="line"></span><br><span class="line">$ <span class="built_in">realpath</span> -m wrong.txt</span><br><span class="line">/home/iskage/docs/wrong.txt</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p><code>realpath</code> 返回绝对路径，缺省参数默认为 <code>-e</code></p>
+<p><code>realpath</code> 返回绝对路径，缺省参数默认为 <code>-e</code> </p>
 </blockquote>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -215,10 +214,9 @@
 </tr>
 </tbody>
 </table>
-<h2 id="2-改变目录和波浪号扩展">2 改变目录和波浪号扩展</h2>
-<p>相关命令 <code>pwd</code> <code>cd</code> <code>~..</code></p>
-<h3 id="2-1-改变目录-pwd-cd">2.1 改变目录 pwd, cd</h3>
-<ul>
+</div>
+<h2 id="2-改变目录和波浪号扩展"><a href="#2-改变目录和波浪号扩展" class="headerlink" title="2 改变目录和波浪号扩展"></a>2 改变目录和波浪号扩展</h2><p>相关命令 <code>pwd</code> <code>cd</code> <code>~..</code></p>
+<h3 id="2-1-改变目录-pwd-cd"><a href="#2-1-改变目录-pwd-cd" class="headerlink" title="2.1 改变目录 pwd, cd"></a>2.1 改变目录 pwd, cd</h3><ul>
 <li><code>pwd</code> 检查当前目录</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">pwd</span></span><br><span class="line">/home/iskage/docs</span><br></pre></td></tr></table></figure>
@@ -229,8 +227,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">~/docs$ <span class="built_in">cd</span></span><br><span class="line">~$</span><br></pre></td></tr></table></figure>
 <p><code>cd -</code> 表示工作目录设置为先前的工作目录，可在两个目录中切换：例如在 A 目录使用 <code>cd -</code> ，然后进入目录 B 随后使用 <code>cd -</code> 返回 A 目录，再次使用返回 B 目录</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">~$ <span class="built_in">cd</span> -</span><br><span class="line">/home/iskage</span><br><span class="line"></span><br><span class="line">~$ <span class="built_in">cd</span> docs</span><br><span class="line">~/docs</span><br><span class="line"></span><br><span class="line">~/docs$ <span class="built_in">cd</span> -</span><br><span class="line">/home/iskage</span><br><span class="line">~$ </span><br></pre></td></tr></table></figure>
-<h3 id="2-2-扩展">2.2 ~ 扩展</h3>
-<ul>
+<h3 id="2-2-扩展"><a href="#2-2-扩展" class="headerlink" title="2.2 ~ 扩展"></a>2.2 ~ 扩展</h3><ul>
 <li>单独的波浪号 <code>~</code> 表示当前用户的主目录，而 <code>~user</code> 表示用户 user 的主目录</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~user</span><br><span class="line">进入 user 的主目录，一般为 /home/user</span><br></pre></td></tr></table></figure>
@@ -238,9 +235,7 @@
 <p>追踪 bash 的命令和返回，可以设置 <code>set -x</code> 打开追踪功能；<code>set +x</code> 关闭追踪功能。</p>
 </blockquote>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> -x</span><br><span class="line"><span class="built_in">cd</span> ~iskage</span><br><span class="line">+ <span class="built_in">cd</span> /home/iskage</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> ~user</span><br><span class="line">+ <span class="built_in">cd</span> <span class="string">&#x27;~user&#x27;</span></span><br><span class="line">bash: <span class="built_in">cd</span>: ~user: No such file or directory</span><br></pre></td></tr></table></figure>
-<h2 id="3-文件系统的组织方式">3 文件系统的组织方式</h2>
-<h3 id="3-1-文件系统的组织">3.1 文件系统的组织</h3>
-<p>文件系统由 2 部分组成：</p>
+<h2 id="3-文件系统的组织方式"><a href="#3-文件系统的组织方式" class="headerlink" title="3 文件系统的组织方式"></a>3 文件系统的组织方式</h2><h3 id="3-1-文件系统的组织"><a href="#3-1-文件系统的组织" class="headerlink" title="3.1 文件系统的组织"></a>3.1 文件系统的组织</h3><p>文件系统由 2 部分组成：</p>
 <ul>
 <li>保存文件相关的元信息的索引节点 <code>inode</code>（index node）</li>
 <li>实际存储数据的数据块</li>
@@ -250,35 +245,30 @@
 <blockquote>
 <p>目录项：每个目录包含子目录和文件的目录项，目录项保存了其对应的文件（包括子目录）的名字以及该文件对应的 inode 编号</p>
 </blockquote>
-<img src="https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/QQ_1741309097697.png" alt="文件结构：索引节点和数据块" style="zoom:67%;" />
+<p><img src="https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/QQ_1741309097697.png" alt="文件结构：索引节点和数据块" style="zoom:67%;" /></p>
 <ul>
 <li><code>ls -i</code> 可以产看索引节点</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> -i</span><br><span class="line">793134 docs</span><br></pre></td></tr></table></figure>
-<h3 id="3-2-查看磁盘使用情况-df">3.2 查看磁盘使用情况 df</h3>
-<p><strong>格式</strong></p>
+<h3 id="3-2-查看磁盘使用情况-df"><a href="#3-2-查看磁盘使用情况-df" class="headerlink" title="3.2 查看磁盘使用情况 df"></a>3.2 查看磁盘使用情况 df</h3><p><strong>格式</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">df</span> [options] [file]</span><br><span class="line"></span><br><span class="line">-h 					: 以自然语言展示 1k=1024</span><br><span class="line">-H , --si 			: 以自然语言展示 1k=1000</span><br><span class="line">-i , --inodes 		: 查看节点类型</span><br><span class="line">-T , --print-type  	: 显示文件系统类型</span><br><span class="line">-t , --<span class="built_in">type</span>=TYPE    : 仅仅显示相应类型的文件系统信息，例如 --<span class="built_in">type</span>=ext4 或 -t ext4</span><br><span class="line"></span><br><span class="line">file 				: 缺省，则展示当前所在目录属于的文件系统</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">df</span> -Th</span><br><span class="line"></span><br><span class="line">Filesystem     Type   Size  Used Avail Use% Mounted on</span><br><span class="line">tmpfs          tmpfs  168M  1.1M  167M   1% /run</span><br><span class="line">/dev/vda3      ext4    40G  3.8G   34G  11% /</span><br><span class="line">tmpfs          tmpfs  837M     0  837M   0% /dev/shm</span><br><span class="line">tmpfs          tmpfs  5.0M     0  5.0M   0% /run/lock</span><br><span class="line">/dev/vda2      vfat   197M  6.1M  191M   4% /boot/efi</span><br><span class="line">tmpfs          tmpfs  168M  4.0K  168M   1% /run/user/0</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">df</span> -iT --si</span><br><span class="line"></span><br><span class="line">Filesystem     Type  Inodes IUsed IFree IUse% Mounted on</span><br><span class="line">tmpfs          tmpfs   215k   729  214k    1% /run</span><br><span class="line">/dev/vda3      ext4    2.7M  100k  2.6M    4% /</span><br><span class="line">tmpfs          tmpfs   215k     2  215k    1% /dev/shm</span><br><span class="line">tmpfs          tmpfs   215k     3  215k    1% /run/lock</span><br><span class="line">/dev/vda2      vfat       0     0     0     - /boot/efi</span><br><span class="line">tmpfs          tmpfs    43k    26   43k    1% /run/user/0</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p><code>vda2</code> 表示位于第 1 个磁盘的第 2 区（abc表示磁盘号，123表示分区）</p>
 </blockquote>
-<h3 id="3-3-查看文件使用的空间情况-du">3.3 查看文件使用的空间情况 du</h3>
-<p><strong>格式</strong></p>
+<h3 id="3-3-查看文件使用的空间情况-du"><a href="#3-3-查看文件使用的空间情况-du" class="headerlink" title="3.3 查看文件使用的空间情况 du"></a>3.3 查看文件使用的空间情况 du</h3><p><strong>格式</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">du</span> [options] [file]</span><br><span class="line"></span><br><span class="line">-c , --total  			: 最后显示加和总使用空间</span><br><span class="line">-s , --summarize 		: 仅仅显示每个参数的总使用情况</span><br><span class="line">-d ,  --max-depth=N 	: 递归展示子目录的深度，N=0 表示不递归</span><br><span class="line">-B SIZE 				: 设置展示的单位为 SIZE，缺省默认为 1k bit</span><br><span class="line">-h 						: 自然语言展示 1k=1024</span><br><span class="line">--si 					: 与 -h 相同，但 1k=1000</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>因为 <code>du -s</code> 表示只展示 file 自己的总使用情况，故等价于 <code>du -d 0</code> 深度为 0</p>
 </blockquote>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">du</span> --si -d 1 -c ./snap</span><br><span class="line"></span><br><span class="line">17k	./snap/lxd</span><br><span class="line">21k	./snap</span><br><span class="line">21k	total</span><br></pre></td></tr></table></figure>
-<h3 id="3-4-查看文件类型-file">3.4 查看文件类型 file</h3>
-<p><code>file</code> 指令会查看文件的根本类型，而不是根据拓展名查看。</p>
+<h3 id="3-4-查看文件类型-file"><a href="#3-4-查看文件类型-file" class="headerlink" title="3.4 查看文件类型 file"></a>3.4 查看文件类型 file</h3><p><code>file</code> 指令会查看文件的根本类型，而不是根据拓展名查看。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">file a.py</span><br><span class="line">a.py: ASCII text</span><br><span class="line"></span><br><span class="line">file -i a.py</span><br><span class="line">a.py: text/plain; charset=us-ascii</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p><code>-i , --mime</code> 输出 MIME 头部。</p>
 </blockquote>
-<h2 id="4-文件名和目录查看">4 文件名和目录查看</h2>
-<h3 id="4-1-touch-修改时间">4.1 touch 修改时间</h3>
-<p><code>touch file</code> 文件存在时改变时间，不存在时创建文件。每个文件的时间包括：</p>
+<h2 id="4-文件名和目录查看"><a href="#4-文件名和目录查看" class="headerlink" title="4 文件名和目录查看"></a>4 文件名和目录查看</h2><h3 id="4-1-touch-修改时间"><a href="#4-1-touch-修改时间" class="headerlink" title="4.1 touch 修改时间"></a>4.1 touch 修改时间</h3><p><code>touch file</code> 文件存在时改变时间，不存在时创建文件。每个文件的时间包括：</p>
 <ul>
 <li>修改时间 <code>mtime</code> ：修改文件内容时更新</li>
 <li>访问时间 <code>atime</code> ：读文件操作时更新的时间</li>
@@ -286,17 +276,16 @@
 </ul>
 <p><strong>格式</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">touch</span> [option] file</span><br><span class="line"></span><br><span class="line">-m 					  : 仅改变修改时间</span><br><span class="line">-a 					  : 仅改变访问时间</span><br><span class="line">-t <span class="keyword">time</span> 			  : 指定时间为 <span class="keyword">time</span> 格式为 [[CC]YY]MMDDhhmm[.ss] </span><br><span class="line">			  			例如 [[20]25]03070938[.11] 表示2025年3月7日9时38分11秒</span><br><span class="line">-r , --reference=BASE : 使用文件 BASE 的时间</span><br></pre></td></tr></table></figure>
-<h3 id="4-2-文件名格式">4.2 文件名格式</h3>
-<ul>
+<h3 id="4-2-文件名格式"><a href="#4-2-文件名格式" class="headerlink" title="4.2 文件名格式"></a>4.2 文件名格式</h3><ul>
 <li>Linux 系统的文件名（包括目录等）区分大小写。</li>
 <li>文件名不能命名为 <code>.</code> 和 <code>..</code> ，也不能包含 <code>/</code> 和 <code>NULL</code> 字符（ASCII 码为 0 的字符），除此之外可以包含任何字符。</li>
 <li>可以使用后缀，不过并不强制要求。</li>
 <li>一般规范为：使用字母、数字、 <code>.</code> 、<code>-</code> 、<code>_</code> 组成。且避免使用 <code>-</code> 开头，也不使用空格。</li>
-<li>如果出现歧义，可以使用 <code>&quot;&quot;</code> 或 <code>''</code> 包裹起这些文件名。</li>
+<li>如果出现歧义，可以使用 <code>&quot;&quot;</code> 或 <code>&#39;&#39;</code> 包裹起这些文件名。</li>
 </ul>
-<h3 id="4-3-列目录命令-ls">4.3 列目录命令 ls</h3>
-<p><strong>格式</strong></p>
+<h3 id="4-3-列目录命令-ls"><a href="#4-3-列目录命令-ls" class="headerlink" title="4.3 列目录命令 ls"></a>4.3 列目录命令 ls</h3><p><strong>格式</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> [options] [file]</span><br></pre></td></tr></table></figure>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -359,11 +348,13 @@
 </tr>
 </tbody>
 </table>
+</div>
 <p>对于 <code>ls -l</code> 列出的信息，里面分别包含：文件类型、访问模式、引用计数、拥有者用户、用户组、文件大小（<code>-h</code> 以自然语言展示）、修改时间、文件名。</p>
-<img src="https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/QQ_1741584509233.png" alt="ls -l 文件信息" style="zoom:67%;" />
+<p><img src="https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/QQ_1741584509233.png" alt="ls -l 文件信息" style="zoom:67%;" /></p>
 <ul>
 <li>文件类型</li>
 </ul>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -402,9 +393,11 @@
 </tr>
 </tbody>
 </table>
+</div>
 <ul>
 <li>访问模式：所有者权限（<code>1, 2, 3</code>）、所属组权限（<code>4, 5, 6</code>）、其他用户权限</li>
 </ul>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -427,10 +420,11 @@
 </tr>
 </tbody>
 </table>
-<h3 id="4-4-tree-查看目录树">4.4 tree 查看目录树</h3>
-<p>先在 Ubuntu 上安装 <code>tree</code></p>
+</div>
+<h3 id="4-4-tree-查看目录树"><a href="#4-4-tree-查看目录树" class="headerlink" title="4.4 tree 查看目录树"></a>4.4 tree 查看目录树</h3><p>先在 Ubuntu 上安装 <code>tree</code></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install tree</span><br></pre></td></tr></table></figure>
 <p>然后可以使用 <code>tree</code> 命令以树的形式递归展示目录结构：</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -485,10 +479,9 @@
 </tr>
 </tbody>
 </table>
+</div>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">~$ tree</span><br><span class="line"></span><br><span class="line">.</span><br><span class="line">├── a.py</span><br><span class="line">├── file1</span><br><span class="line">├── file2</span><br><span class="line">├── file3</span><br><span class="line">└── snap</span><br><span class="line">    └── lxd</span><br><span class="line">        ├── 22923</span><br><span class="line">        ├── 31333</span><br><span class="line">        ├── common</span><br><span class="line">        └── current -&gt; 31333</span><br></pre></td></tr></table></figure>
-<h2 id="5-文件和目录操作">5 文件和目录操作</h2>
-<h3 id="5-1-创建目录-mkdir">5.1 创建目录 mkdir</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> [-p] directory</span><br></pre></td></tr></table></figure>
+<h2 id="5-文件和目录操作"><a href="#5-文件和目录操作" class="headerlink" title="5 文件和目录操作"></a>5 文件和目录操作</h2><h3 id="5-1-创建目录-mkdir"><a href="#5-1-创建目录-mkdir" class="headerlink" title="5.1 创建目录 mkdir"></a>5.1 创建目录 mkdir</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> [-p] directory</span><br></pre></td></tr></table></figure>
 <ul>
 <li>同一目录下不可同名</li>
 <li>缺省 <code>-p</code> <code>--parents</code> 时，父目录不存在时不可以创建子目录</li>
@@ -496,17 +489,14 @@
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> dir1</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> dir2/dir3</span><br><span class="line"><span class="comment"># mkdir: cannot create directory ‘dir2/dir3’: No such file or directory</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">mkdir</span> -p dir2/dir3</span><br></pre></td></tr></table></figure>
-<h3 id="5-2-删除目录-rmdir">5.2 删除目录 rmdir</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">rmdir</span> [-p] directory</span><br></pre></td></tr></table></figure>
+<h3 id="5-2-删除目录-rmdir"><a href="#5-2-删除目录-rmdir" class="headerlink" title="5.2 删除目录 rmdir"></a>5.2 删除目录 rmdir</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">rmdir</span> [-p] directory</span><br></pre></td></tr></table></figure>
 <ul>
 <li>仅允许删除空目录，如果有文件则无法删除</li>
 <li>对于一连串的目录，例如 <code>dir1/dir2/dir3</code> 其中 dir3 为空目录。可以使用 <code>rmdir -p dir1/dir2/dir3</code> 删除。这一步等价于先删除 dir1 然后 dir2 dir3 ，即 <code>rmdir dir1/dir2/dir3 &amp;&amp; rmdir dir1/dir2 &amp;&amp; rmdir dir1</code></li>
 <li>如果希望递归删除节点以下所有内容，可以使用 <code>rm -R</code></li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">rmdir</span> dir1</span><br><span class="line"><span class="comment"># rmdir: failed to remove &#x27;dir1&#x27;: Directory not empty</span></span><br><span class="line"><span class="built_in">rmdir</span> -p dir1</span><br><span class="line"><span class="comment"># rmdir: failed to remove &#x27;dir1&#x27;: Directory not empty</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 正确</span></span><br><span class="line"><span class="built_in">rmdir</span> -p dir1/dir2/dir3</span><br></pre></td></tr></table></figure>
-<h3 id="5-3-复制文件和目录-cp">5.3 复制文件和目录 cp</h3>
-<h4 id="5-3-1-复制和创建新文件">5.3.1 复制和创建新文件</h4>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cp</span> [options] SOURCE DESTINATION</span><br></pre></td></tr></table></figure>
+<h3 id="5-3-复制文件和目录-cp"><a href="#5-3-复制文件和目录-cp" class="headerlink" title="5.3 复制文件和目录 cp"></a>5.3 复制文件和目录 cp</h3><h4 id="5-3-1-复制和创建新文件"><a href="#5-3-1-复制和创建新文件" class="headerlink" title="5.3.1 复制和创建新文件"></a>5.3.1 复制和创建新文件</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cp</span> [options] SOURCE DESTINATION</span><br></pre></td></tr></table></figure>
 <ul>
 <li>SOURCE：要复制的文件或目录。</li>
 <li>DESTINATION：目标文件或目录。如果 <code>DESTINATION</code> 是一个目录，则会将 <code>SOURCE</code> 复制到该目录中；如果 <code>DESTINATION</code> 是一个文件名，则会将 <code>SOURCE</code> 复制并重命名为 <code>DESTINATION</code>。</li>
@@ -514,11 +504,9 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cp</span> ./dir1/file file_copy</span><br><span class="line"><span class="comment"># 将 ./dir1/ 下的 file 文件复制一份到当前目录的 file_copy 文件</span></span><br></pre></td></tr></table></figure>
 <p>复制目录需要 <code>-r</code> 递归复制。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cp</span> -r ./dir1/ dir1_copy</span><br></pre></td></tr></table></figure>
-<h4 id="5-3-2-备份和覆盖">5.3.2 备份和覆盖</h4>
-<p>如果要复制的位置存在相同的文件名，权限允许（即可以写 <code>w</code>）时缺省会直接覆盖。权限不允许（没有写权限）时会报 <code>Permission denied</code> 错。</p>
+<h4 id="5-3-2-备份和覆盖"><a href="#5-3-2-备份和覆盖" class="headerlink" title="5.3.2 备份和覆盖"></a>5.3.2 备份和覆盖</h4><p>如果要复制的位置存在相同的文件名，权限允许（即可以写 <code>w</code>）时缺省会直接覆盖。权限不允许（没有写权限）时会报 <code>Permission denied</code> 错。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cp</span> -f : 强制覆盖</span><br><span class="line"><span class="built_in">cp</span> -i : 覆盖前询问用户</span><br><span class="line"><span class="built_in">cp</span> -b : 覆盖前保留备份，以原文件名加 ~ </span><br></pre></td></tr></table></figure>
-<h4 id="5-3-3-递归复制目录">5.3.3 递归复制目录</h4>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cp</span> -r : 递归复制目录和子目录</span><br><span class="line"><span class="built_in">cp</span> -a : 递归复制目录和子目录，保留原文件的属性</span><br></pre></td></tr></table></figure>
+<h4 id="5-3-3-递归复制目录"><a href="#5-3-3-递归复制目录" class="headerlink" title="5.3.3 递归复制目录"></a>5.3.3 递归复制目录</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cp</span> -r : 递归复制目录和子目录</span><br><span class="line"><span class="built_in">cp</span> -a : 递归复制目录和子目录，保留原文件的属性</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>如果目标目录存在，则将复制后的目录直接放在目标目录下</p>
 <p>如果目标目录不存在，则创建新目录，将被复制的目录第一个父目录后的所有子目录放在目标目录下</p>
@@ -532,8 +520,7 @@
 <li>但如果不存在目标目录</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cp</span> -r dir1 ./tmp2</span><br><span class="line">.</span><br><span class="line">├── dir1</span><br><span class="line">│   └── dir2</span><br><span class="line">│       └── dir3</span><br><span class="line">├── tmp1</span><br><span class="line">│   └── dir1</span><br><span class="line">│       └── dir2</span><br><span class="line">│           └── dir3</span><br><span class="line">└── tmp2</span><br><span class="line">    └── dir2</span><br><span class="line">        └── dir3</span><br></pre></td></tr></table></figure>
-<h3 id="5-4-移动或重命名-mv">5.4 移动或重命名 mv</h3>
-<p><strong>格式</strong></p>
+<h3 id="5-4-移动或重命名-mv"><a href="#5-4-移动或重命名-mv" class="headerlink" title="5.4 移动或重命名 mv"></a>5.4 移动或重命名 mv</h3><p><strong>格式</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 格式1：移动并重命名</span></span><br><span class="line"><span class="built_in">mv</span> [OPTION] SOURCE DEST</span><br><span class="line"></span><br><span class="line"><span class="comment"># 格式2：移动到目录（目录必须存在）</span></span><br><span class="line"><span class="built_in">mv</span> [OPTION] SOURCE... DIRECTORY</span><br><span class="line"></span><br><span class="line"><span class="comment"># 格式3：指定目标目录（与格式2等价）</span></span><br><span class="line"><span class="built_in">mv</span> [OPTION] -t DIRECTORY SOURCE...</span><br></pre></td></tr></table></figure>
 <blockquote>
 <ul>
@@ -541,6 +528,7 @@
 <li>若目标位置存在同名文件/目录，默认直接覆盖</li>
 </ul>
 </blockquote>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -583,33 +571,32 @@
 </tr>
 </tbody>
 </table>
+</div>
 <ol>
 <li>重命名文件</li>
 </ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mv</span> old_file.txt new_file.txt</span><br></pre></td></tr></table></figure>
-<ol start="2">
+<ol>
 <li>移动文件到目录</li>
 </ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mv</span> file.txt /target/dir/</span><br></pre></td></tr></table></figure>
-<ol start="3">
+<ol>
 <li>覆盖前备份</li>
 </ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mv</span> -b file.txt /backup/  <span class="comment"># 生成 file.txt~</span></span><br><span class="line"><span class="built_in">mv</span> -b -S .bak file.txt  <span class="comment"># 自定义备份后缀 生成 file.txt.bak</span></span><br></pre></td></tr></table></figure>
-<ol start="4">
+<ol>
 <li>批量移动</li>
 </ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mv</span> *.jpg /photos/ -v  <span class="comment"># -v 显示详细操作</span></span><br></pre></td></tr></table></figure>
-<h3 id="5-5-删除-rm">5.5 删除 rm</h3>
-<p><strong>格式</strong></p>
+<h3 id="5-5-删除-rm"><a href="#5-5-删除-rm" class="headerlink" title="5.5 删除 rm"></a>5.5 删除 rm</h3><p><strong>格式</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">rm</span> [OPTION]... [FILE]...</span><br></pre></td></tr></table></figure>
 <ul>
-<li>
-<p>直接删除文件（不询问）</p>
+<li><p>直接删除文件（不询问）</p>
 </li>
-<li>
-<p>目录删除，需配合 <code>-R/-r</code> 选项删除非空目录；使用 <code>-d</code> 选项可删除空目录</p>
+<li><p>目录删除，需配合 <code>-R/-r</code> 选项删除非空目录；使用 <code>-d</code> 选项可删除空目录</p>
 </li>
 </ul>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -640,26 +627,24 @@
 </tr>
 </tbody>
 </table>
+</div>
 <ol>
 <li>删除文件（强制）</li>
 </ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">rm</span> -f file.txt</span><br></pre></td></tr></table></figure>
-<ol start="2">
+<ol>
 <li>递归删除目录</li>
 </ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">rm</span> -r directory/</span><br></pre></td></tr></table></figure>
-<ol start="3">
+<ol>
 <li>删除多个文件</li>
 </ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">rm</span> -i *.<span class="built_in">log</span>  <span class="comment"># -i 每次删除都询问是否进行</span></span><br></pre></td></tr></table></figure>
-<h2 id="6-Linux-目录结构">6 Linux 目录结构</h2>
-<blockquote>
+<h2 id="6-Linux-目录结构"><a href="#6-Linux-目录结构" class="headerlink" title="6 Linux 目录结构"></a>6 Linux 目录结构</h2><blockquote>
 <p>由 <strong>DeepSeek</strong> 整理</p>
 </blockquote>
-<h3 id="6-1-核心目录">6.1 核心目录</h3>
-<h4 id="6-1-1-根目录（-）">6.1.1 根目录（/）</h4>
-<p>整个文件系统树的根，包含了许多子目录</p>
-<h4 id="6-1-2-基础功能目录">6.1.2 基础功能目录</h4>
+<h3 id="6-1-核心目录"><a href="#6-1-核心目录" class="headerlink" title="6.1 核心目录"></a>6.1 核心目录</h3><h4 id="6-1-1-根目录（-）"><a href="#6-1-1-根目录（-）" class="headerlink" title="6.1.1 根目录（/）"></a>6.1.1 根目录（/）</h4><p>整个文件系统树的根，包含了许多子目录</p>
+<h4 id="6-1-2-基础功能目录"><a href="#6-1-2-基础功能目录" class="headerlink" title="6.1.2 基础功能目录"></a>6.1.2 基础功能目录</h4><div class="table-container">
 <table>
 <thead>
 <tr>
@@ -691,7 +676,8 @@
 </tr>
 </tbody>
 </table>
-<h4 id="6-1-3-系统配置目录">6.1.3 系统配置目录</h4>
+</div>
+<h4 id="6-1-3-系统配置目录"><a href="#6-1-3-系统配置目录" class="headerlink" title="6.1.3 系统配置目录"></a>6.1.3 系统配置目录</h4><div class="table-container">
 <table>
 <thead>
 <tr>
@@ -713,7 +699,8 @@
 </tr>
 </tbody>
 </table>
-<h4 id="6-1-4-用户相关目录">6.1.4 用户相关目录</h4>
+</div>
+<h4 id="6-1-4-用户相关目录"><a href="#6-1-4-用户相关目录" class="headerlink" title="6.1.4 用户相关目录"></a>6.1.4 用户相关目录</h4><div class="table-container">
 <table>
 <thead>
 <tr>
@@ -735,7 +722,8 @@
 </tr>
 </tbody>
 </table>
-<h4 id="6-1-5-存储相关目录">6.1.5 存储相关目录</h4>
+</div>
+<h4 id="6-1-5-存储相关目录"><a href="#6-1-5-存储相关目录" class="headerlink" title="6.1.5 存储相关目录"></a>6.1.5 存储相关目录</h4><div class="table-container">
 <table>
 <thead>
 <tr>
@@ -757,8 +745,8 @@
 </tr>
 </tbody>
 </table>
-<h3 id="6-2-特殊用途目录">6.2 特殊用途目录</h3>
-<h4 id="6-2-1-运行时数据">6.2.1 运行时数据</h4>
+</div>
+<h3 id="6-2-特殊用途目录"><a href="#6-2-特殊用途目录" class="headerlink" title="6.2 特殊用途目录"></a>6.2 特殊用途目录</h3><h4 id="6-2-1-运行时数据"><a href="#6-2-1-运行时数据" class="headerlink" title="6.2.1 运行时数据"></a>6.2.1 运行时数据</h4><div class="table-container">
 <table>
 <thead>
 <tr>
@@ -780,7 +768,8 @@
 </tr>
 </tbody>
 </table>
-<h4 id="6-2-2-临时空间">6.2.2 临时空间</h4>
+</div>
+<h4 id="6-2-2-临时空间"><a href="#6-2-2-临时空间" class="headerlink" title="6.2.2 临时空间"></a>6.2.2 临时空间</h4><div class="table-container">
 <table>
 <thead>
 <tr>
@@ -802,7 +791,8 @@
 </tr>
 </tbody>
 </table>
-<h4 id="6-2-3-内核与硬件">6.2.3 内核与硬件</h4>
+</div>
+<h4 id="6-2-3-内核与硬件"><a href="#6-2-3-内核与硬件" class="headerlink" title="6.2.3 内核与硬件"></a>6.2.3 内核与硬件</h4><div class="table-container">
 <table>
 <thead>
 <tr>
@@ -824,8 +814,8 @@
 </tr>
 </tbody>
 </table>
-<h3 id="6-3-资源存储目录">6.3. 资源存储目录</h3>
-<h4 id="6-3-1-静态资源库">6.3.1 静态资源库</h4>
+</div>
+<h3 id="6-3-资源存储目录"><a href="#6-3-资源存储目录" class="headerlink" title="6.3. 资源存储目录"></a>6.3. 资源存储目录</h3><h4 id="6-3-1-静态资源库"><a href="#6-3-1-静态资源库" class="headerlink" title="6.3.1 静态资源库"></a>6.3.1 静态资源库</h4><div class="table-container">
 <table>
 <thead>
 <tr>
@@ -847,7 +837,8 @@
 </tr>
 </tbody>
 </table>
-<h4 id="6-3-2-服务数据">6.3.2 服务数据</h4>
+</div>
+<h4 id="6-3-2-服务数据"><a href="#6-3-2-服务数据" class="headerlink" title="6.3.2 服务数据"></a>6.3.2 服务数据</h4><div class="table-container">
 <table>
 <thead>
 <tr>
@@ -864,7 +855,8 @@
 </tr>
 </tbody>
 </table>
-</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://blog.iskage.online">isKage</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://blog.iskage.online/posts/dad6b81f.html">https://blog.iskage.online/posts/dad6b81f.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://blog.iskage.online" target="_blank">isKage`Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Linux/">Linux</a><a class="post-meta__tags" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a><a class="post-meta__tags" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/">服务器</a><a class="post-meta__tags" href="/tags/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/">文件系统</a></div><div class="post-share"><div class="social-share" data-image="https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/linux.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/posts/9241942.html" title="链表 (1) 单向链表、循环链表与双向链表 Linked List"><img class="cover" src="https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/python._logo.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">链表 (1) 单向链表、循环链表与双向链表 Linked List</div></div><div class="info-2"><div class="info-item-1">本周讲解的链表实现了栈、队列、双端队列三种数据结构。它们的特点就是：可以在头部或者尾部进行插入或删除操作，无法在任意位置进行耗时为常数的操作。</div></div></div></a><a class="pagination-related" href="/posts/340249a9.html" title="数组 Array"><img class="cover" src="https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/python._logo.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">数组 Array</div></div><div class="info-2"><div class="info-item-1">本文介绍了低层次数组的原理，并自定义实现了 Python 的一个动态数组。并详细分析了底层存储原理、摊销时间。分析了一些基于数组的案例，例如插入排序算法。同时指出了组成字符串和多维数组创建的常见误用。</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/posts/753a6f85.html" title="Linux 操作系统：重定向和通配符扩展"><img class="cover" src="https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/linux.jpeg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-16</div><div class="info-item-2">Linux 操作系统：重定向和通配符扩展</div></div><div class="info-2"><div class="info-item-1">本章介绍了 Linux 操作系统中的重定向和通配符扩展：包括 `cat` 和 `split` 命令以及管道 `|` 的使用；有关通配符 `?, *, [abc]` 等的使用，快速查找文件内容和处理命令输入输出。</div></div></div></a><a class="pagination-related" href="/posts/e0a5070b.html" title="Linux 操作系统：ssh 远程连接服务器和基本指令"><img class="cover" src="https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/linux.jpeg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-03</div><div class="info-item-2">Linux 操作系统：ssh 远程连接服务器和基本指令</div></div><div class="info-2"><div class="info-item-1">本文介绍了使用 ssh 进行 Linux 系统服务区的远程访问与一些简单的命令。服务器可以去往各大服务器商购买，或者在本地安装虚拟机，针对 mac 用户 Linux 操作系统的指令大多可以直接使用，windows 系统的 wsl 或 powershell 也满足 Linux 的习惯。</div></div></div></a><a class="pagination-related" href="/posts/50fa0735.html" title="Linux 操作系统：命令帮助和快捷使用"><img class="cover" src="https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/linux.jpeg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-05</div><div class="info-item-2">Linux 操作系统：命令帮助和快捷使用</div></div><div class="info-2"><div class="info-item-1">本文介绍了在 Linux 系统中如何查找相关命令和命令的帮助文档。如何命名和管理命令的别名以及一些组合键的使用。</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/avatar_new.PNG" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">isKage</div><div class="author-info-description">欢迎来到 isKage 的博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">52</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">27</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/isKage"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon faa-parent animated-hover" href="https://github.com/isKage" target="_blank" title="Github"><svg class="icon faa-tada" aria-hidden="true"><use xlink:href="#icon-github"></use></svg></a><a class="social-icon faa-parent animated-hover" href="mailto:kageshu211@gmail.com" target="_blank" title="Email"><svg class="icon faa-tada" aria-hidden="true"><use xlink:href="#icon-mail"></use></svg></a><a class="social-icon faa-parent animated-hover" href="https://www.zhihu.com/people/iskage" target="_blank" title="知乎"><svg class="icon faa-tada" aria-hidden="true"><use xlink:href="#icon-zhihu"></use></svg></a><a class="social-icon faa-parent animated-hover" href="https://www.kaggle.com/iskage" target="_blank" title="Kaggle"><svg class="icon faa-tada" aria-hidden="true"><use xlink:href="#icon-kaggle_"></use></svg></a><a class="social-icon faa-parent animated-hover" href="https://www.xiaohongshu.com/user/profile/65f64c14000000000b00f875" target="_blank" title="小红书"><svg class="icon faa-tada" aria-hidden="true"><use xlink:href="#icon-xiaohongshu"></use></svg></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的个人博客，我会定期分享学习笔记。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">Linux 文件系统</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E8%B7%AF%E5%BE%84%E5%90%8D%E5%92%8C%E8%B7%AF%E5%BE%84%E5%90%8D%E8%A7%A3%E6%9E%90"><span class="toc-text">1 路径名和路径名解析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E8%B7%AF%E5%BE%84%E5%90%8D"><span class="toc-text">1.1 路径名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E8%B7%AF%E5%BE%84%E8%A7%A3%E6%9E%90"><span class="toc-text">1.2 路径解析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%94%B9%E5%8F%98%E7%9B%AE%E5%BD%95%E5%92%8C%E6%B3%A2%E6%B5%AA%E5%8F%B7%E6%89%A9%E5%B1%95"><span class="toc-text">2 改变目录和波浪号扩展</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E6%94%B9%E5%8F%98%E7%9B%AE%E5%BD%95-pwd-cd"><span class="toc-text">2.1 改变目录 pwd, cd</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E6%89%A9%E5%B1%95"><span class="toc-text">2.2 ~ 扩展</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%BB%84%E7%BB%87%E6%96%B9%E5%BC%8F"><span class="toc-text">3 文件系统的组织方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%BB%84%E7%BB%87"><span class="toc-text">3.1 文件系统的组织</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E6%9F%A5%E7%9C%8B%E7%A3%81%E7%9B%98%E4%BD%BF%E7%94%A8%E6%83%85%E5%86%B5-df"><span class="toc-text">3.2 查看磁盘使用情况 df</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E4%BD%BF%E7%94%A8%E7%9A%84%E7%A9%BA%E9%97%B4%E6%83%85%E5%86%B5-du"><span class="toc-text">3.3 查看文件使用的空间情况 du</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B-file"><span class="toc-text">3.4 查看文件类型 file</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E6%96%87%E4%BB%B6%E5%90%8D%E5%92%8C%E7%9B%AE%E5%BD%95%E6%9F%A5%E7%9C%8B"><span class="toc-text">4 文件名和目录查看</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-touch-%E4%BF%AE%E6%94%B9%E6%97%B6%E9%97%B4"><span class="toc-text">4.1 touch 修改时间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E6%96%87%E4%BB%B6%E5%90%8D%E6%A0%BC%E5%BC%8F"><span class="toc-text">4.2 文件名格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E5%88%97%E7%9B%AE%E5%BD%95%E5%91%BD%E4%BB%A4-ls"><span class="toc-text">4.3 列目录命令 ls</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-tree-%E6%9F%A5%E7%9C%8B%E7%9B%AE%E5%BD%95%E6%A0%91"><span class="toc-text">4.4 tree 查看目录树</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E6%96%87%E4%BB%B6%E5%92%8C%E7%9B%AE%E5%BD%95%E6%93%8D%E4%BD%9C"><span class="toc-text">5 文件和目录操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E5%88%9B%E5%BB%BA%E7%9B%AE%E5%BD%95-mkdir"><span class="toc-text">5.1 创建目录 mkdir</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E5%88%A0%E9%99%A4%E7%9B%AE%E5%BD%95-rmdir"><span class="toc-text">5.2 删除目录 rmdir</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-%E5%A4%8D%E5%88%B6%E6%96%87%E4%BB%B6%E5%92%8C%E7%9B%AE%E5%BD%95-cp"><span class="toc-text">5.3 复制文件和目录 cp</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-3-1-%E5%A4%8D%E5%88%B6%E5%92%8C%E5%88%9B%E5%BB%BA%E6%96%B0%E6%96%87%E4%BB%B6"><span class="toc-text">5.3.1 复制和创建新文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-3-2-%E5%A4%87%E4%BB%BD%E5%92%8C%E8%A6%86%E7%9B%96"><span class="toc-text">5.3.2 备份和覆盖</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-3-3-%E9%80%92%E5%BD%92%E5%A4%8D%E5%88%B6%E7%9B%AE%E5%BD%95"><span class="toc-text">5.3.3 递归复制目录</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-%E7%A7%BB%E5%8A%A8%E6%88%96%E9%87%8D%E5%91%BD%E5%90%8D-mv"><span class="toc-text">5.4 移动或重命名 mv</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-5-%E5%88%A0%E9%99%A4-rm"><span class="toc-text">5.5 删除 rm</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-Linux-%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-text">6 Linux 目录结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E6%A0%B8%E5%BF%83%E7%9B%AE%E5%BD%95"><span class="toc-text">6.1 核心目录</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#6-1-1-%E6%A0%B9%E7%9B%AE%E5%BD%95%EF%BC%88-%EF%BC%89"><span class="toc-text">6.1.1 根目录（&#x2F;）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-1-2-%E5%9F%BA%E7%A1%80%E5%8A%9F%E8%83%BD%E7%9B%AE%E5%BD%95"><span class="toc-text">6.1.2 基础功能目录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-1-3-%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE%E7%9B%AE%E5%BD%95"><span class="toc-text">6.1.3 系统配置目录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-1-4-%E7%94%A8%E6%88%B7%E7%9B%B8%E5%85%B3%E7%9B%AE%E5%BD%95"><span class="toc-text">6.1.4 用户相关目录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-1-5-%E5%AD%98%E5%82%A8%E7%9B%B8%E5%85%B3%E7%9B%AE%E5%BD%95"><span class="toc-text">6.1.5 存储相关目录</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-%E7%89%B9%E6%AE%8A%E7%94%A8%E9%80%94%E7%9B%AE%E5%BD%95"><span class="toc-text">6.2 特殊用途目录</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#6-2-1-%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE"><span class="toc-text">6.2.1 运行时数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-2-2-%E4%B8%B4%E6%97%B6%E7%A9%BA%E9%97%B4"><span class="toc-text">6.2.2 临时空间</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-2-3-%E5%86%85%E6%A0%B8%E4%B8%8E%E7%A1%AC%E4%BB%B6"><span class="toc-text">6.2.3 内核与硬件</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-%E8%B5%84%E6%BA%90%E5%AD%98%E5%82%A8%E7%9B%AE%E5%BD%95"><span class="toc-text">6.3. 资源存储目录</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#6-3-1-%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E5%BA%93"><span class="toc-text">6.3.1 静态资源库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-3-2-%E6%9C%8D%E5%8A%A1%E6%95%B0%E6%8D%AE"><span class="toc-text">6.3.2 服务数据</span></a></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/ccdaeb5f.html" title="统计软件 R 语言学习笔记 (5) 统计数据类型和日期时间数据"><img src="https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/r_prog.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="统计软件 R 语言学习笔记 (5) 统计数据类型和日期时间数据"/></a><div class="content"><a class="title" href="/posts/ccdaeb5f.html" title="统计软件 R 语言学习笔记 (5) 统计数据类型和日期时间数据">统计软件 R 语言学习笔记 (5) 统计数据类型和日期时间数据</a><time datetime="2025-03-25T04:44:00.000Z" title="发表于 2025-03-25 12:44:00">2025-03-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/583f8c56.html" title="队列 Queue"><img src="https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/python._logo.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="队列 Queue"/></a><div class="content"><a class="title" href="/posts/583f8c56.html" title="队列 Queue">队列 Queue</a><time datetime="2025-03-21T14:16:00.000Z" title="发表于 2025-03-21 22:16:00">2025-03-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/753a6f85.html" title="Linux 操作系统：重定向和通配符扩展"><img src="https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/linux.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux 操作系统：重定向和通配符扩展"/></a><div class="content"><a class="title" href="/posts/753a6f85.html" title="Linux 操作系统：重定向和通配符扩展">Linux 操作系统：重定向和通配符扩展</a><time datetime="2025-03-16T06:03:00.000Z" title="发表于 2025-03-16 14:03:00">2025-03-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/c69bd6a6.html" title="栈 Stack 和回溯法 Backtracking"><img src="https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/python._logo.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="栈 Stack 和回溯法 Backtracking"/></a><div class="content"><a class="title" href="/posts/c69bd6a6.html" title="栈 Stack 和回溯法 Backtracking">栈 Stack 和回溯法 Backtracking</a><time datetime="2025-03-15T05:43:00.000Z" title="发表于 2025-03-15 13:43:00">2025-03-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/502a59cb.html" title="统计软件 R 语言学习笔记 (4) R 语言初步：自定义函数、简单模拟与数据清洗"><img src="https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/r_prog.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="统计软件 R 语言学习笔记 (4) R 语言初步：自定义函数、简单模拟与数据清洗"/></a><div class="content"><a class="title" href="/posts/502a59cb.html" title="统计软件 R 语言学习笔记 (4) R 语言初步：自定义函数、简单模拟与数据清洗">统计软件 R 语言学习笔记 (4) R 语言初步：自定义函数、简单模拟与数据清洗</a><time datetime="2025-03-13T09:07:00.000Z" title="发表于 2025-03-13 17:07:00">2025-03-13</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2025 By isKage</div><div class="footer_custom_text">Welcome to my blog, have a nice day!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><div class="js-pjax"><script>(async () => {
+</div>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://blog.iskage.online">isKage</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://blog.iskage.online/posts/dad6b81f.html">https://blog.iskage.online/posts/dad6b81f.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://blog.iskage.online" target="_blank">isKage`Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Linux/">Linux</a><a class="post-meta__tags" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a><a class="post-meta__tags" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/">服务器</a><a class="post-meta__tags" href="/tags/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/">文件系统</a></div><div class="post-share"><div class="social-share" data-image="https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/linux.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/posts/9241942.html" title="链表 (1) 单向链表、循环链表与双向链表 Linked List"><img class="cover" src="https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/python._logo.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">链表 (1) 单向链表、循环链表与双向链表 Linked List</div></div><div class="info-2"><div class="info-item-1">本周讲解的链表实现了栈、队列、双端队列三种数据结构。它们的特点就是：可以在头部或者尾部进行插入或删除操作，无法在任意位置进行耗时为常数的操作。</div></div></div></a><a class="pagination-related" href="/posts/340249a9.html" title="数组 Array"><img class="cover" src="https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/python._logo.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">数组 Array</div></div><div class="info-2"><div class="info-item-1">本文介绍了低层次数组的原理，并自定义实现了 Python 的一个动态数组。并详细分析了底层存储原理、摊销时间。分析了一些基于数组的案例，例如插入排序算法。同时指出了组成字符串和多维数组创建的常见误用。</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/posts/753a6f85.html" title="Linux 操作系统：重定向和通配符扩展"><img class="cover" src="https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/linux.jpeg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-16</div><div class="info-item-2">Linux 操作系统：重定向和通配符扩展</div></div><div class="info-2"><div class="info-item-1">本章介绍了 Linux 操作系统中的重定向和通配符扩展：包括 `cat` 和 `split` 命令以及管道 `|` 的使用；有关通配符 `?, *, [abc]` 等的使用，快速查找文件内容和处理命令输入输出。</div></div></div></a><a class="pagination-related" href="/posts/e0a5070b.html" title="Linux 操作系统：ssh 远程连接服务器和基本指令"><img class="cover" src="https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/linux.jpeg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-03</div><div class="info-item-2">Linux 操作系统：ssh 远程连接服务器和基本指令</div></div><div class="info-2"><div class="info-item-1">本文介绍了使用 ssh 进行 Linux 系统服务区的远程访问与一些简单的命令。服务器可以去往各大服务器商购买，或者在本地安装虚拟机，针对 mac 用户 Linux 操作系统的指令大多可以直接使用，windows 系统的 wsl 或 powershell 也满足 Linux 的习惯。</div></div></div></a><a class="pagination-related" href="/posts/50fa0735.html" title="Linux 操作系统：命令帮助和快捷使用"><img class="cover" src="https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/linux.jpeg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-05</div><div class="info-item-2">Linux 操作系统：命令帮助和快捷使用</div></div><div class="info-2"><div class="info-item-1">本文介绍了在 Linux 系统中如何查找相关命令和命令的帮助文档。如何命名和管理命令的别名以及一些组合键的使用。</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/avatar_new.PNG" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">isKage</div><div class="author-info-description">欢迎来到 isKage 的博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">53</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">27</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/isKage"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon faa-parent animated-hover" href="https://github.com/isKage" target="_blank" title="Github"><svg class="icon faa-tada" aria-hidden="true"><use xlink:href="#icon-github"></use></svg></a><a class="social-icon faa-parent animated-hover" href="mailto:kageshu211@gmail.com" target="_blank" title="Email"><svg class="icon faa-tada" aria-hidden="true"><use xlink:href="#icon-mail"></use></svg></a><a class="social-icon faa-parent animated-hover" href="https://www.zhihu.com/people/iskage" target="_blank" title="知乎"><svg class="icon faa-tada" aria-hidden="true"><use xlink:href="#icon-zhihu"></use></svg></a><a class="social-icon faa-parent animated-hover" href="https://www.kaggle.com/iskage" target="_blank" title="Kaggle"><svg class="icon faa-tada" aria-hidden="true"><use xlink:href="#icon-kaggle_"></use></svg></a><a class="social-icon faa-parent animated-hover" href="https://www.xiaohongshu.com/user/profile/65f64c14000000000b00f875" target="_blank" title="小红书"><svg class="icon faa-tada" aria-hidden="true"><use xlink:href="#icon-xiaohongshu"></use></svg></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的个人博客，我会定期分享学习笔记。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="toc-text">Linux 文件系统</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E8%B7%AF%E5%BE%84%E5%90%8D%E5%92%8C%E8%B7%AF%E5%BE%84%E5%90%8D%E8%A7%A3%E6%9E%90"><span class="toc-text">1 路径名和路径名解析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E8%B7%AF%E5%BE%84%E5%90%8D"><span class="toc-text">1.1 路径名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E8%B7%AF%E5%BE%84%E8%A7%A3%E6%9E%90"><span class="toc-text">1.2 路径解析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%94%B9%E5%8F%98%E7%9B%AE%E5%BD%95%E5%92%8C%E6%B3%A2%E6%B5%AA%E5%8F%B7%E6%89%A9%E5%B1%95"><span class="toc-text">2 改变目录和波浪号扩展</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E6%94%B9%E5%8F%98%E7%9B%AE%E5%BD%95-pwd-cd"><span class="toc-text">2.1 改变目录 pwd, cd</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E6%89%A9%E5%B1%95"><span class="toc-text">2.2 ~ 扩展</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%BB%84%E7%BB%87%E6%96%B9%E5%BC%8F"><span class="toc-text">3 文件系统的组织方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%BB%84%E7%BB%87"><span class="toc-text">3.1 文件系统的组织</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E6%9F%A5%E7%9C%8B%E7%A3%81%E7%9B%98%E4%BD%BF%E7%94%A8%E6%83%85%E5%86%B5-df"><span class="toc-text">3.2 查看磁盘使用情况 df</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E4%BD%BF%E7%94%A8%E7%9A%84%E7%A9%BA%E9%97%B4%E6%83%85%E5%86%B5-du"><span class="toc-text">3.3 查看文件使用的空间情况 du</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B-file"><span class="toc-text">3.4 查看文件类型 file</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E6%96%87%E4%BB%B6%E5%90%8D%E5%92%8C%E7%9B%AE%E5%BD%95%E6%9F%A5%E7%9C%8B"><span class="toc-text">4 文件名和目录查看</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-touch-%E4%BF%AE%E6%94%B9%E6%97%B6%E9%97%B4"><span class="toc-text">4.1 touch 修改时间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E6%96%87%E4%BB%B6%E5%90%8D%E6%A0%BC%E5%BC%8F"><span class="toc-text">4.2 文件名格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E5%88%97%E7%9B%AE%E5%BD%95%E5%91%BD%E4%BB%A4-ls"><span class="toc-text">4.3 列目录命令 ls</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-tree-%E6%9F%A5%E7%9C%8B%E7%9B%AE%E5%BD%95%E6%A0%91"><span class="toc-text">4.4 tree 查看目录树</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E6%96%87%E4%BB%B6%E5%92%8C%E7%9B%AE%E5%BD%95%E6%93%8D%E4%BD%9C"><span class="toc-text">5 文件和目录操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E5%88%9B%E5%BB%BA%E7%9B%AE%E5%BD%95-mkdir"><span class="toc-text">5.1 创建目录 mkdir</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E5%88%A0%E9%99%A4%E7%9B%AE%E5%BD%95-rmdir"><span class="toc-text">5.2 删除目录 rmdir</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-%E5%A4%8D%E5%88%B6%E6%96%87%E4%BB%B6%E5%92%8C%E7%9B%AE%E5%BD%95-cp"><span class="toc-text">5.3 复制文件和目录 cp</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-3-1-%E5%A4%8D%E5%88%B6%E5%92%8C%E5%88%9B%E5%BB%BA%E6%96%B0%E6%96%87%E4%BB%B6"><span class="toc-text">5.3.1 复制和创建新文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-3-2-%E5%A4%87%E4%BB%BD%E5%92%8C%E8%A6%86%E7%9B%96"><span class="toc-text">5.3.2 备份和覆盖</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-3-3-%E9%80%92%E5%BD%92%E5%A4%8D%E5%88%B6%E7%9B%AE%E5%BD%95"><span class="toc-text">5.3.3 递归复制目录</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-%E7%A7%BB%E5%8A%A8%E6%88%96%E9%87%8D%E5%91%BD%E5%90%8D-mv"><span class="toc-text">5.4 移动或重命名 mv</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-5-%E5%88%A0%E9%99%A4-rm"><span class="toc-text">5.5 删除 rm</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-Linux-%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-text">6 Linux 目录结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E6%A0%B8%E5%BF%83%E7%9B%AE%E5%BD%95"><span class="toc-text">6.1 核心目录</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#6-1-1-%E6%A0%B9%E7%9B%AE%E5%BD%95%EF%BC%88-%EF%BC%89"><span class="toc-text">6.1.1 根目录（&#x2F;）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-1-2-%E5%9F%BA%E7%A1%80%E5%8A%9F%E8%83%BD%E7%9B%AE%E5%BD%95"><span class="toc-text">6.1.2 基础功能目录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-1-3-%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE%E7%9B%AE%E5%BD%95"><span class="toc-text">6.1.3 系统配置目录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-1-4-%E7%94%A8%E6%88%B7%E7%9B%B8%E5%85%B3%E7%9B%AE%E5%BD%95"><span class="toc-text">6.1.4 用户相关目录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-1-5-%E5%AD%98%E5%82%A8%E7%9B%B8%E5%85%B3%E7%9B%AE%E5%BD%95"><span class="toc-text">6.1.5 存储相关目录</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-%E7%89%B9%E6%AE%8A%E7%94%A8%E9%80%94%E7%9B%AE%E5%BD%95"><span class="toc-text">6.2 特殊用途目录</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#6-2-1-%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE"><span class="toc-text">6.2.1 运行时数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-2-2-%E4%B8%B4%E6%97%B6%E7%A9%BA%E9%97%B4"><span class="toc-text">6.2.2 临时空间</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-2-3-%E5%86%85%E6%A0%B8%E4%B8%8E%E7%A1%AC%E4%BB%B6"><span class="toc-text">6.2.3 内核与硬件</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-%E8%B5%84%E6%BA%90%E5%AD%98%E5%82%A8%E7%9B%AE%E5%BD%95"><span class="toc-text">6.3. 资源存储目录</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#6-3-1-%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E5%BA%93"><span class="toc-text">6.3.1 静态资源库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-3-2-%E6%9C%8D%E5%8A%A1%E6%95%B0%E6%8D%AE"><span class="toc-text">6.3.2 服务数据</span></a></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/86c8422a.html" title="统计软件 R 语言学习笔记 (6) 统计图表"><img src="https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/r_prog.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="统计软件 R 语言学习笔记 (6) 统计图表"/></a><div class="content"><a class="title" href="/posts/86c8422a.html" title="统计软件 R 语言学习笔记 (6) 统计图表">统计软件 R 语言学习笔记 (6) 统计图表</a><time datetime="2025-03-26T01:44:00.000Z" title="发表于 2025-03-26 09:44:00">2025-03-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/ccdaeb5f.html" title="统计软件 R 语言学习笔记 (5) 统计数据类型和日期时间数据"><img src="https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/r_prog.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="统计软件 R 语言学习笔记 (5) 统计数据类型和日期时间数据"/></a><div class="content"><a class="title" href="/posts/ccdaeb5f.html" title="统计软件 R 语言学习笔记 (5) 统计数据类型和日期时间数据">统计软件 R 语言学习笔记 (5) 统计数据类型和日期时间数据</a><time datetime="2025-03-25T04:44:00.000Z" title="发表于 2025-03-25 12:44:00">2025-03-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/583f8c56.html" title="队列 Queue"><img src="https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/python._logo.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="队列 Queue"/></a><div class="content"><a class="title" href="/posts/583f8c56.html" title="队列 Queue">队列 Queue</a><time datetime="2025-03-21T14:16:00.000Z" title="发表于 2025-03-21 22:16:00">2025-03-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/753a6f85.html" title="Linux 操作系统：重定向和通配符扩展"><img src="https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/linux.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux 操作系统：重定向和通配符扩展"/></a><div class="content"><a class="title" href="/posts/753a6f85.html" title="Linux 操作系统：重定向和通配符扩展">Linux 操作系统：重定向和通配符扩展</a><time datetime="2025-03-16T06:03:00.000Z" title="发表于 2025-03-16 14:03:00">2025-03-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/c69bd6a6.html" title="栈 Stack 和回溯法 Backtracking"><img src="https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/python._logo.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="栈 Stack 和回溯法 Backtracking"/></a><div class="content"><a class="title" href="/posts/c69bd6a6.html" title="栈 Stack 和回溯法 Backtracking">栈 Stack 和回溯法 Backtracking</a><time datetime="2025-03-15T05:43:00.000Z" title="发表于 2025-03-15 13:43:00">2025-03-15</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2025 By isKage</div><div class="footer_custom_text">Welcome to my blog, have a nice day!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><div class="js-pjax"><script>(async () => {
   const showKatex = () => {
     document.querySelectorAll('#article-container .katex').forEach(el => el.classList.add('katex-show'))
   }
