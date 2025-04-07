@@ -32,5 +32,5 @@
 
 ![](https://blog-iskage.oss-cn-hangzhou.aliyuncs.com/images/QQ_1737362146995.png)
 
-## Stargazers over time
+## Stars
 [![Stargazers over time](https://starchart.cc/isKage/iskage.github.io.svg?variant=adaptive)](https://starchart.cc/isKage/iskage.github.io)
