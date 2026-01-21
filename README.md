@@ -2,7 +2,7 @@
 
 [English](./README_en.md)
 
-> 个人博客成品：[isKage`Blog](https://blog/iskage/online/)
+> 个人博客成品：[isKage`Blog](https://blog.iskage.online/)
 
 `Hexo`, `butterfly`, `node.js`, `oss`, `Markdown`, `js & css`
 
